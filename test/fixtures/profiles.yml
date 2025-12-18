@@ -5,11 +5,11 @@ one:
   first_name: MyString
   last_name: MyString
   bio: MyText
-  skill: MyString
+
 
 two:
   user: two
   first_name: MyString
   last_name: MyString
   bio: MyText
-  skill: MyString
+
