@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "dashboard/index"
   get "pages/home"
   get "users/dashboard", to: "dashboard#index", as: :user_dashboard
   devise_for :users
