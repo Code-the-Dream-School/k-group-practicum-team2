@@ -16,7 +16,7 @@
       <%# User name and skill level %>
       <div class="text-center">
         <h2 class="text-lg font-semibold">
-          <%= [@user&.first_name, @user&.last_name].compact.join(" ") || "Guest" %> Test Test 
+          <%= [@user.profile&.first_name, @user.profile&.last_name].compact.join(" ") || "Guest" %> 
         </h2>
         <p class="text-sm text-gray-600"><span>☆</span> Skill level</p>
       </div>
@@ -39,7 +39,7 @@
 
     <%# Bio below the profile line %>
     <div class="mt-4 text-center text-gray-700">
-      <%= @user&.bio.presence || "..." %>
+      <%= @user.profile&.bio.presence || "..." %>
     </div>
   </section>
 
@@ -56,7 +56,7 @@
 
     <%# bookmarked projects %>
     <div class="w-full max-w-3xl">
-      <h2 class="text-left font-semibold text-lg sm:text-xl">bookmarked Projects</h2>
+      <h2 class="text-left font-semibold text-lg sm:text-xl">Bookmarked Projects</h2>
       <%# bookmarked projects cards %>
       <div class="mt-2">
         <%# placeholder card container %>
