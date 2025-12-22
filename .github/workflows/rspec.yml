@@ -14,11 +14,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.2"
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - name: Prepare test database
+        run: bin/rails db:test:prepare test
       - name: Run RSpec
+        env:
+          RAILS_ENV: test
         run: bundle exec rspec
