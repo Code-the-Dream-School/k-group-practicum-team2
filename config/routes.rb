@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get "pages/home"
-  get "users/dashboard", to: "dashboard#index", as: :user_dashboard
+  get "dashboard", to: "dashboard#index", as: :user_dashboard
   devise_for :users
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
