@@ -80,6 +80,29 @@ Developer Community Hub helps students at all levels grow in tech by providing a
 
 ### 1. Clone the project
 
-```bash
+```bash 
 git clone https://github.com/Code-the-Dream-School/k-group-practicum-team2.git
 cd k-group-practicum-team2
+```
+
+### 2. Install dependencies
+
+```bash
+bundle install 
+npm install 
+```
+
+### 3.Setup database
+
+```bash 
+bin/rails db:prepare
+``` 
+
+### 4.Start development server
+
+```bash 
+bin/dev 
+``` 
+
+### App will run at
+👉 http://localhost:3000
