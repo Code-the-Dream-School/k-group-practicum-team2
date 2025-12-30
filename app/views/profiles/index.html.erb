@@ -1,0 +1,11 @@
+<h1>Profiles</h1>
+<% @profiles.each do |profile| %>
+  <%= profile&.first_name %>
+  <%= profile&.last_name %>
+  <%= link_to "View Profile",  profile_path(profile.id) %>
+<% end %>
+<br>
+
+<% if !current_user.profile.present? %>
+  <%= link_to "Create profile",  new_user_profile_path(current_user) %>
+<% end %>

@@ -1,0 +1,21 @@
+<p>form</p>
+<%= form_with model: @profile do |f|%>
+
+  <%= f.label :first_name%>
+  <%= f.text_field :first_name%>
+
+  <%= f.label :last_name%>
+  <%= f.text_field :last_name%>
+
+  <%= f.label :bio%>
+  <%= f.text_area :bio%>
+
+
+  <%= f.label :skill_id, "Skills"%>
+  <%= f.collection_select(:skill_ids, @skills, :id, :name, { prompt: 'Select skills' }, { multiple: true }) %>
+
+
+
+  <%= f.submit %>
+<%end%>
+

@@ -1,0 +1,17 @@
+<div>
+  <h1 class="font-bold text-4xl">Profiles#show</h1>
+  <p>Find me in app/views/profiles/show.html.erb</p>
+</div>
+
+
+<%= @profile&.first_name %>
+<%= @profile&.bio %>
+<ul>
+  <% @profile&.skills&.each do |skill| %>
+    <li><%= skill.name %></li>
+  <% end %>
+</ul>
+
+<% if current_user.profile.id == @profile.id %>
+  <%= link_to "Edit Profile" , edit_user_profile_path(current_user,@profile.id)%>
+<% end %>
