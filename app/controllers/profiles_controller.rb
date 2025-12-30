@@ -1,7 +1,7 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_skills, only: [:new, :edit]
-  before_action :set_user_profile, only: [:edit, :update]
+  before_action :set_skills, only: [ :new, :edit ]
+  before_action :set_user_profile, only: [ :edit, :update ]
 
 
   def index
@@ -20,7 +20,6 @@ class ProfilesController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-
   end
 
   def show
@@ -31,7 +30,6 @@ class ProfilesController < ApplicationController
   end
 
   def update
-
     if @profile.update(profile_params)
       redirect_to user_profile_path(current_user.id, @profile.id)
     else
@@ -48,7 +46,7 @@ class ProfilesController < ApplicationController
 
   private
   def profile_params
-    params.require(:profile).permit(:first_name, :last_name, :bio, :avatar,:skill_ids => [])
+    params.require(:profile).permit(:first_name, :last_name, :bio, :avatar, skill_ids: [])
   end
   def set_skills
     @skills = Skill.all
@@ -56,5 +54,4 @@ class ProfilesController < ApplicationController
   def set_user_profile
     @profile = current_user.profile
   end
-
 end
