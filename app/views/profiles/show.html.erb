@@ -4,6 +4,12 @@
 </div>
 
 
+<% if !@profile.avatar.present? %>
+  <p>no image attached</p>
+  <%else %>
+  <%= image_tag  @profile.avatar%>
+<% end %>
+
 <%= @profile&.first_name %>
 <%= @profile&.bio %>
 <ul>

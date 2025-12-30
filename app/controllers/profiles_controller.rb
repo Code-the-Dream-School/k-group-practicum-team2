@@ -48,7 +48,7 @@ class ProfilesController < ApplicationController
 
   private
   def profile_params
-    params.require(:profile).permit(:first_name, :last_name, :bio, :skill_ids => [])
+    params.require(:profile).permit(:first_name, :last_name, :bio, :avatar,:skill_ids => [])
   end
   def set_skills
     @skills = Skill.all
