@@ -19,14 +19,14 @@
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
   
-  <body class="min-h-screen flex flex-col">
+  <body class="m-0 p-0 min-h-screen flex flex-col">
     <%= render "shared/navbar" %>
 
-    <main class="flex-grow">
+    <main class="flex-grow overflow-hidden">
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
       <%= yield %>

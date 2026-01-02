@@ -10,8 +10,12 @@
         BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
         "Noto Sans", sans-serif;
     }
-    body {
+    html, body {
         margin: 0;
+        padding: 0;
+        height: 100%;
+        overscroll-behavior: none;
+        overflow-x: hidden;
     }
   }
   
