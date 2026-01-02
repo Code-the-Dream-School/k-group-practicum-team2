@@ -2,14 +2,14 @@ require "test_helper"
 
 class ProfilesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
-  
-  setup do 
+
+  setup do
     @user = users(:one)
-    sign_in @user 
-  end 
+    sign_in @user
+  end
 
   test "should get show" do
-    get profile_url 
+    get profile_url
     assert_response :success
   end
 
