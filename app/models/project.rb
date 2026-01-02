@@ -8,4 +8,6 @@ class Project < ApplicationRecord
   # tech stack associations (based on ProjectSkill plan)
   has_many :project_skills, dependent: :destroy
   has_many :skills, through: :project_skills
+
+  validates :title, presence: true
 end

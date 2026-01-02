@@ -2,12 +2,12 @@
 
 one:
   user: one
-  title: MyString
-  description: MyText
-  url: MyString
+  title: TitleOne
+  description: DescriptionOne
+  url: https://example.com/resources-one
 
 two:
   user: two
-  title: MyString
-  description: MyText
-  url: MyString
+  title: TitleTwo
+  description: DescriptionTwo
+  url: https://example.com/resources-two 
