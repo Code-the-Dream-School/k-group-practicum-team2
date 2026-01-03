@@ -1,6 +1,6 @@
 class Skill < ApplicationRecord
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
 
-  has_many :profile_skills
+  has_many :profile_skills, dependent: :destroy
   has_many :profiles, through: :profile_skills
 end
