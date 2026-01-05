@@ -3,6 +3,13 @@
 The Web Developer Hub is a platform designed to connect developers, provide resources, and showcase projects. Users can create profiles, list their skills, share resources, post projects, and bookmark both resources and projects for future reference. The system emphasizes user-generated content while maintaining structured skill management for consistent categorization.
 
 ---
+## 👥 Mentors
+
+- [Daniel Sinn](https://github.com/dsinn)
+- [Olga Goncharenko](https://github.com/OGoncharenko)
+- [Anamaria Maldonado](https://github.com/acmv19)
+
+---
 
 ## 👥 Team Members
 
