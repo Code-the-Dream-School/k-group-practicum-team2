@@ -15,7 +15,7 @@ skills = [
     "PostgreSQL",
     "Tailwind CSS",
     "Java",
-    "MySql",
+    "MySQL",
     "C++",
     "Git",
     "GitHub"
