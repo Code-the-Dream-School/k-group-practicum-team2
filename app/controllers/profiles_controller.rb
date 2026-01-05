@@ -15,8 +15,8 @@ class ProfilesController < ApplicationController
     if @profile.update(profile_params)
       redirect_to profile_path, notice: "Profile updated successfully."
     else
-      @skills = skill.all
-      render :edit, status: :uprocessable_entity
+      @skills = Skill.all
+      render :edit, status: :unprocessable_entity
     end
   end
 
