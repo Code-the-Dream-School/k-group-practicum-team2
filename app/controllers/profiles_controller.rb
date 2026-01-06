@@ -9,10 +9,10 @@ class ProfilesController < ApplicationController
   end
 
   def new
-    @profile = current_user.build_profile || current_user.profile
+    @profile = current_user.profile || current_user.build_profile
   end
   def create
-    @profile = current_user.build_profile || current_user.profile
+    @profile = current_user.profile || current_user.build_profile
 
     if @profile.update(profile_params)
 
