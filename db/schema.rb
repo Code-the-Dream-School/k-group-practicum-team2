@@ -39,6 +39,25 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_30_155919) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+ActiveRecord::Schema[8.1].define(version: 2025_12_26_201252) do
+  create_table "bookmarked_projects", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "project_id", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["project_id"], name: "index_bookmarked_projects_on_project_id"
+    t.index ["user_id"], name: "index_bookmarked_projects_on_user_id"
+  end
+
+  create_table "bookmarked_resources", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "resource_id", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["resource_id"], name: "index_bookmarked_resources_on_resource_id"
+    t.index ["user_id"], name: "index_bookmarked_resources_on_user_id"
+  end
+
   create_table "profile_skills", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "profile_id", null: false
@@ -56,6 +75,35 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_30_155919) do
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
+  create_table "project_skills", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "project_id", null: false
+    t.integer "skill_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_project_skills_on_project_id"
+    t.index ["skill_id"], name: "index_project_skills_on_skill_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.text "tech_stack"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_projects_on_user_id"
+  end
+
+  create_table "resources", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.string "url"
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_resources_on_user_id"
   end
 
   create_table "skills", force: :cascade do |t|
@@ -76,9 +124,17 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_30_155919) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "bookmarked_projects", "projects"
+  add_foreign_key "bookmarked_projects", "users"
+  add_foreign_key "bookmarked_resources", "resources"
+  add_foreign_key "bookmarked_resources", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "profile_skills", "profiles"
   add_foreign_key "profile_skills", "skills"
   add_foreign_key "profiles", "users"
+  add_foreign_key "project_skills", "projects"
+  add_foreign_key "project_skills", "skills"
+  add_foreign_key "projects", "users"
+  add_foreign_key "resources", "users"
 end
