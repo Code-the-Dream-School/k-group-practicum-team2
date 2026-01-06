@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  resource :profile, only: [ :show, :edit, :update ]
+  # resource :profile, only: [ :show, :edit, :update ]
 
 
   resources :users do
