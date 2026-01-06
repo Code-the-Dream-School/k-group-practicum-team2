@@ -49,3 +49,7 @@ jobs:
         env:
           RAILS_ENV: test
         run: bundle exec rspec
+      - name: Run RSpec
+        env:
+          RAILS_ENV: test
+        run: bundle exec rspec
