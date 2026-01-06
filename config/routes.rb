@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "resources/index"
+  get "resources/new"
+  get "resources/create"
   devise_for :users
   resource :profile, only: [ :show, :edit, :update ]
 
@@ -15,4 +18,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   root "home#index"
+
+  resources :resources
 end
