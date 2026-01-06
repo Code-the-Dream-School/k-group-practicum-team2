@@ -81,4 +81,51 @@ RSpec.describe "Projects", type: :request do
       expect(response.body).to include('Test project description')
     end
   end
+
+  describe 'GET /projects/new' do
+    let!(:user) do
+      User.create!(
+        email: 'test@mail.com',
+        password: 'secret'
+      )
+    end
+
+    before do
+      sign_in user, scope: :user
+    end
+
+    it 'displays title and description labels' do
+      get '/projects/new'
+
+      expect(response.body).to include('Title')
+      expect(response.body).to include('Description')
+    end
+  end
+
+  describe 'POST /projects' do
+    let!(:user) do
+      User.create!(
+        email: 'test@mail.com',
+        password: 'secret'
+      )
+    end
+
+    before do
+      sign_in user, scope: :user
+    end
+
+    it 'creates a new project when title and description exist' do
+      post '/projects', params: {
+        project: {
+          title: "New Project",
+          description: 'Project description.'
+        }
+      }
+
+      expect(response).to redirect_to(projects_path)
+
+      expect(Project.last.title).to eq('New Project')
+      expect(Project.last.description).to eq('Project description.')
+    end
+  end
 end
