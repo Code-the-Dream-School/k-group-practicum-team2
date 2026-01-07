@@ -1,31 +1,61 @@
 class ProfilesController < ApplicationController
-  # Ensure user is logged in
   before_action :authenticate_user!
-  before_action :set_profile
+  before_action :set_skills, only: [ :new, :edit ]
+  before_action :set_user_profile, only: [ :edit, :update ]
 
-  def show
+
+  def index
+    if current_user.profile
+      @profiles = Profile.all.where.not(id: current_user&.profile.id)
+    else
+      @profiles = Profile, all
+    end
   end
 
+  def new
+    @profile = current_user.profile || current_user.build_profile
+  end
+  def create
+    @profile = current_user.profile || current_user.build_profile
+
+    if @profile.update(profile_params)
+
+      redirect_to user_profile_path(current_user.id, @profile.id)
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def show
+    @profile = Profile.find(params[:id])
+  end
 
   def edit
-    @skills = Skill.all
   end
 
   def update
     if @profile.update(profile_params)
-      redirect_to profile_path, notice: "Profile updated successfully."
+      redirect_to user_profile_path(current_user.id, @profile.id)
     else
-      @skills = Skill.all
       render :edit, status: :unprocessable_entity
     end
   end
 
-  private
-  def set_profile
-    @profile = current_user.profile
-  end
+  # def destroy
+  #   @profile = current_user.profile
+  #   @profile.destroy!
+  #   redirect_to user_profiles_path(current_user)
+  # end
 
+
+  private
   def profile_params
-    params.require(:profile).permit(:first_name, :last_name, :bio, skill_ids: [])
+    params.require(:profile).permit(:first_name, :last_name, :bio, :avatar, skill_ids: [])
+  end
+  def set_skills
+    @skills = Skill.all
+  end
+  def set_user_profile
+    @profile = current_user.profile
   end
 end
