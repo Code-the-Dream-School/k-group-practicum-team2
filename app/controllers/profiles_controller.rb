@@ -5,7 +5,11 @@ class ProfilesController < ApplicationController
 
 
   def index
-    @profiles = Profile.all.where.not(id: current_user&.profile.id)
+    if current_user.profile
+      @profiles = Profile.all.where.not(id: current_user&.profile.id)
+    else
+      @profiles = Profile, all
+    end
   end
 
   def new
