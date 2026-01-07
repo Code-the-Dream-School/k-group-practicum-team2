@@ -4,7 +4,7 @@ RSpec.describe "Projects", type: :request do
   describe "GET /projects" do
     let!(:user) do
       User.create!(
-        email: 'test@mail.com',
+        email: 'user@example.com',
         password: 'secret'
       )
     end
@@ -43,10 +43,10 @@ RSpec.describe "Projects", type: :request do
     end
   end
 
-  describe 'GET /projects/:id', type: :request do
+  describe 'GET /projects/:id' do
     let!(:user) do
       User.create!(
-        email: 'test@mail.com',
+        email: 'user@example.com',
         password: 'secret'
       )
     end
@@ -85,7 +85,7 @@ RSpec.describe "Projects", type: :request do
   describe 'GET /projects/new' do
     let!(:user) do
       User.create!(
-        email: 'test@mail.com',
+        email: 'user@example.com',
         password: 'secret'
       )
     end
@@ -105,7 +105,7 @@ RSpec.describe "Projects", type: :request do
   describe 'POST /projects' do
     let!(:user) do
       User.create!(
-        email: 'test@mail.com',
+        email: 'user@example.com',
         password: 'secret'
       )
     end
