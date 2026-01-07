@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
-  resource :profile, only: [ :show, :edit, :update ]
+  # resource :profile, only: [ :show, :edit, :update ]
+
+
+  resources :users do
+    resources :profiles
+  end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
