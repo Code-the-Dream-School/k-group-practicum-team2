@@ -7,3 +7,24 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+skills = [
+    "Ruby on Rails",
+    "Node",
+    "Python",
+    "React",
+    "PostgreSQL",
+    "Tailwind CSS",
+    "Java",
+    "MySQL",
+    "C++",
+    "Git",
+    "GitHub"
+]
+
+puts "Seeding initial skills..."
+
+skills.each do |skill_name|
+    Skill.find_or_create_by!(name: skill_name)
+end
+
+puts "Finished seeding #{Skill.count} skills."
