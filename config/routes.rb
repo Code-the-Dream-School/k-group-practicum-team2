@@ -21,4 +21,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   root "home#index"
+
+  # include resourceful routes to list projects, show creation form, and create a project
+  resources :projects
 end
