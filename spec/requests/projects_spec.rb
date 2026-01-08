@@ -127,5 +127,26 @@ RSpec.describe "Projects", type: :request do
       expect(Project.last.title).to eq('New Project')
       expect(Project.last.description).to eq('Project description.')
     end
+
+    it 'does not create a project when no title is provided' do
+      expect {
+        post '/projects', params: {
+          project: {
+            title: nil,
+            description: 'Project description.'
+          }
+        }
+      }.to_not change(Project, :count)
+    end
+
+    it 're-renders the form when no title is provided' do
+      post '/projects', params: {
+        project: {
+          title: nil,
+          description: 'Project description.'
+        }
+      }
+      expect(response).to have_http_status(:unprocessable_content)
+    end
   end
 end
