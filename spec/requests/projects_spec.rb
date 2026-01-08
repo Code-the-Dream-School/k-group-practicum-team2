@@ -114,7 +114,7 @@ RSpec.describe "Projects", type: :request do
       sign_in user, scope: :user
     end
 
-    it 'creates a new project when title and description exist' do
+    it 'creates a new project associated with the current user when title and description exist' do
       post '/projects', params: {
         project: {
           title: "New Project",
@@ -126,6 +126,8 @@ RSpec.describe "Projects", type: :request do
 
       expect(Project.last.title).to eq('New Project')
       expect(Project.last.description).to eq('Project description.')
+
+      expect(Project.last.user).to eq(user)
     end
 
     it 'does not create a project when no title is provided' do
