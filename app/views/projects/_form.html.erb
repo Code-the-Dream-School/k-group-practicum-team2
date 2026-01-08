@@ -21,7 +21,7 @@
       </div>
 
       <div class="pt-4 text-center">
-        <%= form.submit "Create Project", class: "bg-black text-white px-6 py-2 rounded-lg hover:opacity-80 transition" %>
+        <%= form.submit @project.new_record? ? "Create Project" : "Update Project", class: "bg-black text-white px-6 py-2 rounded-lg hover:opacity-80 transition" %>
       </div>
     <% end %>
   </div>
