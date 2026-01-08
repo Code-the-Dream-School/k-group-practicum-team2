@@ -1,0 +1,28 @@
+<div class="min-h-screen bg-gray-100 flex items-center justify-center py-10">
+  <div class="w-full max-w-xl bg-white rounded-2xl shadow-lg p-8">
+    <%= form_with model: @project, class: "space-y-5" do |form| %>
+      <% if @project.errors.any? %>
+        <h2><%= pluralize(@project.errors.count, "error") %>: project not saved:</h2>
+        <ul>
+          <% @project.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
+      <div>
+        <%= form.label :title, class: "block font-medium mb-1" %>
+        <%= form.text_field :title, class: "w-full border rounded-lg px-3 py-2" %>
+      </div>
+
+      <div>
+        <%= form.label :description, class: "block font-medium mb-1" %>
+        <%= form.text_area :description, rows: 8, class: "w-full border rounded-lg px-3 py-2" %>
+      </div>
+
+      <div class="pt-4 text-center">
+        <%= form.submit @project.new_record? ? "Create Project" : "Update Project", class: "bg-black text-white px-6 py-2 rounded-lg hover:opacity-80 transition" %>
+      </div>
+    <% end %>
+  </div>
+</div>
