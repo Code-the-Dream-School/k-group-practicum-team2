@@ -25,7 +25,7 @@
       <div>
         <% if @user&.profile&.skills&.present? %>
           <ul class="flex gap-2">
-            <% (@user&.profile&.skills || []).each do |skill| %>
+            <% @user&.profile&.skills.each do |skill| %>
               <li class="border border-gray-900 rounded px-2 py-1 text-sm text-center">
                 <%= skill.name %>
               </li>

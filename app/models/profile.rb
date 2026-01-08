@@ -1,6 +1,5 @@
 class Profile < ApplicationRecord
   belongs_to :user
-  has_one_attached :avatar
 
   has_many :profile_skills, dependent: :destroy
   has_many :skills, through: :profile_skills
