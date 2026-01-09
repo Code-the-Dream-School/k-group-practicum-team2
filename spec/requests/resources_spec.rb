@@ -60,9 +60,17 @@ RSpec.describe "Resources", type: :request do
       sign_in user, scope: :user
     end
 
-    it "returns http success" do
+    it "responds with 200 OK" do
       get "/resources/new"
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'displays title, description and external link labels' do
+      get '/resources/new'
+
+      expect(response.body).to include('Title')
+      expect(response.body).to include('Description')
+      expect(response.body).to include ('External link')
     end
   end
 
