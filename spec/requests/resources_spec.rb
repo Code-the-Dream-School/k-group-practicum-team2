@@ -36,7 +36,7 @@ RSpec.describe "Resources", type: :request do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'returns a page containing title, descriptions and urls of all the projects' do
+    it 'returns a page containing title, descriptions and urls of all the resources' do
       get '/resources'
 
       expect(response.body).to include('Test Resource 1')
@@ -74,7 +74,7 @@ RSpec.describe "Resources", type: :request do
     end
   end
 
-  describe "POST /create" do
+  describe "POST /resources" do
     let!(:user) do
       User.create!(
         email: 'user@example.com',
@@ -86,9 +86,68 @@ RSpec.describe "Resources", type: :request do
       sign_in user, scope: :user
     end
 
-    # it "returns http success" do
-    #   get "/resources/create"
-    #   expect(response).to have_http_status(:success)
-    # end
+    it 'creates a new resource associated with the current user when title, description and url exist' do
+      post '/resources', params: {
+        resource: {
+          title: 'New Resource',
+          description: 'Resource description.',
+          url: 'https://example.com'
+        }
+      }
+
+      expect(response).to redirect_to(resources_path)
+
+      expect(Resource.last.title).to eq('New Resource')
+      expect(Resource.last.description).to eq('Resource description.')
+
+      expect(Resource.last.user).to eq(user)
+    end
+
+    it 'does not create a resource when no title is provided' do
+      expect {
+        post '/resources', params: {
+          resource: {
+            title: nil,
+            description: 'Resource description.',
+            url: 'https://example.com'
+          }
+        }
+      }.to_not change(Resource, :count)
+    end
+
+    it 're-renders the form when no title is provided' do
+      post '/resources', params: {
+        resource: {
+          title: nil,
+          description: 'Resource description.'
+        }
+      }
+
+      expect(response).to have_http_status(:unprocessable_content)
+    end
+
+    it 'does not create a resource when no url is provided' do
+      expect {
+        post '/resources', params: {
+          resource: {
+            title: 'New Resource',
+            description: 'Resource description.',
+            url: nil
+          }
+        }
+      }.to_not change(Resource, :count)
+    end
+
+    it 're-renders the form when no title is provided' do
+      post '/resources', params: {
+        resource: {
+          title: 'New Resource',
+          description: 'Resource description.',
+          url: nil
+        }
+      }
+
+      expect(response).to have_http_status(:unprocessable_content)
+    end
   end
 end
