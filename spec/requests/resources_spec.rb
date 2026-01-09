@@ -48,6 +48,70 @@ RSpec.describe "Resources", type: :request do
     end
   end
 
+  describe 'GET /resources/:id' do
+    let!(:user1) do
+      User.create!(
+        email: 'user1@example.com',
+        password: 'secret'
+      )
+    end
+
+    let!(:user2) do
+      User.create!(
+        email: 'user2@example.com',
+        password: 'secret'
+      )
+    end
+
+    let(:resource1) do
+      Resource.create!(
+        title: 'Test Resource 1',
+        description: 'Test resource description one.',
+        url: 'https://example.com/resource1',
+        user: user1
+      )
+    end
+
+    let!(:resource2) do
+      Resource.create!(
+        title: 'Test Resource 2',
+        description: 'Test resource description two.',
+        url: 'https://example.com/resource2',
+        user: user2
+      )
+    end
+
+    before do
+      sign_in user1, scope: :user
+    end
+
+    it 'responds with 200 OK' do
+      get "/resources/#{resource1.id}"
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'returns a page containing the resource title, description and url' do
+      get "/resources/#{resource1.id}"
+
+      expect(response.body).to include('Test Resource 1')
+      expect(response.body).to include('Test resource description one.')
+      expect(response.body).to include(resource1.url)
+    end
+
+    it "displays a link to edit a user's own resource" do
+      get "/resources/#{resource1.id}"
+
+      expect(response.body).to include('Edit Resource')
+    end
+
+    it "does not display a link to edit a different user's resource" do
+      get "/resources/#{resource2.id}"
+
+      expect(response.body).to_not include('Edit Resource')
+    end
+  end
+
   describe "GET /resources/new" do
     let!(:user) do
       User.create!(
