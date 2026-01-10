@@ -1,0 +1,27 @@
+name: Auto Request Review
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  run:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Request reviews
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const reviewers = ['dsinn', 'OGoncharenko', 'acmv19', 'briHalterman', 'abrahamflres', 'Sisi-tech'];
+            const author = context.payload.pull_request.user.login;
+
+            // Remove PR author from reviewers list
+            const filteredReviewers = reviewers.filter(r => r !== author);
+
+            await github.rest.pulls.requestReviewers({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              reviewers: filteredReviewers
+            });
