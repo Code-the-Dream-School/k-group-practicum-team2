@@ -1,0 +1,40 @@
+name: Auto Request Review
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  run:
+    permissions:
+      pull-requests: write
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Request reviews
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // NOTE: A GitHub team would be preferred over hardcoding reviewers,
+            // but we don't have permissions to manage teams in this organization.
+            const reviewers = ['dsinn', 'OGoncharenko', 'acmv19', 'briHalterman', 'abrahamflres', 'Sisi-tech'];
+            const author = context.payload.pull_request.user.login;
+
+            // Remove PR author from reviewers list
+            const filteredReviewers = reviewers.filter(r => r !== author);
+
+            try {
+              if (filteredReviewers.length === 0) {
+                core.info('No eligible reviewers to request for this pull request.');
+              } else {
+                await github.rest.pulls.requestReviewers({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: context.payload.pull_request.number,
+                  reviewers: filteredReviewers
+                });
+                core.info(`Successfully requested reviewers: ${filteredReviewers.join(', ')}`);
+              }
+            } catch (error) {
+              core.setFailed(`Failed to request reviewers: ${error.message || error}`);
+            }
