@@ -22,6 +22,10 @@ class ResourcesController < ApplicationController
     end
   end
 
+  def edit
+    @resource = current_user.resources.find(params[:id])
+  end
+
   private
 
   def resource_params

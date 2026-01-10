@@ -214,4 +214,72 @@ RSpec.describe "Resources", type: :request do
       expect(response).to have_http_status(:unprocessable_content)
     end
   end
+
+  describe 'GET /resources/:id/edit' do
+    let!(:user1) do
+      User.create!(
+        email: 'user1@example.com',
+        password: 'secret'
+      )
+    end
+
+    let!(:user2) do
+      User.create!(
+        email: 'user2@example.com',
+        password: 'secret'
+      )
+    end
+
+    let!(:resource1) do
+      Resource.create!(
+        title: 'New Resource 1',
+        description: 'New resource description 1.',
+        url: 'https://example.com/resource1',
+        user: user1
+      )
+    end
+
+    let!(:resource2) do
+      Resource.create!(
+        title: 'New Resource 2',
+        description: 'New resource description two.',
+        url: 'https://example.com/resource2',
+        user: user2
+      )
+    end
+
+    before do
+      sign_in user1, scope: :user
+    end
+
+    it 'responds with 200 OK' do
+      get "/resources/#{resource1.id}/edit"
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'displays the title label' do
+      get "/resources/#{resource1.id}/edit"
+
+      expect(response.body).to include('Title')
+    end
+
+    it 'displays the description label' do
+      get "/resources/#{resource1.id}/edit"
+
+      expect(response.body).to include('Description')
+    end
+
+    it 'displays the link label' do
+      get "/resources/#{resource1.id}/edit"
+
+      expect(response.body).to include('External link')
+    end
+
+    it "does not allow access to another user's resource" do
+      get "/resources/#{resource2.id}/edit"
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
 end
