@@ -19,6 +19,8 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - name: Build Tailwind CSS
+        run: bin/rails tailwindcss:build
       - name: Prepare test database
         run: bin/rails db:test:prepare test
       - name: Run RSpec
