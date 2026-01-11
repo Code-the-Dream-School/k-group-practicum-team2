@@ -26,6 +26,16 @@ class ResourcesController < ApplicationController
     @resource = current_user.resources.find(params[:id])
   end
 
+  def update
+    @resource = current_user.resources.find(params[:id])
+
+    if @resource.update(resource_params)
+      redirect_to resource_path(@resource), notice: "#{@resource.title} has been updated!"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def resource_params

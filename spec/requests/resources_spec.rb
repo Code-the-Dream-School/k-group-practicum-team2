@@ -282,4 +282,106 @@ RSpec.describe "Resources", type: :request do
       expect(response).to have_http_status(:not_found)
     end
   end
+
+  describe 'PUT /resources/:id' do
+    let!(:user1) do
+      User.create!(
+        email: 'user1@example.com',
+        password: 'secret'
+      )
+    end
+
+    let!(:user2) do
+      User.create!(
+        email: 'user2@example.com',
+        password: 'secret'
+      )
+    end
+
+    let!(:resource1) do
+      Resource.create!(
+        title: 'Resource 1',
+        description: 'Resource description one.',
+        url: 'https://example.com/resource1',
+        user: user1
+      )
+    end
+
+    let!(:resource2) do
+      Resource.create!(
+        title: 'Resource 2',
+        description: 'Resource description two.',
+        url: 'https://example.com/resource2',
+        user: user2
+      )
+    end
+
+    before do
+      sign_in user1, scope: :user
+    end
+
+    it "updates a resource's title, description and/or url when they are valid and exist" do
+      put "/resources/#{resource1.id}", params: {
+        resource: {
+          title: 'New title',
+          description: 'New description.',
+          url: 'https://example.com/newurl'
+        }
+      }
+
+      expect(response).to redirect_to(resource1)
+      resource1.reload
+      expect(resource1.title).to eq('New title')
+      expect(resource1.description).to eq('New description.')
+      expect(resource1.url).to eq('https://example.com/newurl')
+    end
+
+    it 'responds with 400 status when title is not provided' do
+      put "/resources/#{resource1.id}", params: {
+        resource: {
+          title: nil,
+          description: 'New description',
+          url: 'https://example.com/newurl'
+        }
+      }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'responds with 400 status when url is not provided' do
+      put "/resources/#{resource1.id}", params: {
+        resource: {
+          title: 'New title',
+          description: 'New description',
+          url: nil
+        }
+      }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'responds with 400 status when url is invalid format' do
+      put "/resources/#{resource1.id}", params: {
+        resource: {
+          title: 'New title',
+          description: 'New description.',
+          url: 'not-a-valid-url'
+        }
+      }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it "does not allow access to another user's resource" do
+      put "/resources/#{resource2.id}", params: {
+        resource: {
+          title: 'New title',
+          description: 'New description',
+          url: 'https://example.com/newurl'
+        }
+      }
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
 end
