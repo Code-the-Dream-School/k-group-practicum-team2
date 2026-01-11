@@ -8,6 +8,10 @@
     </p>
     <% if @resource.user == current_user %>
       <%= link_to "Edit Resource", edit_resource_path(@resource), class: "absolute top-6 right-6 bg-black text-white px-4 py-2 rounded-lg hover:opacity-80 transition"%>
+      <%= link_to 'Delete Resource', resource_path(@resource),
+        method: :delete,
+        data: { confirm: "Are you sure you want to delete this #{@resource.title}"},
+      class: "absolute top-6 right-6 bg-black text-red px-4 py-2 rounded-lg hover:opacity-80 transition"%>
     <% end %>
   </div>
 </div>

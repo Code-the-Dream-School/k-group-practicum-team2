@@ -336,7 +336,7 @@ RSpec.describe "Resources", type: :request do
       expect(resource1.url).to eq('https://example.com/newurl')
     end
 
-    it 'responds with 400 status when title is not provided' do
+    it 'responds with 422 status when title is not provided' do
       put "/resources/#{resource1.id}", params: {
         resource: {
           title: nil,
@@ -348,7 +348,7 @@ RSpec.describe "Resources", type: :request do
       expect(response).to have_http_status(:unprocessable_entity)
     end
 
-    it 'responds with 400 status when url is not provided' do
+    it 'responds with 422 status when url is not provided' do
       put "/resources/#{resource1.id}", params: {
         resource: {
           title: 'New title',
@@ -360,7 +360,7 @@ RSpec.describe "Resources", type: :request do
       expect(response).to have_http_status(:unprocessable_entity)
     end
 
-    it 'responds with 400 status when url is invalid format' do
+    it 'responds with 422 status when url is invalid format' do
       put "/resources/#{resource1.id}", params: {
         resource: {
           title: 'New title',
@@ -380,6 +380,62 @@ RSpec.describe "Resources", type: :request do
           url: 'https://example.com/newurl'
         }
       }
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
+
+  describe 'DELETE /resources/:id' do
+    let!(:user1) do
+      User.create!(
+        email: 'user1@example.com',
+        password: 'secret'
+      )
+    end
+
+    let!(:user2) do
+      User.create!(
+        email: 'user2@example.com',
+        password: 'secret'
+      )
+    end
+
+    let!(:resource1) do
+      Resource.create!(
+        title: 'Resource 1',
+        description: 'Resource description one.',
+        url: 'https://example.com/resource1',
+        user: user1
+      )
+    end
+
+    let!(:resource2) do
+      Resource.create!(
+        title: 'Resource 2',
+        description: 'Resource description two.',
+        url: 'https://example.com/resource2',
+        user: user2
+      )
+    end
+
+    before do
+      sign_in user1, scope: :user
+    end
+
+    it "deletes the resource" do
+      expect {
+        delete "/resources/#{resource1.id}"
+      }.to change(Resource, :count).by(-1)
+    end
+
+    it 'redirects to the resources index page' do
+      delete "/resources/#{resource1.id}"
+
+      expect(response).to redirect_to(resources_path)
+    end
+
+    it "does not allow access to another user's resource" do
+      delete "/resources/#{resource2.id}"
 
       expect(response).to have_http_status(:not_found)
     end

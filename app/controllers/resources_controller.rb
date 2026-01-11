@@ -36,6 +36,13 @@ class ResourcesController < ApplicationController
     end
   end
 
+  def destroy
+    @resource = current_user.resources.find(params[:id])
+    @resource.destroy
+
+    redirect_to resources_path, notice: "Resource has been deleted."
+  end
+
   private
 
   def resource_params
