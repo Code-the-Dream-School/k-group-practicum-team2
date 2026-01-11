@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "resources/index"
+  get "resources/new"
+  get "resources/create"
   devise_for :users
   # resource :profile, only: [ :show, :edit, :update ]
 
@@ -21,6 +24,6 @@ Rails.application.routes.draw do
   # root "posts#index"
   root "home#index"
 
-  # include resourceful routes to list projects, show creation form, and create a project
+  resources :resources
   resources :projects
 end
