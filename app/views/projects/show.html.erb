@@ -1,0 +1,10 @@
+<div class="min-h-screen bg-gray-100 py-10">
+  <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-2xl p-8 relative">
+    <h1 class="text-3xl font-bold text-center text-gray-500"><%= @project.title %></h1>
+    <p class="text-gray-600 text-center mb-2"><%= @project.description %></p>
+    <% if @project.user == current_user %>
+      <%# Edit action is not implemented yet %>
+      <%# <%= link_to "Edit Project", edit_project_path(@project), class: "absolute top-6 right-6 bg-black text-white px-4 py-2 rounded-lg hover:opacity-80 transition" %>
+    <% end %>
+  </div>
+</div>
