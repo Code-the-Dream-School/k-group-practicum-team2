@@ -59,4 +59,16 @@ class ProfilesControllerTest < ActionDispatch::IntegrationTest
     get edit_user_profile_path(@user, @profile)
     assert_response :success
   end
+
+  test "show displays user's projects when user has projects" do
+    project = @user.projects.create!(
+      title: "Test Project",
+      description: "Project description",
+    )
+
+    get user_profile_path(@user, @profile)
+    assert_response :success
+
+    assert_match "Test Project", response.body
+  end
 end
