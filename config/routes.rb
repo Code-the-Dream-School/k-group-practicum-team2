@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  get "resources/index"
-  get "resources/new"
-  get "resources/create"
   devise_for :users
   # resource :profile, only: [ :show, :edit, :update ]
 

@@ -134,7 +134,7 @@ RSpec.describe "Resources", type: :request do
 
       expect(response.body).to include('Title')
       expect(response.body).to include('Description')
-      expect(response.body).to include ('External link')
+      expect(response.body).to include('External link')
     end
   end
 
@@ -187,7 +187,7 @@ RSpec.describe "Resources", type: :request do
         }
       }
 
-      expect(response).to have_http_status(:unprocessable_content)
+      expect(response).to have_http_status(:unprocessable_entity)
     end
 
     it 'does not create a resource when no url is provided' do
@@ -205,9 +205,9 @@ RSpec.describe "Resources", type: :request do
     it 're-renders the form when no title is provided' do
       post '/resources', params: {
         resource: {
-          title: 'New Resource',
+          title: nil,
           description: 'Resource description.',
-          url: nil
+          url: 'https://example.com'
         }
       }
 
