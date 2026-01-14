@@ -151,4 +151,64 @@ RSpec.describe "Projects", type: :request do
       expect(response).to have_http_status(:unprocessable_content)
     end
   end
+
+  describe 'GET /projects/:id/edit' do
+    let!(:user1) do
+      User.create!(
+        email: 'user1@example.com',
+        password: 'secret'
+      )
+    end
+
+    let!(:user2) do
+      User.create!(
+        email: 'user2@example.com',
+        password: 'secret'
+      )
+    end
+
+    let!(:project1) do
+      Project.create!(
+        title: 'New Project 1',
+        description: 'New project description one.',
+        user: user1
+      )
+    end
+
+    let!(:project2) do
+      Project.create!(
+        title: 'New Project 2',
+        description: 'New project description two.',
+        user: user2
+      )
+    end
+
+    before do
+      sign_in user1, scope: :user
+    end
+
+    it 'responds with 200 OK' do
+      get "/projects/#{project1.id}/edit"
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'displays the title label' do
+      get "/projects/#{project1.id}/edit"
+
+      expect(response.body).to include('Title')
+    end
+
+    it 'displays the description label' do
+      get "/projects/#{project1.id}/edit"
+
+      expect(response.body).to include('Description')
+    end
+
+    it "does not allow access to another user's resource" do
+      get "/projects/#{project2.id}/edit"
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
 end
