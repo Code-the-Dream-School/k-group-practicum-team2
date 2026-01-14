@@ -10,8 +10,7 @@ RSpec.describe "Profiles", type: :request do
 
   describe "GET /users/:user_id/profiles" do
     it "excludes current_user's profile" do
-      other_profile = create(:profile, first_name: "Other", last_name: "User")
-
+      create(:profile, first_name: "Other", last_name: "User")
       get user_profiles_path(user)
 
       expect(response).to have_http_status(:ok)
@@ -29,14 +28,20 @@ RSpec.describe "Profiles", type: :request do
 
   describe "POST /users/:user_id/profiles" do
     context "with valid params" do
-      it "creates a profile" do
+      it "creates a profile with the correct attributes" do
         post user_profiles_path(user), params: {
           profile: { first_name: "John", last_name: "Kim", bio: "Hello" }
         }
 
         user.reload
-        expect(user.profile).to be_present
-        expect(response).to redirect_to(user_profile_path(user, user.profile))
+        profile = user.profile
+
+        expect(profile).to be_present
+        expect(profile.first_name).to eq("John")
+        expect(profile.last_name).to eq("Kim")
+        expect(profile.bio).to eq("Hello")
+
+        expect(response).to redirect_to(user_profile_path(user, profile))
       end
     end
 
