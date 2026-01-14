@@ -1,36 +1,53 @@
 require 'rails_helper'
 
 RSpec.describe "Resources", type: :request do
+  let!(:user1) do
+    User.create!(
+      email: 'user@example.com',
+      password: 'secret'
+    )
+  end
+
+  let!(:user2) do
+    User.create!(
+      email: 'user2@example.com',
+      password: 'secret'
+    )
+  end
+
+  let!(:resource1) do
+    Resource.create!(
+      title: 'Test Resource 1',
+      description: 'Test resource description one.',
+      url: 'https://example.com/resource1',
+      user: user1
+    )
+  end
+
+  let!(:resource2) do
+    Resource.create!(
+      title: 'Test Resource 2',
+      description: 'Test resource description two.',
+      url: 'https://example.com/resource2',
+      user: user1
+    )
+  end
+
+  let!(:resource3) do
+    Resource.create!(
+      title: 'Test Resource 3',
+      description: 'Test resource description three.',
+      url: 'https://example.com/resource3',
+      user: user2
+    )
+  end
+
+
+  before do
+    sign_in user1, scope: :user
+  end
+
   describe "GET /resources" do
-    let!(:user) do
-      User.create!(
-        email: 'user@example.com',
-        password: 'secret'
-      )
-    end
-
-    let!(:resource1) do
-      Resource.create!(
-        title: 'Test Resource 1',
-        description: 'Test resource description 1.',
-        url: 'https://example.com/resource1',
-        user: user
-      )
-    end
-
-    let!(:resource2) do
-      Resource.create!(
-        title: 'Test Resource 2',
-        description: 'Test resource description 2.',
-        url: 'https://example.com/resource2',
-        user: user
-      )
-    end
-
-    before do
-      sign_in user, scope: :user
-    end
-
     it "returns with 200 OK" do
       get '/resources'
       expect(response).to have_http_status(:ok)
@@ -40,51 +57,15 @@ RSpec.describe "Resources", type: :request do
       get '/resources'
 
       expect(response.body).to include('Test Resource 1')
-      expect(response.body).to include('Test resource description 1.')
+      expect(response.body).to include('Test resource description one.')
       expect(response.body).to include('https://example.com/resource1')
       expect(response.body).to include('Test Resource 2')
-      expect(response.body).to include('Test resource description 2.')
+      expect(response.body).to include('Test resource description two.')
       expect(response.body).to include('https://example.com/resource2')
     end
   end
 
   describe 'GET /resources/:id' do
-    let!(:user1) do
-      User.create!(
-        email: 'user1@example.com',
-        password: 'secret'
-      )
-    end
-
-    let!(:user2) do
-      User.create!(
-        email: 'user2@example.com',
-        password: 'secret'
-      )
-    end
-
-    let(:resource1) do
-      Resource.create!(
-        title: 'Test Resource 1',
-        description: 'Test resource description one.',
-        url: 'https://example.com/resource1',
-        user: user1
-      )
-    end
-
-    let!(:resource2) do
-      Resource.create!(
-        title: 'Test Resource 2',
-        description: 'Test resource description two.',
-        url: 'https://example.com/resource2',
-        user: user2
-      )
-    end
-
-    before do
-      sign_in user1, scope: :user
-    end
-
     it 'responds with 200 OK' do
       get "/resources/#{resource1.id}"
 
@@ -106,24 +87,13 @@ RSpec.describe "Resources", type: :request do
     end
 
     it "does not display a link to edit a different user's resource" do
-      get "/resources/#{resource2.id}"
+      get "/resources/#{resource3.id}"
 
       expect(response.body).to_not include('Edit Resource')
     end
   end
 
   describe "GET /resources/new" do
-    let!(:user) do
-      User.create!(
-        email: 'user@example.com',
-        password: 'secret'
-      )
-    end
-
-    before do
-      sign_in user, scope: :user
-    end
-
     it "responds with 200 OK" do
       get "/resources/new"
       expect(response).to have_http_status(:ok)
@@ -139,17 +109,6 @@ RSpec.describe "Resources", type: :request do
   end
 
   describe "POST /resources" do
-    let!(:user) do
-      User.create!(
-        email: 'user@example.com',
-        password: 'secret'
-      )
-    end
-
-    before do
-      sign_in user, scope: :user
-    end
-
     it 'creates a new resource associated with the current user when title, description and url exist' do
       post '/resources', params: {
         resource: {
@@ -164,7 +123,7 @@ RSpec.describe "Resources", type: :request do
       expect(Resource.last.title).to eq('New Resource')
       expect(Resource.last.description).to eq('Resource description.')
 
-      expect(Resource.last.user).to eq(user)
+      expect(Resource.last.user).to eq(user1)
     end
 
     it 'does not create a resource when no title is provided' do
@@ -211,47 +170,11 @@ RSpec.describe "Resources", type: :request do
         }
       }
 
-      expect(response).to have_http_status(:unprocessable_content)
+      expect(response).to have_http_status(:unprocessable_entity)
     end
   end
 
   describe 'GET /resources/:id/edit' do
-    let!(:user1) do
-      User.create!(
-        email: 'user1@example.com',
-        password: 'secret'
-      )
-    end
-
-    let!(:user2) do
-      User.create!(
-        email: 'user2@example.com',
-        password: 'secret'
-      )
-    end
-
-    let!(:resource1) do
-      Resource.create!(
-        title: 'New Resource 1',
-        description: 'New resource description 1.',
-        url: 'https://example.com/resource1',
-        user: user1
-      )
-    end
-
-    let!(:resource2) do
-      Resource.create!(
-        title: 'New Resource 2',
-        description: 'New resource description two.',
-        url: 'https://example.com/resource2',
-        user: user2
-      )
-    end
-
-    before do
-      sign_in user1, scope: :user
-    end
-
     it 'responds with 200 OK' do
       get "/resources/#{resource1.id}/edit"
 
@@ -277,49 +200,13 @@ RSpec.describe "Resources", type: :request do
     end
 
     it "does not allow access to another user's resource" do
-      get "/resources/#{resource2.id}/edit"
+      get "/resources/#{resource3.id}/edit"
 
       expect(response).to have_http_status(:not_found)
     end
   end
 
   describe 'PUT /resources/:id' do
-    let!(:user1) do
-      User.create!(
-        email: 'user1@example.com',
-        password: 'secret'
-      )
-    end
-
-    let!(:user2) do
-      User.create!(
-        email: 'user2@example.com',
-        password: 'secret'
-      )
-    end
-
-    let!(:resource1) do
-      Resource.create!(
-        title: 'Resource 1',
-        description: 'Resource description one.',
-        url: 'https://example.com/resource1',
-        user: user1
-      )
-    end
-
-    let!(:resource2) do
-      Resource.create!(
-        title: 'Resource 2',
-        description: 'Resource description two.',
-        url: 'https://example.com/resource2',
-        user: user2
-      )
-    end
-
-    before do
-      sign_in user1, scope: :user
-    end
-
     it "updates a resource's title, description and/or url when they are valid and exist" do
       put "/resources/#{resource1.id}", params: {
         resource: {
@@ -373,7 +260,7 @@ RSpec.describe "Resources", type: :request do
     end
 
     it "does not allow access to another user's resource" do
-      put "/resources/#{resource2.id}", params: {
+      put "/resources/#{resource3.id}", params: {
         resource: {
           title: 'New title',
           description: 'New description',
@@ -386,42 +273,6 @@ RSpec.describe "Resources", type: :request do
   end
 
   describe 'DELETE /resources/:id' do
-    let!(:user1) do
-      User.create!(
-        email: 'user1@example.com',
-        password: 'secret'
-      )
-    end
-
-    let!(:user2) do
-      User.create!(
-        email: 'user2@example.com',
-        password: 'secret'
-      )
-    end
-
-    let!(:resource1) do
-      Resource.create!(
-        title: 'Resource 1',
-        description: 'Resource description one.',
-        url: 'https://example.com/resource1',
-        user: user1
-      )
-    end
-
-    let!(:resource2) do
-      Resource.create!(
-        title: 'Resource 2',
-        description: 'Resource description two.',
-        url: 'https://example.com/resource2',
-        user: user2
-      )
-    end
-
-    before do
-      sign_in user1, scope: :user
-    end
-
     it "deletes the resource" do
       expect {
         delete "/resources/#{resource1.id}"
@@ -435,7 +286,7 @@ RSpec.describe "Resources", type: :request do
     end
 
     it "does not allow access to another user's resource" do
-      delete "/resources/#{resource2.id}"
+      delete "/resources/#{resource3.id}"
 
       expect(response).to have_http_status(:not_found)
     end
