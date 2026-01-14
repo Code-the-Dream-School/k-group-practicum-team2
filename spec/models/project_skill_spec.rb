@@ -19,7 +19,7 @@ RSpec.describe ProjectSkill, type: :model do
             project = create(:project)
             skill = create(:skill)
 
-            join = create(:project_skill, project: project, skill: skill)
+            create(:project_skill, project: project, skill: skill)
 
             expect(project.skills).to include(skill)
             expect(skill.projects).to include(project)

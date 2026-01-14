@@ -19,7 +19,7 @@ RSpec.describe ProfileSkill, type: :model do
             profile = create(:profile)
             skill = create(:skill)
 
-            join = create(:profile_skill, profile: profile, skill: skill)
+            create(:profile_skill, profile: profile, skill: skill)
 
             expect(profile.skills).to include(skill)
             expect(skill.profiles).to include(profile)
