@@ -145,7 +145,7 @@ RSpec.describe "Projects", type: :request do
       expect(response.body).to include('Description')
     end
 
-    it "does not allow access to another user's resource" do
+    it "does not allow access to another user's project" do
       get "/projects/#{project3.id}/edit"
 
       expect(response).to have_http_status(:not_found)
@@ -178,13 +178,33 @@ RSpec.describe "Projects", type: :request do
       expect(response).to have_http_status(:unprocessable_entity)
     end
 
-    it "does not allow access to another user's resource" do
+    it "does not allow access to another user's project" do
       put "/projects/#{project3.id}", params: {
         project: {
           title: 'New Title',
           description: 'New description.'
         }
       }
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
+
+  describe 'DELETE /projects/:id' do
+    it 'deletes the project' do
+      expect {
+        delete "/projects/#{project1.id}"
+      }.to change(Project, :count).by(-1)
+    end
+
+    it 'redirects to the projects index page' do
+      delete "/projects/#{project1.id}"
+
+      expect(response).to redirect_to(projects_path)
+    end
+
+    it "does not allow access to another user's project" do
+      delete "/projects/#{project3.id}"
 
       expect(response).to have_http_status(:not_found)
     end
