@@ -27,6 +27,16 @@ class ProjectsController < ApplicationController
     @project = current_user.projects.find(params[:id])
   end
 
+  def update
+    @project = current_user.projects.find(params[:id])
+
+    if @project.update(project_params)
+      redirect_to project_path(@project), notice: "#{@project.title} has been updated!"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def project_params

@@ -151,4 +151,42 @@ RSpec.describe "Projects", type: :request do
       expect(response).to have_http_status(:not_found)
     end
   end
+
+  describe 'PUT /projects/:id' do
+    it "updates a project's title and/or description when they are valid and exist" do
+      put "/projects/#{project1.id}", params: {
+        project: {
+          title: 'New Title',
+          description: 'New description.'
+        }
+      }
+
+      expect(response).to redirect_to(project1)
+      project1.reload
+      expect(project1.title).to eq('New Title')
+      expect(project1.description).to eq('New description.')
+    end
+
+    it 'responds with 422 status when title is not provided' do
+      put "/projects/#{project1.id}", params: {
+        project: {
+          title: nil,
+          description: 'New description.'
+        }
+      }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it "does not allow access to another user's resource" do
+      put "/projects/#{project3.id}", params: {
+        project: {
+          title: 'New Title',
+          description: 'New description.'
+        }
+      }
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
 end
