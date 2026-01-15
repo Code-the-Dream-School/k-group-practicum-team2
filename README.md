@@ -181,7 +181,7 @@ bundle exec rspec
 bundle exec rspec spec/requests/home_spec.rb
 bundle exec rspec spec/requests/profiles_spec.rb
 bundle exec rspec spec/requests/projects_spec.rb
-
+bundle exec rspec spec/models/profile_spec.rb
 ```
 
 ---
