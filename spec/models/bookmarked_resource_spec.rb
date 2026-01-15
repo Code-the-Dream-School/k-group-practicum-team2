@@ -1,7 +1,9 @@
 require "rails_helper"
 
 RSpec.describe BookmarkedResource, type: :model do
-    subject { build(:bookmarked_resource) }
+    fixtures :users, :resources, :bookmarked_resources
+
+    let(:bookmark) { bookmarked_resources(:one) }
 
     describe "associations" do
         it { is_expected.to belong_to(:user) }
@@ -10,22 +12,26 @@ RSpec.describe BookmarkedResource, type: :model do
 
     describe "validations" do
         it "is valid with a resource" do
-            expect(subject).to be_valid
+            expect(bookmark).to be_valid
         end
 
         it "is invalid without a user" do
-            subject.user = nil
-            expect(subject).not_to be_valid
+            bookmark.user = nil
+            expect(bookmark).not_to be_valid
         end
 
         it "is invalid without a resource" do
-            subject.resource = nil
-            expect(subject).not_to be_valid
+            bookmark.resource = nil
+            expect(bookmark).not_to be_valid
         end
 
         it "prevents duplicate bookmarks per user/resource" do
-            bookmark = create(:bookmarked_resource)
-            duplicate = build(:bookmarked_resource, user: bookmark.user, resource: bookmark.resource)
+            original = bookmarked_resources(:one)
+
+            duplicate = BookmarkedResource.new(
+                user: original.user,
+                resource: original.resource
+            )
 
             expect(duplicate).not_to be_valid
             expect(duplicate.errors[:resource_id]).to be_present
