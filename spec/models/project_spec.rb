@@ -41,6 +41,16 @@ RSpec.describe Project, type: :model do
 
       expect { project.destroy }.to change { ProjectSkill.count }.by(-1)
     end
+    it "destroys associated bookmarked_projects when deleted" do
+      user = User.create!(email: "user@email.com", password: "password")
+      project_owner = User.create!(email: "owner@email.com", password: "password")
+      project = Project.create!(title: "Test Project", user: project_owner)
+
+
+      project.bookmarked_projects.create!(user: user)
+
+      expect { project.destroy }.to change { BookmarkedProject.count }.by(-1)
+    end
   end
 
   describe "validations" do
