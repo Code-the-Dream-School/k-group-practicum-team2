@@ -68,8 +68,5 @@ RSpec.describe Project, type: :model do
       expect(project.valid?).to be false
       expect(project.errors[:title]).to include("can't be blank")
     end
-
-  
   end
-
 end
