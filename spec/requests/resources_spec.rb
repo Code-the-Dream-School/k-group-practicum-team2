@@ -42,7 +42,6 @@ RSpec.describe "Resources", type: :request do
     )
   end
 
-
   before do
     sign_in user1, scope: :user
   end
@@ -62,6 +61,9 @@ RSpec.describe "Resources", type: :request do
       expect(response.body).to include('Test Resource 2')
       expect(response.body).to include('Test resource description two.')
       expect(response.body).to include('https://example.com/resource2')
+      expect(response.body).to include('Test Resource 3')
+      expect(response.body).to include('Test resource description three.')
+      expect(response.body).to include('https://example.com/resource3')
     end
   end
 
@@ -122,6 +124,7 @@ RSpec.describe "Resources", type: :request do
 
       expect(Resource.last.title).to eq('New Resource')
       expect(Resource.last.description).to eq('Resource description.')
+      expect(Resource.last.url).to eq('https://example.com')
 
       expect(Resource.last.user).to eq(user1)
     end
@@ -161,12 +164,36 @@ RSpec.describe "Resources", type: :request do
       }.to_not change(Resource, :count)
     end
 
-    it 're-renders the form when no title is provided' do
+    it 're-renders the form when no url is provided' do
       post '/resources', params: {
         resource: {
-          title: nil,
+          title: 'New Resource',
           description: 'Resource description.',
-          url: 'https://example.com'
+          url: nil
+        }
+      }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'does not create a resource when url is invalid' do
+      expect {
+        post '/resources', params: {
+          resource: {
+            title: 'New title',
+            description: 'New description.',
+            url: 'not-a-valid-url'
+          }
+        }
+      }.to_not change(Resource, :count)
+    end
+
+    it 're-renders the form when url is invalid' do
+      post '/resources', params: {
+        resource: {
+          title: 'New Resource',
+          description: 'Resource description.',
+          url: 'not-a-valid-url'
         }
       }
 
@@ -223,7 +250,22 @@ RSpec.describe "Resources", type: :request do
       expect(resource1.url).to eq('https://example.com/newurl')
     end
 
-    it 'responds with 422 status when title is not provided' do
+    it 'does not update the resource when no title is provided' do
+      put "/resources/#{resource1.id}", params: {
+        resource: {
+          title: nil,
+          description: 'New description',
+          url: 'https://example.com/newurl'
+        }
+      }
+
+      resource1.reload
+      expect(resource1.title).to eq('Test Resource 1')
+      expect(resource1.description).to eq('Test resource description one.')
+      expect(resource1.url).to eq('https://example.com/resource1')
+    end
+
+    it 're-renders the form when no title is present' do
       put "/resources/#{resource1.id}", params: {
         resource: {
           title: nil,
@@ -235,7 +277,23 @@ RSpec.describe "Resources", type: :request do
       expect(response).to have_http_status(:unprocessable_entity)
     end
 
-    it 'responds with 422 status when url is not provided' do
+
+    it 'does not update the resource when no url is provided' do
+      put "/resources/#{resource1.id}", params: {
+        resource: {
+          title: 'New Title',
+          description: 'New description',
+          url: nil
+        }
+      }
+
+      resource1.reload
+      expect(resource1.title).to eq('Test Resource 1')
+      expect(resource1.description).to eq('Test resource description one.')
+      expect(resource1.url).to eq('https://example.com/resource1')
+    end
+
+    it 're-render the form when url is not provided' do
       put "/resources/#{resource1.id}", params: {
         resource: {
           title: 'New title',
@@ -247,7 +305,22 @@ RSpec.describe "Resources", type: :request do
       expect(response).to have_http_status(:unprocessable_entity)
     end
 
-    it 'responds with 422 status when url is invalid format' do
+    it 'does not update the resource when url is invalid format' do
+      put "/resources/#{resource1.id}", params: {
+        resource: {
+          title: 'New Title',
+          description: 'New description',
+          url: 'not-a-valid-url'
+        }
+      }
+
+      resource1.reload
+      expect(resource1.title).to eq('Test Resource 1')
+      expect(resource1.description).to eq('Test resource description one.')
+      expect(resource1.url).to eq('https://example.com/resource1')
+    end
+
+    it 're-renders the form when url is invalid format' do
       put "/resources/#{resource1.id}", params: {
         resource: {
           title: 'New title',
@@ -289,6 +362,12 @@ RSpec.describe "Resources", type: :request do
       delete "/resources/#{resource3.id}"
 
       expect(response).to have_http_status(:not_found)
+    end
+
+    it "does not allow access to another user's resource" do
+      expect {
+        delete "/resources/#{resource3.id}"
+    }.to_not change(Resource, :count)
     end
   end
 end
