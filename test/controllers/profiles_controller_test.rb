@@ -72,13 +72,13 @@ class ProfilesControllerTest < ActionDispatch::IntegrationTest
     assert_match "Test Project", response.body
   end
 
-  test "should show 'no projects' message when user has no projects" do
+  test "should show 'No projects yet.' message when user has no projects" do
     @user.projects.destroy_all
 
     get user_profile_path(@user, @profile)
     assert_response :success
 
 
-    assert_select "p", text: "no projects"
+    assert_select "p", text: "No projects yet."
   end
 end

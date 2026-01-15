@@ -8,7 +8,7 @@ class ProfilesController < ApplicationController
     if current_user.profile
       @profiles = Profile.all.where.not(id: current_user&.profile.id)
     else
-      @profiles = Profile, all
+      @profiles = Profile.all
     end
   end
 
