@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Skill, type: :model do
-    subject { build(:skill) }
+    fixtures :skills
+    subject { skills(:one) }
 
     describe "validations" do
         it { should validate_presence_of(:name) }

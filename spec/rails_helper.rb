@@ -1,8 +1,5 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
-require 'faker'
-
-
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
@@ -11,9 +8,8 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 # that will avoid rails generators crashing because migrations haven't been run yet
 # return unless Rails.env.test?
 require 'rspec/rails'
-require 'devise'
-
 # Add additional requires below this line. Rails is not loaded until this point!
+
 require 'shoulda/matchers'
 
 Shoulda::Matchers.configure do |config|
@@ -22,7 +18,6 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
-
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -49,9 +44,7 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_paths = [
-    Rails.root.join('test/fixtures')
-  ]
+  config.fixture_paths = "#{::Rails.root}/spec/fixtures"
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
@@ -76,9 +69,7 @@ RSpec.configure do |config|
   # behaviour is considered legacy and will be removed in a future version.
   #
   # To enable this behaviour uncomment the line below.
-  config.infer_spec_type_from_file_location!
-
-  config.include FactoryBot::Syntax::Methods
+  # config.infer_spec_type_from_file_location!
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
@@ -87,7 +78,4 @@ RSpec.configure do |config|
 
   # Add Devise test helpers for request specs
   config.include Devise::Test::IntegrationHelpers, type: :request
-  config.include Devise::Test::ControllerHelpers, type: :controller
-  config.include Warden::Test::Helpers, type: :request
-  config.after(type: :request) { Warden.test_reset! }
 end

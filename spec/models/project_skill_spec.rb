@@ -1,13 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe ProjectSkill, type: :model do
+    fixtures :projects, :skills, :project_skills
+
     describe "associations" do
         it { should belong_to(:project) }
         it { should belong_to(:skill) }
     end
 
     describe "validations" do
-        subject { create(:project_skill) }
+        subject { project_skills(:one) }
 
         it "validates uniqueness of skill scoped to project" do
             should validate_uniqueness_of(:skill_id).scoped_to(:project_id)
@@ -16,10 +18,8 @@ RSpec.describe ProjectSkill, type: :model do
 
     describe "join table behavior" do
         it "connects a project and a skill" do
-            project = create(:project)
-            skill = create(:skill)
-
-            create(:project_skill, project: project, skill: skill)
+            project = projects(:one)
+            skill = skills(:one)
 
             expect(project.skills).to include(skill)
             expect(skill.projects).to include(project)
