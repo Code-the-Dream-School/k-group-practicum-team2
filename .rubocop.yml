@@ -10,5 +10,8 @@ inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 Layout/TrailingEmptyLines:
   Enabled: true # To reduce noise with GitHub's diffs; violations render as 🚫 at the end of a file
 
+Lint/ParenthesesAsGroupedExpression:
+  Enabled: true
+
 Style/StringLiterals:
   Enabled: false # Too heavy-handed to enforce for students
