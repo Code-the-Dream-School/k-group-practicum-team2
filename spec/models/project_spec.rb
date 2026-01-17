@@ -3,14 +3,14 @@ require "rails_helper"
 RSpec.describe Project, type: :model do
   describe "associations" do
     it "belongs to a user" do
-      user = User.create!(email: "user@email.com", password: "password")
+      user = User.create!(email: "user@example.com", password: "password")
       project = Project.create!(title: "Test Project", user: user)
 
       expect(project.user).to eq(user)
     end
 
     it "can have many skills through project_skills" do
-      user = User.create!(email: "user@email.com", password: "password")
+      user = User.create!(email: "user@example.com", password: "password")
       project = Project.create!(title: "Test Project", user: user)
 
       skill1 = Skill.create!(name: "Rails")
@@ -23,8 +23,8 @@ RSpec.describe Project, type: :model do
     end
 
     it "tracks users who bookmarked the project" do
-      owner = User.create!(email: "owner@email.com", password: "password")
-      favoriter = User.create!(email: "fan@email.com", password: "password")
+      owner = User.create!(email: "owner@example.com", password: "password")
+      favoriter = User.create!(email: "fan@example.com", password: "password")
 
       project = Project.create!(title: "Test Project", user: owner)
       BookmarkedProject.create!(user: favoriter, project: project)
@@ -33,7 +33,7 @@ RSpec.describe Project, type: :model do
     end
 
     it "destroys associated project_skills when deleted" do
-      user = User.create!(email: "user@email.com", password: "password")
+      user = User.create!(email: "user@example.com", password: "password")
       project = Project.create!(title: "Test Project", user: user)
       skill = Skill.create!(name: "Ruby")
 
@@ -42,8 +42,8 @@ RSpec.describe Project, type: :model do
       expect { project.destroy }.to change { ProjectSkill.count }.by(-1)
     end
     it "destroys associated bookmarked_projects when deleted" do
-      user = User.create!(email: "user@email.com", password: "password")
-      project_owner = User.create!(email: "owner@email.com", password: "password")
+      user = User.create!(email: "user@example.com", password: "password")
+      project_owner = User.create!(email: "owner@example.com", password: "password")
       project = Project.create!(title: "Test Project", user: project_owner)
 
 
@@ -53,27 +53,19 @@ RSpec.describe Project, type: :model do
     end
   end
 
+
   describe "validations" do
-    it "is invalid without a title" do
-      user = User.create!(email: "user@email.com", password: "password")
-      project = Project.new(title: nil, user: user)
-
-      expect(project.valid?).to be false
-      expect(project.errors[:title]).to include("can't be blank")
-    end
-  end
-  describe "validations" do
-    let(:user) { User.create!(email: "user@email.com", password: "password") }
-
-    it "is invalid without a title (nil)" do
-      project = Project.new(title: nil, user: user)
-
-      expect(project.valid?).to be false
-      expect(project.errors[:title]).to include("can't be blank")
-    end
+    let(:user) { User.create!(email: "user@example.comm", password: "password") }
 
     it "is invalid with an empty title ('')" do
       project = Project.new(title: "", user: user)
+
+      expect(project.valid?).to be false
+      expect(project.errors[:title]).to include("can't be blank")
+    end
+
+    it "is invalid without a title - nil" do
+      project = Project.new(title: nil, user: user)
 
       expect(project.valid?).to be false
       expect(project.errors[:title]).to include("can't be blank")
