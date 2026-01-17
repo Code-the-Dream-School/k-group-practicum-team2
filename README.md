@@ -166,3 +166,22 @@ bin/dev
 ### App will run at
 👉 [http://localhost:3000](http://localhost:3000)
 
+---
+## 🧪 Testing
+
+This project uses RSpec for automated testing. All previous Minitest tests have been migrated to RSpec request specs.
+
+Run the test suite
+
+```bash
+# Run all specs
+bundle exec rspec
+
+# Run a single spec file
+bundle exec rspec spec/requests/home_spec.rb
+bundle exec rspec spec/requests/profiles_spec.rb
+bundle exec rspec spec/requests/projects_spec.rb
+bundle exec rspec spec/models/profile_spec.rb
+```
+
+---
