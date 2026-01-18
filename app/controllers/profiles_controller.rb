@@ -8,7 +8,7 @@ class ProfilesController < ApplicationController
     if current_user.profile
       @profiles = Profile.all.where.not(id: current_user&.profile.id)
     else
-      @profiles = Profile, all
+      @profiles = Profile.all
     end
   end
 
@@ -28,6 +28,8 @@ class ProfilesController < ApplicationController
 
   def show
     @profile = Profile.find(params[:id])
+    @user = User.find(params[:user_id])
+    @user_projects = @user.projects
   end
 
   def edit
