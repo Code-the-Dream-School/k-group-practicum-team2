@@ -19,7 +19,7 @@ RSpec.describe "Projects", type: :request do
     Project.create!(
       title: 'Test Project 1',
       description: 'Test project description one.',
-      status: 0,
+      status: "mentors",
       user: user1
     )
   end
@@ -28,7 +28,7 @@ RSpec.describe "Projects", type: :request do
     Project.create!(
       title: 'Test Project 2',
       description: 'Test project description two.',
-      status: 0,
+      status: "teammates",
       user: user1
     )
   end
@@ -37,7 +37,7 @@ RSpec.describe "Projects", type: :request do
     Project.create!(
       title: 'New Project 2',
       description: 'New project description three.',
-      status: 0,
+      status: "both",
       user: user2
     )
   end
@@ -59,6 +59,13 @@ RSpec.describe "Projects", type: :request do
       expect(response.body).to include('Test Project 2')
       expect(response.body).to include('Test project description two.')
     end
+
+    it 'returns a page containing status of each project' do
+      get '/projects'
+
+      expect(response.body).to include('Looking for mentors.')
+      expect(response.body).to include('Looking for teammates.')
+    end
   end
 
   describe 'GET /projects/:id' do
@@ -79,6 +86,12 @@ RSpec.describe "Projects", type: :request do
 
       expect(response.body).to include('Test project description one.')
     end
+
+    it 'returns a page containing the project status' do
+      get "/projects/#{project1.id}"
+
+      expect(response.body).to include('Looking for mentors.')
+    end
   end
 
   describe 'GET /projects/new' do
@@ -88,14 +101,21 @@ RSpec.describe "Projects", type: :request do
       expect(response.body).to include('Title')
       expect(response.body).to include('Description')
     end
+
+    it 'displays the status label' do
+      get '/projects/new'
+
+      expect(response.body).to include('Status')
+    end
   end
 
   describe 'POST /projects' do
-    it 'creates a new project associated with the current user when title and description exist' do
+    it 'creates a new project associated with the current user when title and status exist' do
       post '/projects', params: {
         project: {
           title: "New Project",
-          description: 'Project description.'
+          description: 'Project description.',
+          status: 'mentors'
         }
       }
 
@@ -103,6 +123,7 @@ RSpec.describe "Projects", type: :request do
 
       expect(Project.last.title).to eq('New Project')
       expect(Project.last.description).to eq('Project description.')
+      expect(Project.last.status).to eq('mentors')
 
       expect(Project.last.user).to eq(user1)
     end
@@ -112,7 +133,8 @@ RSpec.describe "Projects", type: :request do
         post '/projects', params: {
           project: {
             title: nil,
-            description: 'Project description.'
+            description: 'Project description.',
+            status: 'mentors'
           }
         }
       }.to_not change(Project, :count)
@@ -122,10 +144,23 @@ RSpec.describe "Projects", type: :request do
       post '/projects', params: {
         project: {
           title: nil,
-          description: 'Project description.'
+          description: 'Project description.',
+          status: 'mentors'
         }
       }
       expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'does not create a project when no status is provided' do
+      expect {
+        post '/projects', params: {
+          project: {
+            title: 'New Project',
+            description: 'Project description.',
+            status: nil
+          }
+        }
+      }.to_not change(Project, :count)
     end
   end
 
@@ -148,6 +183,12 @@ RSpec.describe "Projects", type: :request do
       expect(response.body).to include('Description')
     end
 
+    it 'displays the status label' do
+      get "/projects/#{project1.id}/edit"
+
+      expect(response.body).to include('Status')
+    end
+
     it "does not allow access to another user's project" do
       get "/projects/#{project3.id}/edit"
 
@@ -156,11 +197,12 @@ RSpec.describe "Projects", type: :request do
   end
 
   describe 'PUT /projects/:id' do
-    it "updates a project's title and/or description when they are valid and exist" do
+    it "updates a project's title, description and/or status  when they are valid and strong params exist" do
       put "/projects/#{project1.id}", params: {
         project: {
           title: 'New Title',
-          description: 'New description.'
+          description: 'New description.',
+          status: 'teammates'
         }
       }
 
@@ -168,13 +210,27 @@ RSpec.describe "Projects", type: :request do
       project1.reload
       expect(project1.title).to eq('New Title')
       expect(project1.description).to eq('New description.')
+      expect(project1.status).to eq('teammates')
     end
 
     it 'responds with 422 status when title is not provided' do
       put "/projects/#{project1.id}", params: {
         project: {
           title: nil,
-          description: 'New description.'
+          description: 'New description.',
+          status: 'teammates'
+        }
+      }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+    end
+
+    it 'responds with 422 status when no status is provided' do
+      put "/projects/#{project1.id}", params: {
+        project: {
+          title: 'New Project',
+          description: 'New description',
+          status: nil
         }
       }
 
@@ -185,7 +241,8 @@ RSpec.describe "Projects", type: :request do
       put "/projects/#{project3.id}", params: {
         project: {
           title: 'New Title',
-          description: 'New description.'
+          description: 'New description.',
+          status: 'teammates'
         }
       }
 
