@@ -15,11 +15,30 @@ RSpec.describe "Projects", type: :request do
     )
   end
 
+  let!(:skill1) do
+    Skill.create!(
+      name: 'Skill 1'
+    )
+  end
+
+  let!(:skill2) do
+    Skill.create!(
+      name: 'Skill 2'
+    )
+  end
+
+  let!(:skill3) do
+    Skill.create!(
+      name: 'Skill 3'
+    )
+  end
+
   let!(:project1) do
     Project.create!(
       title: 'Test Project 1',
       description: 'Test project description one.',
       status: "mentors",
+      skills: [ skill1, skill2 ],
       user: user1
     )
   end
@@ -29,6 +48,7 @@ RSpec.describe "Projects", type: :request do
       title: 'Test Project 2',
       description: 'Test project description two.',
       status: "teammates",
+      skills: [ skill1 ],
       user: user1
     )
   end
@@ -38,6 +58,7 @@ RSpec.describe "Projects", type: :request do
       title: 'New Project 2',
       description: 'New project description three.',
       status: "both",
+      skills: [ skill1 ],
       user: user2
     )
   end
@@ -66,6 +87,13 @@ RSpec.describe "Projects", type: :request do
       expect(response.body).to include('Looking for mentors.')
       expect(response.body).to include('Looking for teammates.')
     end
+
+    it 'returns a page containing the tech stack of each project' do
+      get '/projects'
+
+      expect(response.body).to include('Skill 1')
+      expect(response.body).to include('Skill 2')
+    end
   end
 
   describe 'GET /projects/:id' do
@@ -92,6 +120,13 @@ RSpec.describe "Projects", type: :request do
 
       expect(response.body).to include('Looking for mentors.')
     end
+
+    it 'returns a page containing the project tech stack' do
+      get "/projects/#{project1.id}"
+
+      expect(response.body).to include('Skill 1')
+      expect(response.body).to include('Skill 2')
+    end
   end
 
   describe 'GET /projects/new' do
@@ -107,6 +142,12 @@ RSpec.describe "Projects", type: :request do
 
       expect(response.body).to include('Status')
     end
+
+    it 'displays the tech stack label' do
+      get '/projects/new'
+
+      expect(response.body).to include('Skills')
+    end
   end
 
   describe 'POST /projects' do
@@ -115,7 +156,8 @@ RSpec.describe "Projects", type: :request do
         project: {
           title: "New Project",
           description: 'Project description.',
-          status: 'mentors'
+          status: 'mentors',
+          skill_ids: [ skill1.id ]
         }
       }
 
@@ -124,6 +166,7 @@ RSpec.describe "Projects", type: :request do
       expect(Project.last.title).to eq('New Project')
       expect(Project.last.description).to eq('Project description.')
       expect(Project.last.status).to eq('mentors')
+      expect(Project.last.skills).to include(skill1)
 
       expect(Project.last.user).to eq(user1)
     end
@@ -134,7 +177,8 @@ RSpec.describe "Projects", type: :request do
           project: {
             title: nil,
             description: 'Project description.',
-            status: 'mentors'
+            status: 'mentors',
+            skill_ids: [ skill1.id ]
           }
         }
       }.to_not change(Project, :count)
@@ -145,7 +189,8 @@ RSpec.describe "Projects", type: :request do
         project: {
           title: nil,
           description: 'Project description.',
-          status: 'mentors'
+          status: 'mentors',
+          skill_ids: [ skill1.id ]
         }
       }
       expect(response).to have_http_status(:unprocessable_entity)
@@ -157,7 +202,8 @@ RSpec.describe "Projects", type: :request do
           project: {
             title: 'New Project',
             description: 'Project description.',
-            status: nil
+            status: nil,
+            skill_ids: [ skill1.id ]
           }
         }
       }.to_not change(Project, :count)
@@ -189,6 +235,12 @@ RSpec.describe "Projects", type: :request do
       expect(response.body).to include('Status')
     end
 
+    it 'displays the tech stack label' do
+      get "/projects/#{project1.id}/edit"
+
+      expect(response.body).to include('Skills')
+    end
+
     it "does not allow access to another user's project" do
       get "/projects/#{project3.id}/edit"
 
@@ -197,12 +249,13 @@ RSpec.describe "Projects", type: :request do
   end
 
   describe 'PUT /projects/:id' do
-    it "updates a project's title, description and/or status  when they are valid and strong params exist" do
+    it "updates a project's title, description, status and skills when they are valid and strong params exist" do
       put "/projects/#{project1.id}", params: {
         project: {
           title: 'New Title',
           description: 'New description.',
-          status: 'teammates'
+          status: 'teammates',
+          skill_ids: [ skill3.id ]
         }
       }
 
@@ -211,6 +264,8 @@ RSpec.describe "Projects", type: :request do
       expect(project1.title).to eq('New Title')
       expect(project1.description).to eq('New description.')
       expect(project1.status).to eq('teammates')
+      expect(project1.skills).to include(skill3)
+      expect(project1.skills).to_not include(skill1)
     end
 
     it 'responds with 422 status when title is not provided' do
@@ -218,7 +273,8 @@ RSpec.describe "Projects", type: :request do
         project: {
           title: nil,
           description: 'New description.',
-          status: 'teammates'
+          status: 'teammates',
+          skill_ids: [ skill3.id ]
         }
       }
 
@@ -230,7 +286,8 @@ RSpec.describe "Projects", type: :request do
         project: {
           title: 'New Project',
           description: 'New description',
-          status: nil
+          status: nil,
+          skill_ids: [ skill3.id ]
         }
       }
 
@@ -242,7 +299,8 @@ RSpec.describe "Projects", type: :request do
         project: {
           title: 'New Title',
           description: 'New description.',
-          status: 'teammates'
+          status: 'teammates',
+          skill_ids: [ skill3 ]
         }
       }
 
