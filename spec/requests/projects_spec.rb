@@ -68,13 +68,15 @@ RSpec.describe "Projects", type: :request do
   end
 
   describe "GET /projects" do
-    it 'responds with 200 OK' do
+    before do
       get '/projects'
+    end
+
+    it 'responds with 200 OK' do
       expect(response).to have_http_status(:ok)
     end
 
     it 'returns a page containing title and descriptions of all the projects' do
-      get '/projects'
       expect(response.body).to include('Test Project 1')
       expect(response.body).to include('Test project description one.')
       expect(response.body).to include('Test Project 2')
@@ -82,70 +84,58 @@ RSpec.describe "Projects", type: :request do
     end
 
     it 'returns a page containing status of each project' do
-      get '/projects'
-
       expect(response.body).to include('Looking for mentors.')
       expect(response.body).to include('Looking for teammates.')
     end
 
     it 'returns a page containing the tech stack of each project' do
-      get '/projects'
-
       expect(response.body).to include('Skill 1')
       expect(response.body).to include('Skill 2')
     end
   end
 
   describe 'GET /projects/:id' do
-    it 'responds with 200 OK' do
+    before do
       get "/projects/#{project1.id}"
+    end
 
+    it 'responds with 200 OK' do
       expect(response).to have_http_status(:ok)
     end
 
     it 'returns a page containing the project title' do
-      get "/projects/#{project1.id}"
-
       expect(response.body).to include('Test Project 1')
     end
 
     it 'returns a page containing the project description' do
-      get "/projects/#{project1.id}"
-
       expect(response.body).to include('Test project description one.')
     end
 
     it 'returns a page containing the project status' do
-      get "/projects/#{project1.id}"
-
       expect(response.body).to include('Looking for mentors.')
     end
 
     it 'returns a page containing the project tech stack' do
-      get "/projects/#{project1.id}"
-
       expect(response.body).to include('Skill 1')
       expect(response.body).to include('Skill 2')
     end
   end
 
   describe 'GET /projects/new' do
-    it 'displays title and description labels' do
+    before do
       get '/projects/new'
+    end
 
+    it 'displays title and description labels' do
       expect(response.body).to include('Title')
       expect(response.body).to include('Description')
     end
 
     it 'displays the status label' do
-      get '/projects/new'
-
       expect(response.body).to include('Status')
     end
 
     it 'displays the tech stack label' do
-      get '/projects/new'
-
       expect(response.body).to include('Skills')
     end
   end
@@ -211,40 +201,38 @@ RSpec.describe "Projects", type: :request do
   end
 
   describe 'GET /projects/:id/edit' do
-    it 'responds with 200 OK' do
-      get "/projects/#{project1.id}/edit"
+    context 'user owns project' do
+      before do
+        get "/projects/#{project1.id}/edit"
+      end
 
-      expect(response).to have_http_status(:ok)
+      it 'responds with 200 OK' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'displays the title label' do
+        expect(response.body).to include('Title')
+      end
+
+      it 'displays the description label' do
+        expect(response.body).to include('Description')
+      end
+
+      it 'displays the status label' do
+        expect(response.body).to include('Status')
+      end
+
+      it 'displays the tech stack label' do
+        expect(response.body).to include('Skills')
+      end
     end
 
-    it 'displays the title label' do
-      get "/projects/#{project1.id}/edit"
+    context 'user does not own the project' do
+      it "does not allow access to another user's project" do
+        get "/projects/#{project3.id}/edit"
 
-      expect(response.body).to include('Title')
-    end
-
-    it 'displays the description label' do
-      get "/projects/#{project1.id}/edit"
-
-      expect(response.body).to include('Description')
-    end
-
-    it 'displays the status label' do
-      get "/projects/#{project1.id}/edit"
-
-      expect(response.body).to include('Status')
-    end
-
-    it 'displays the tech stack label' do
-      get "/projects/#{project1.id}/edit"
-
-      expect(response.body).to include('Skills')
-    end
-
-    it "does not allow access to another user's project" do
-      get "/projects/#{project3.id}/edit"
-
-      expect(response).to have_http_status(:not_found)
+        expect(response).to have_http_status(:not_found)
+      end
     end
   end
 
