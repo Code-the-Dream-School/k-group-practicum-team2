@@ -300,7 +300,7 @@ RSpec.describe "Projects", type: :request do
           title: 'New Title',
           description: 'New description.',
           status: 'teammates',
-          skill_ids: [ skill3 ]
+          skill_ids: [ skill3.id ]
         }
       }
 
