@@ -4,9 +4,31 @@
       <h2 class="text-lg font-semibold">
         <%= project.title %>
       </h2>
+
+      <% if project.project_skills.any? %>
+        <ul>
+          <% project.project_skills.each do |project_skill| %>
+            <li><%= project_skill.skill.name %></li>
+          <% end %>
+        </ul>
+      <% end %>
+
       <p class="text-gray-600 mt-2">
         <%= project.description %>
       </p>
+
+      <% case project.status %>
+        <% when 'mentors' %>
+          <p>Looking for mentors.</p>
+        <% when 'teammates' %>
+          <p>Looking for teammates.</p>
+        <% when 'both' %>
+          <p>Looking for mentors.</p>
+          <p>Looking for teammates.</p>
+        <% when 'closed' %>
+          <p>Project closed.</p>
+      <% end %>
+
       <%= link_to "View Project", project_path(project), class: "mt-3 text-blue-500 hover:underline" %>
     </div>
   <% end %>

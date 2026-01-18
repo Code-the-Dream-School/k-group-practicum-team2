@@ -8,17 +8,18 @@ RSpec.describe "Projects", type: :request do
     )
   end
 
-    let!(:user2) do
-      User.create!(
-        email: 'user2@example.com',
-        password: 'secret'
-      )
-    end
+  let!(:user2) do
+    User.create!(
+      email: 'user2@example.com',
+      password: 'secret'
+    )
+  end
 
   let!(:project1) do
     Project.create!(
       title: 'Test Project 1',
       description: 'Test project description one.',
+      status: 0,
       user: user1
     )
   end
@@ -27,6 +28,7 @@ RSpec.describe "Projects", type: :request do
     Project.create!(
       title: 'Test Project 2',
       description: 'Test project description two.',
+      status: 0,
       user: user1
     )
   end
@@ -35,6 +37,7 @@ RSpec.describe "Projects", type: :request do
     Project.create!(
       title: 'New Project 2',
       description: 'New project description three.',
+      status: 0,
       user: user2
     )
   end
