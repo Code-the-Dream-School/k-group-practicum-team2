@@ -12,17 +12,7 @@
 
     <p class="text-gray-600 text-center mb-2"><%= @project.description %></p>
 
-    <% case @project.status %>
-      <% when 'mentors' %>
-        <p>Looking for mentors.</p>
-      <% when 'teammates' %>
-        <p>Looking for teammates.</p>
-      <% when 'both' %>
-        <p>Looking for mentors.</p>
-        <p>Looking for teammates.</p>
-      <% when 'closed' %>
-        <p>This project is closed.</p>
-    <% end %>
+    <%= render 'project_status', project: @project %>
 
     <% if @project.user == current_user %>
       <%= link_to "Edit Project", edit_project_path(@project), class: "absolute top-6 right-6 bg-black text-white px-4 py-2 rounded-lg hover:opacity-80 transition" %>
