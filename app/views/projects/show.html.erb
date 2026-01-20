@@ -4,9 +4,7 @@
 
     <% if @project.project_skills.any? %>
       <ul>
-        <% @project.project_skills.each do |project_skill| %>
-          <li><%= project_skill.skill.name %></li>
-        <% end %>
+        <%= render 'project_skills', project: @project %>
       </ul>
     <% end %>
 
