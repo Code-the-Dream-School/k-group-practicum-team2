@@ -1,0 +1,11 @@
+<% case project.status %>
+  <% when 'mentors' %>
+    <p>Looking for mentors.</p>
+  <% when 'teammates' %>
+    <p>Looking for teammates.</p>
+  <% when 'both' %>
+    <p>Looking for mentors.</p>
+    <p>Looking for teammates.</p>
+  <% when 'closed' %>
+    <p>Project closed.</p>
+<% end %>
