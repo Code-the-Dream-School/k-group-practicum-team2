@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   devise_for :users
   # resource :profile, only: [ :show, :edit, :update ]
 
-
   resources :users do
     resources :profiles
   end
@@ -22,6 +21,6 @@ Rails.application.routes.draw do
   # root "posts#index"
   root "home#index"
 
-  # include resourceful routes to list projects, show creation form, and create a project
+  resources :resources
   resources :projects
 end
