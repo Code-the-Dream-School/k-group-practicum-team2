@@ -7,6 +7,8 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+# Skills Seeding
 skills = [
     "Ruby on Rails",
     "Node",
@@ -28,3 +30,50 @@ skills.each do |skill_name|
 end
 
 puts "Finished seeding #{Skill.count} skills."
+
+# Users Seeding
+puts "Seeding test users and corresponding profiles..."
+
+User.destroy_all
+
+user1 = User.create!(
+  email: 'user1@example.com',
+  password: 'secret'
+)
+Profile.create!(
+  user: user1,
+  first_name: 'Penny',
+  last_name: 'Gadget'
+)
+
+user2 = User.create!(
+  email: 'user2@example.com',
+  password: 'secret'
+)
+Profile.create!(
+  user: user2,
+  first_name: 'Gadget',
+  last_name: 'Hackwrench'
+)
+
+user3 = User.create!(
+  email: 'user3@example.com',
+  password: 'secret'
+)
+Profile.create!(
+  user: user3,
+  first_name: 'Velma',
+  last_name: 'Dinkley'
+)
+
+user4 = User.create!(
+  email: 'user4@example.com',
+  password: 'secret'
+)
+Profile.create!(
+  user: user4,
+  first_name: 'Jimmy',
+  last_name: 'Neutron'
+)
+
+puts "Finished seeding #{User.count} users and #{Profile.count} profiles."

@@ -39,12 +39,12 @@ The Web Developer Hub is a platform designed to connect developers, provide reso
 - `id` (primary key)
 - `email` (unique, not null)
 - `encrypted_password` (not null)
-- `created_at`, `updated_at`  
-**Associations:**  
-`has_one :profile`  
-`has_many :resources`  
-`has_many :projects`  
-`has_many :bookmarked_resources`  
+- `created_at`, `updated_at`
+**Associations:**
+`has_one :profile`
+`has_many :resources`
+`has_many :projects`
+`has_many :bookmarked_resources`
 `has_many :bookmarked_projects`
 
 ### Skill (admin only)
@@ -55,10 +55,10 @@ The Web Developer Hub is a platform designed to connect developers, provide reso
 - `id`, `user_id` (foreign key)
 - `first_name`, `last_name` (not null)
 - `bio`, `skills`, `avatar`
-- `created_at`, `updated_at`  
-**Associations:**  
-`belongs_to :user`  
-`has_many :skills`  
+- `created_at`, `updated_at`
+**Associations:**
+`belongs_to :user`
+`has_many :skills`
 
 ### ProfileSkill
 - `user_id`, `skill_id` (foreign keys)
@@ -66,34 +66,34 @@ The Web Developer Hub is a platform designed to connect developers, provide reso
 ### Resource
 - `id`, `user_id` (foreign key)
 - `title`, `description`, `url`
-- `created_at`, `updated_at`  
-**Associations:**  
-`belongs_to :user`  
+- `created_at`, `updated_at`
+**Associations:**
+`belongs_to :user`
 `has_many :bookmarked_resources`
 
 ### Project
 - `id`, `user_id` (foreign key)
 - `title`, `description`, `tech_stack`
-- `created_at`, `updated_at`  
-**Associations:**  
-`belongs_to :user`  
-`has_many :skills`  
+- `created_at`, `updated_at`
+**Associations:**
+`belongs_to :user`
+`has_many :skills`
 
 ### ProjectSkill
 - `project_id`, `skill_id` (foreign keys)
 
 ### BookmarkedResource
 - `id`, `user_id`, `resource_id` (foreign keys)
-- `created_at`, `updated_at`  
-**Associations:**  
-`belongs_to :resource`  
+- `created_at`, `updated_at`
+**Associations:**
+`belongs_to :resource`
 `belongs_to :user`
 
 ### BookmarkedProject
 - `id`, `user_id`, `project_id` (foreign keys)
-- `created_at`, `updated_at`  
-**Associations:**  
-`belongs_to :project`  
+- `created_at`, `updated_at`
+**Associations:**
+`belongs_to :project`
 `belongs_to :user`
 
 ---
@@ -139,7 +139,7 @@ The Web Developer Hub is a platform designed to connect developers, provide reso
 
 ### 1. Clone the project
 
-```bash 
+```bash
 git clone https://github.com/Code-the-Dream-School/k-group-practicum-team2.git
 cd k-group-practicum-team2
 ```
@@ -147,24 +147,29 @@ cd k-group-practicum-team2
 ### 2. Install dependencies
 
 ```bash
-bundle install 
-npm install 
+bundle install
+npm install
 ```
 
 ### 3.Setup database
 
-```bash 
+```bash
 bin/rails db:prepare
-``` 
+```
 
 ### 4.Start development server
 
-```bash 
-bin/dev 
-``` 
+```bash
+bin/dev
+```
 
 ### App will run at
 👉 [http://localhost:3000](http://localhost:3000)
+
+### Seeding the Database
+
+Run the seed file:
+`bin/rails db:seed`
 
 ---
 ## 🧪 Testing
