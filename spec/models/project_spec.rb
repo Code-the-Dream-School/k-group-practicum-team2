@@ -1,16 +1,18 @@
 require "rails_helper"
 
 RSpec.describe Project, type: :model do
+  let(:user) { User.create!(email: "user@example.com", password: "password") }
+  let(:owner) { User.create!(email: "owner@example.com", password: "password") }
+  let(:favoriter) { User.create!(email: "fan@example.com", password: "password") }
+
   describe "associations" do
     it "belongs to a user" do
-      user = User.create!(email: "user@example.com", password: "password")
       project = Project.create!(title: "Test Project", user: user)
 
       expect(project.user).to eq(user)
     end
 
     it "can have many skills through project_skills" do
-      user = User.create!(email: "user@example.com", password: "password")
       project = Project.create!(title: "Test Project", user: user)
 
       skill1 = Skill.create!(name: "Rails")
@@ -23,9 +25,6 @@ RSpec.describe Project, type: :model do
     end
 
     it "tracks users who bookmarked the project" do
-      owner = User.create!(email: "owner@example.com", password: "password")
-      favoriter = User.create!(email: "fan@example.com", password: "password")
-
       project = Project.create!(title: "Test Project", user: owner)
       BookmarkedProject.create!(user: favoriter, project: project)
 
@@ -33,30 +32,23 @@ RSpec.describe Project, type: :model do
     end
 
     it "destroys associated project_skills when deleted" do
-      user = User.create!(email: "user@example.com", password: "password")
       project = Project.create!(title: "Test Project", user: user)
       skill = Skill.create!(name: "Ruby")
 
       project.skills << skill
 
-      expect { project.destroy }.to change { ProjectSkill.count }.by(-1)
+      expect { project.destroy }.to change(ProjectSkill, :count).by(-1)
     end
     it "destroys associated bookmarked_projects when deleted" do
-      user = User.create!(email: "user@example.com", password: "password")
-      project_owner = User.create!(email: "owner@example.com", password: "password")
-      project = Project.create!(title: "Test Project", user: project_owner)
-
-
+      project = Project.create!(title: "Test Project", user: owner)
       project.bookmarked_projects.create!(user: user)
 
-      expect { project.destroy }.to change { BookmarkedProject.count }.by(-1)
+      expect { project.destroy }.to change(BookmarkedProject, :count).by(-1)
     end
   end
 
 
   describe "validations" do
-    let(:user) { User.create!(email: "user@example.comm", password: "password") }
-
     it "is invalid with an empty title ('')" do
       project = Project.new(title: "", user: user)
 
