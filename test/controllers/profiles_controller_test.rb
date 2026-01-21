@@ -59,4 +59,26 @@ class ProfilesControllerTest < ActionDispatch::IntegrationTest
     get edit_user_profile_path(@user, @profile)
     assert_response :success
   end
+
+  test "show displays user's projects when user has projects" do
+    @user.projects.create!(
+      title: "Test Project",
+      description: "Project description"
+    )
+
+    get user_profile_path(@user, @profile)
+    assert_response :success
+
+    assert_match "Test Project", response.body
+  end
+
+  test "should show 'No projects yet.' message when user has no projects" do
+    @user.projects.destroy_all
+
+    get user_profile_path(@user, @profile)
+    assert_response :success
+
+
+    assert_select "p", text: "No projects yet."
+  end
 end
