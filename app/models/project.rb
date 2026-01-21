@@ -9,5 +9,13 @@ class Project < ApplicationRecord
   has_many :project_skills, dependent: :destroy
   has_many :skills, through: :project_skills
 
+  enum :status, {
+    mentors: 0,
+    teammates: 1,
+    both: 2,
+    closed: 3
+  }
+
   validates :title, presence: true
+  validates :status, presence: true
 end

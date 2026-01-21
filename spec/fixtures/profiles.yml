@@ -2,14 +2,14 @@
 
 one:
   user: one
-  first_name: MyString
-  last_name: MyString
-  bio: MyText
+  first_name: Ally
+  last_name: Wong
+  bio: Hello
 
 
 two:
   user: two
-  first_name: MyString
-  last_name: MyString
-  bio: MyText
+  first_name: Jean
+  last_name: K
+  bio: Hi
 

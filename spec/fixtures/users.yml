@@ -13,3 +13,7 @@ two:
   email: "two@example.com"
   encrypted_password: <%= Devise::Encryptor.digest(User, "password123") %>
 
+three:
+  email: "three@example.com"
+  encrypted_password: <%= Devise::Encryptor.digest(User, "password123") %>
+
