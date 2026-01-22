@@ -41,7 +41,8 @@ user1 = User.find_or_create_by!(
 Profile.find_or_create_by!(
   user: user1,
   first_name: 'Penny',
-  last_name: 'Gadget'
+  last_name: 'Gadget',
+  # skill_level: 'beginner'
 )
 
 user2 = User.find_or_create_by!(
@@ -51,7 +52,8 @@ user2 = User.find_or_create_by!(
 Profile.find_or_create_by!(
   user: user2,
   first_name: 'Gadget',
-  last_name: 'Hackwrench'
+  last_name: 'Hackwrench',
+  # skill_level: 'beginner'
 )
 
 user3 = User.find_or_create_by!(
@@ -61,7 +63,8 @@ user3 = User.find_or_create_by!(
 Profile.find_or_create_by!(
   user: user3,
   first_name: 'Velma',
-  last_name: 'Dinkley'
+  last_name: 'Dinkley',
+  # skill_level: 'beginner'
 )
 
 user4 = User.find_or_create_by!(
@@ -71,7 +74,8 @@ user4 = User.find_or_create_by!(
 Profile.find_or_create_by!(
   user: user4,
   first_name: 'Jimmy',
-  last_name: 'Neutron'
+  last_name: 'Neutron',
+  # skill_level: 'beginner'
 )
 
 puts "Finished seeding #{User.count} users and #{Profile.count} profiles."
