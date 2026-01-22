@@ -5,6 +5,7 @@ one:
   first_name: Ally
   last_name: Wong
   bio: Hello
+  skill_level: junior
 
 
 two:

@@ -75,7 +75,7 @@ RSpec.describe "Profiles", type: :request do
     describe "PATCH /users/:user_id/profiles/:id" do
         context "with valid params" do
             it "updates the profile and redirects" do
-                patch user_profile_path(user, profile), params: { profile: { first_name: "Sisi", last_name: profile.last_name, skill_level: profile.skill_level } }
+                patch user_profile_path(user, profile), params: { profile: { first_name: "Sisi", last_name: profile.last_name, skill_level: profile.skill_level, bio: profile.bio } }
                 profile.reload
                 expect(profile.first_name).to eq("Sisi")
                 expect(response).to redirect_to(user_profile_path(user, profile))
