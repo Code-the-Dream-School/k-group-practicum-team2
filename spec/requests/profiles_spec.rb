@@ -43,7 +43,7 @@ RSpec.describe "Profiles", type: :request do
 
                 expect {
                     post user_profiles_path(user_without_profile), params: {
-                        profile: { first_name: "John", last_name: "Lee", bio: "Hello" }
+                        profile: { first_name: "John", last_name: "Lee", bio: "Hello", skill_level: "junior" }
                     }
                 }.to change(Profile, :count).by(1)
 
@@ -53,6 +53,7 @@ RSpec.describe "Profiles", type: :request do
                 expect(profile.first_name).to eq("John")
                 expect(profile.last_name).to eq("Lee")
                 expect(profile.bio).to eq("Hello")
+                expect(profile.skill_level).to eq("junior")
                 expect(response).to redirect_to(user_profile_path(user_without_profile, profile))
             end
         end
