@@ -34,43 +34,41 @@ puts "Finished seeding #{Skill.count} skills."
 # Users Seeding
 puts "Seeding test users and corresponding profiles..."
 
-User.destroy_all
-
-user1 = User.create!(
+user1 = User.find_or_create_by!(
   email: 'user1@example.com',
   password: 'secret'
 )
-Profile.create!(
+Profile.find_or_create_by!(
   user: user1,
   first_name: 'Penny',
   last_name: 'Gadget'
 )
 
-user2 = User.create!(
+user2 = User.find_or_create_by!(
   email: 'user2@example.com',
   password: 'secret'
 )
-Profile.create!(
+Profile.find_or_create_by!(
   user: user2,
   first_name: 'Gadget',
   last_name: 'Hackwrench'
 )
 
-user3 = User.create!(
+user3 = User.find_or_create_by!(
   email: 'user3@example.com',
   password: 'secret'
 )
-Profile.create!(
+Profile.find_or_create_by!(
   user: user3,
   first_name: 'Velma',
   last_name: 'Dinkley'
 )
 
-user4 = User.create!(
+user4 = User.find_or_create_by!(
   email: 'user4@example.com',
   password: 'secret'
 )
-Profile.create!(
+Profile.find_or_create_by!(
   user: user4,
   first_name: 'Jimmy',
   last_name: 'Neutron'
