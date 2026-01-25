@@ -30,29 +30,29 @@ end
 puts "Finished seeding #{Skill.count} skills."
 
 
-# Profile Skills Seeding 
+# Profile Skills Seeding
 puts "Seeding profile skills..."
 
 profile_skill_map = {
-    "Ramon" => ["Ruby on Rails", "React", "Node"],
-    "Riche" => ["Node", "Java", "MySQL"],
-    "Jennifer" => ["Python", "Git"],
-    "Michael" => ["Ruby on Rails", "Tailwind CSS", "GitHub"]
+    "Ramon" => [ "Ruby on Rails", "React", "Node" ],
+    "Riche" => [ "Node", "Java", "MySQL" ],
+    "Jennifer" => [ "Python", "Git" ],
+    "Michael" => [ "Ruby on Rails", "Tailwind CSS", "GitHub" ]
 }
 
 profile_skill_map.each do |first_name, skill_names|
     profile = Profile.find_by(first_name: first_name)
-    next unless profile 
+    next unless profile
 
     skill_names.each do |skill_name|
         skill = Skill.find_by(name: skill_name)
-        next unless skill 
-        
+        next unless skill
+
         ProfileSkill.find_or_create_by!(
             profile: profile,
-            skill: skill 
+            skill: skill
         )
-    end 
-end 
+    end
+end
 
 puts "Finished seeding profile skills."
