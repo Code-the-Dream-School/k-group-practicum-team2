@@ -5,5 +5,5 @@ class Profile < ApplicationRecord
   has_many :skills, through: :profile_skills
   has_one_attached :avatar
 
-  validates :first_name, :last_name,  presence: true
+  validates :first_name, :last_name,  :skill_level, presence: true
 end

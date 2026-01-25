@@ -4,10 +4,10 @@ one:
   user: one
   title: MyString
   description: MyText
-  tech_stack: MyText
+
 
 two:
   user: two
   title: MyString
   description: MyText
-  tech_stack: MyText
+

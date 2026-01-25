@@ -88,7 +88,7 @@ RSpec.describe "Projects", type: :request do
       expect(response.body).to include('Looking for teammates.')
     end
 
-    it 'returns a page containing the tech stack of each project' do
+    it 'returns a page containing the project_skills of each project' do
       expect(response.body).to include('Skill 1')
       expect(response.body).to include('Skill 2')
     end
@@ -115,7 +115,7 @@ RSpec.describe "Projects", type: :request do
       expect(response.body).to include('Looking for mentors.')
     end
 
-    it 'returns a page containing the project tech stack' do
+    it 'returns a page containing the project_skills' do
       expect(response.body).to include('Skill 1')
       expect(response.body).to include('Skill 2')
     end
@@ -133,10 +133,6 @@ RSpec.describe "Projects", type: :request do
 
     it 'displays the status label' do
       expect(response.body).to include('Status')
-    end
-
-    it 'displays the tech stack label' do
-      expect(response.body).to include('Skills')
     end
   end
 
@@ -220,10 +216,6 @@ RSpec.describe "Projects", type: :request do
 
       it 'displays the status label' do
         expect(response.body).to include('Status')
-      end
-
-      it 'displays the tech stack label' do
-        expect(response.body).to include('Skills')
       end
     end
 
