@@ -73,7 +73,7 @@ The Web Developer Hub is a platform designed to connect developers, provide reso
 
 ### Project
 - `id`, `user_id` (foreign key)
-- `title`, `description`,
+- `title`, `description`
 - `created_at`, `updated_at`  
 **Associations:**  
 `belongs_to :user`  
