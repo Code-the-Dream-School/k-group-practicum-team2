@@ -34,40 +34,86 @@ puts "Finished seeding #{Skill.count} skills."
 # Users Seeding
 puts "Seeding test users and corresponding profiles..."
 
-user1 = User.find_or_create_by!(email: 'user1@example.com') do |user|
-  user.password = 'secret'
+user1 = User.find_or_create_by!(email: 'user1@example.com') do |user_attr|
+  user_attr.password = 'secret'
 end
-Profile.find_or_create_by!(user: user1) do |profile|
-  profile.first_name = 'Penny'
-  profile.last_name = 'Gadget'
-  profile.skill_level = 'beginner'
-end
-
-user2 = User.find_or_create_by!(email: 'user2@example.com') do |user|
-  user.password = 'secret'
-end
-Profile.find_or_create_by!(user: user2) do |profile|
-  profile.first_name = 'Gadget'
-  profile.last_name = 'Hackwrench'
-  profile.skill_level = 'beginner'
+Profile.find_or_create_by!(user: user1) do |profile_attr|
+  profile_attr.first_name = 'Penny'
+  profile_attr.last_name = 'Gadget'
+  profile_attr.skill_level = 'beginner'
 end
 
-user3 = User.find_or_create_by!(email: 'user3@example.com') do |user|
-  user.password = 'secret'
+user2 = User.find_or_create_by!(email: 'user2@example.com') do |user_attr|
+  user_attr.password = 'secret'
 end
-Profile.find_or_create_by!(user: user3) do |profile|
-  profile.first_name = 'Velma'
-  profile.last_name = 'Dinkley'
-  profile.skill_level = 'beginner'
+Profile.find_or_create_by!(user: user2) do |profile_attr|
+  profile_attr.first_name = 'Gadget'
+  profile_attr.last_name = 'Hackwrench'
+  profile_attr.skill_level = 'beginner'
 end
 
-user4 = User.find_or_create_by!(email: 'user4@example.com') do |user|
-  user.password = 'secret'
+user3 = User.find_or_create_by!(email: 'user3@example.com') do |user_attr|
+  user_attr.password = 'secret'
 end
-Profile.find_or_create_by!(user: user4) do |profile|
-  profile.first_name = 'Jimmy'
-  profile.last_name = 'Neutron'
-  profile.skill_level = 'beginner'
+Profile.find_or_create_by!(user: user3) do |profile_attr|
+  profile_attr.first_name = 'Velma'
+  profile_attr.last_name = 'Dinkley'
+  profile_attr.skill_level = 'beginner'
+end
+
+user4 = User.find_or_create_by!(email: 'user4@example.com') do |user_attr|
+  user_attr.password = 'secret'
+end
+Profile.find_or_create_by!(user: user4) do |profile_attr|
+  profile_attr.first_name = 'Jimmy'
+  profile_attr.last_name = 'Neutron'
+  profile_attr.skill_level = 'beginner'
 end
 
 puts "Finished seeding #{User.count} users and #{Profile.count} profiles."
+
+# Resources Seeding
+resources = [
+  {
+    title: 'Resource 1',
+    url: 'https://example.com/resource1',
+    description: "I'm a description of resource one!",
+    user: user1
+  },
+  {
+    title: 'Resource 2',
+    url: 'https://example.com/resource2',
+    description: nil,
+    user: user1
+  },
+  {
+    title: 'Resource 3',
+    url: 'https://example.com/resource3',
+    description: "I'm a description of resource three! Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.",
+    user: user1
+  },
+  {
+    title: 'Resource 4',
+    url: 'https://example.com/resource4',
+    description: "I'm a description of resource four!",
+    user: user2
+  },
+  {
+    title: 'Resource 5',
+    url: 'https://example.com/resource5',
+    description: nil,
+    user: user2
+  }
+]
+
+puts 'Seeding initial resources...'
+
+resources.each do |resource|
+  Resource.find_or_create_by!(url: resource[:url]) do |resource_attr|
+    resource_attr.title = resource[:title]
+    resource_attr.description = resource[:description]
+    resource_attr.user = resource[:user]
+  end
+end
+
+puts "Finished seeding #{Resource.count} resources."
