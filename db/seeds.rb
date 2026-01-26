@@ -40,7 +40,7 @@ end
 Profile.find_or_create_by!(user: user1) do |profile|
   profile.first_name = 'Penny'
   profile.last_name = 'Gadget'
-  # profile.skill_level = 'beginner'
+  profile.skill_level = 'beginner'
 end
 
 user2 = User.find_or_create_by!(email: 'user2@example.com') do |user|
@@ -49,7 +49,7 @@ end
 Profile.find_or_create_by!(user: user2) do |profile|
   profile.first_name = 'Gadget'
   profile.last_name = 'Hackwrench'
-  # profile.skill_level = 'beginner'
+  profile.skill_level = 'beginner'
 end
 
 user3 = User.find_or_create_by!(email: 'user3@example.com') do |user|
@@ -58,7 +58,7 @@ end
 Profile.find_or_create_by!(user: user3) do |profile|
   profile.first_name = 'Velma'
   profile.last_name = 'Dinkley'
-  # profile.skill_level = 'beginner'
+  profile.skill_level = 'beginner'
 end
 
 user4 = User.find_or_create_by!(email: 'user4@example.com') do |user|
@@ -67,7 +67,7 @@ end
 Profile.find_or_create_by!(user: user4) do |profile|
   profile.first_name = 'Jimmy'
   profile.last_name = 'Neutron'
-  # profile.skill_level = 'beginner'
+  profile.skill_level = 'beginner'
 end
 
 puts "Finished seeding #{User.count} users and #{Profile.count} profiles."
