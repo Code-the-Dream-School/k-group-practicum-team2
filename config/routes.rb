@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # resource :profile, only: [ :show, :edit, :update ]
 
   resources :users do
-    resources :profiles
+    resources :profiles, only: [ :index, :show, :new, :create, :edit, :update ]
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
