@@ -5,6 +5,7 @@ one:
   first_name: Ally
   last_name: Wong
   bio: Hello
+  skill_level: junior
 
 
 two:
@@ -12,4 +13,5 @@ two:
   first_name: Jean
   last_name: K
   bio: Hi
+  skill_level: junior
 

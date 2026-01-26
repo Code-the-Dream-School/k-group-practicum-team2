@@ -25,7 +25,7 @@ The Web Developer Hub is a platform designed to connect developers, provide reso
 - **Profile Management** – Create a detailed profile with bio, avatar, and skills.
 - **Skill Management** – Admins can add/remove skills for consistent categorization.
 - **Resource Sharing** – Users can post, edit, and share developer resources.
-- **Project Showcasing** – Users can post projects, include tech stack and related skills.
+- **Project Showcasing** – Users can post projects including related skills.
 - **Bookmarking** – Save favorite resources and projects for future reference.
 - **Dashboard** – View personal resources, projects, bookmarks, and skills.
 - **Search & Filtering** – Find resources and projects by skill or keyword.
@@ -73,7 +73,7 @@ The Web Developer Hub is a platform designed to connect developers, provide reso
 
 ### Project
 - `id`, `user_id` (foreign key)
-- `title`, `description`, `tech_stack`
+- `title`, `description`
 - `created_at`, `updated_at`
 **Associations:**
 `belongs_to :user`
