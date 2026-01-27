@@ -17,6 +17,13 @@
       <%= button_to 'Delete Project', project_path(@project),
         method: :delete,
         class: "absolute top-16 right-6 bg-black text-red-600 px-4 py-2 rounded-lg hover:opacity-80 transition"%>
+    <% else %>
+      <% if current_user.bookmarked_projects.exists?(project: @project) %>
+        <% bookmark = current_user.bookmarked_projects.find_by(project: @project) %>
+        <%= button_to "Remove Bookmark", project_bookmarked_project_path(@project, bookmark), method: :delete, class: "absolute top-6 right-6 bg-black text-white px-4 py-2 rounded-lg hover:opacity-80 transition" %>
+      <% else %>
+        <%= button_to "Bookmark Project", project_bookmarked_projects_path(@project), method: :post, class: "absolute top-6 right-6 bg-black text-white px-4 py-2 rounded-lg hover:opacity-80 transition" %>
+      <% end %>
     <% end %>
   </div>
 </div>

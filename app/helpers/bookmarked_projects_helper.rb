@@ -1,0 +1,2 @@
+module BookmarkedProjectsHelper
+end
