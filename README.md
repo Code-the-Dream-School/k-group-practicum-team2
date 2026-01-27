@@ -189,7 +189,7 @@ bundle exec rspec spec/requests/projects_spec.rb
 bundle exec rspec spec/models/profile_spec.rb
 ```
 
-### 5. Running Tests with Coverage
+### Running Tests with Coverage
 
 Run the test suite with code coverage enabled:
 
