@@ -7,6 +7,8 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+# Skills Seeding
 skills = [
     "Ruby on Rails",
     "Node",
@@ -56,3 +58,45 @@ profile_skill_map.each do |first_name, skill_names|
 end
 
 puts "Finished seeding profile skills."
+
+# Users Seeding
+puts "Seeding test users and corresponding profiles..."
+
+user1 = User.find_or_create_by!(email: 'user1@example.com') do |user|
+  user.password = 'secret'
+end
+Profile.find_or_create_by!(user: user1) do |profile|
+  profile.first_name = 'Penny'
+  profile.last_name = 'Gadget'
+  profile.skill_level = 'beginner'
+end
+
+user2 = User.find_or_create_by!(email: 'user2@example.com') do |user|
+  user.password = 'secret'
+end
+Profile.find_or_create_by!(user: user2) do |profile|
+  profile.first_name = 'Gadget'
+  profile.last_name = 'Hackwrench'
+  profile.skill_level = 'beginner'
+end
+
+user3 = User.find_or_create_by!(email: 'user3@example.com') do |user|
+  user.password = 'secret'
+end
+Profile.find_or_create_by!(user: user3) do |profile|
+  profile.first_name = 'Velma'
+  profile.last_name = 'Dinkley'
+  profile.skill_level = 'beginner'
+end
+
+user4 = User.find_or_create_by!(email: 'user4@example.com') do |user|
+  user.password = 'secret'
+end
+Profile.find_or_create_by!(user: user4) do |profile|
+  profile.first_name = 'Jimmy'
+  profile.last_name = 'Neutron'
+  profile.skill_level = 'beginner'
+end
+
+puts "Finished seeding #{User.count} users and #{Profile.count} profiles."
+
