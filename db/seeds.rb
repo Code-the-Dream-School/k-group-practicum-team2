@@ -99,4 +99,3 @@ Profile.find_or_create_by!(user: user4) do |profile|
 end
 
 puts "Finished seeding #{User.count} users and #{Profile.count} profiles."
-
