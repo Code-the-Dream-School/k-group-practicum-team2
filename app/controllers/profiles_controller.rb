@@ -20,7 +20,7 @@ class ProfilesController < ApplicationController
 
     if @profile.update(profile_params)
 
-      redirect_to user_profile_path(current_user.id, @profile.id)
+      redirect_to user_dashboard_path(current_user)
     else
       render :new, status: :unprocessable_entity
     end
