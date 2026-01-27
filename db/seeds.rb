@@ -31,48 +31,6 @@ end
 
 puts "Finished seeding #{Skill.count} skills."
 
-# Projects Seeding
-puts "Seeding projects..."
-
-projects_data = [
-    {
-        title: "Personal Portfolio Website",
-        description: "A personal portfolio website build with Ruby on rails and Tailwind CSS.",
-        status: 0,
-        user_email: "sisiwang242@gmail.com",
-        skill_names: [ "Ruby on Rails", "Tailwind CSS", "Git", "GitHub" ]
-    },
-    {
-        title: "E-commerce App",
-        description: "An online shop website with full CRUD and user authentication.",
-        status: 1,
-        user_email: "sisiwang242@gmail.com",
-        skill_names: [ "Ruby on Rails", "PostgreSQL", "React" ]
-    }
-]
-
-projects_data.each do |project_data|
-    user = User.find_by(email: project_data[:user_email])
-    next unless user
-
-    project = Project.find_or_create_by!(
-        title: project_data[:title],
-        user: user
-    ) do |project|
-        project.description = project_data[:description]
-        project.status = project_data[:status]
-    end
-
-    project_data[:skill_names].each do |skill_name|
-        skill = Skill.find_by(name: skill_name)
-        next unless skill
-
-        ProjectSkill.find_or_create_by!(project: project, skill: skill)
-    end
-end
-
-puts "Finished seeding projects: #{Project.count}"
-
 # Users Seeding
 puts "Seeding test users and corresponding profiles..."
 
@@ -113,3 +71,51 @@ Profile.find_or_create_by!(user: user4) do |profile|
 end
 
 puts "Finished seeding #{User.count} users and #{Profile.count} profiles."
+
+puts "Seeding projects..."
+
+projects_data = [
+  {
+    title: "Personal Portfolio Website",
+    description: "A personal portfolio website built with Ruby on Rails and Tailwind CSS.",
+    status: 0,
+    user_email: "user1@example.com",
+    skill_names: [ "Ruby on Rails", "Tailwind CSS", "Git", "GitHub" ]
+  },
+  {
+    title: "E-commerce App",
+    description: "An online shop website with full CRUD and user authentication.",
+    status: 1,
+    user_email: "user1@example.com",
+    skill_names: [ "Ruby on Rails", "PostgreSQL", "React" ]
+  }
+]
+
+projects_data.each do |project_data|
+  user = User.find_by(email: project_data[:user_email])
+  next unless user
+
+  project = Project.find_or_create_by!(
+    title: project_data[:title],
+    user: user
+  ) do |p|
+    p.description = project_data[:description]
+    p.status = project_data[:status]
+  end
+
+  skills_by_name = Skill.where(name: project_data[:skill_names]).index_by(&:name)
+  existing_skill_ids = ProjectSkill.where(
+    project: project,
+    skill_id: skills_by_name.values.map(&:id)
+  ).pluck(:skill_id)
+
+  project_data[:skill_names].each do |skill_name|
+    skill = skills_by_name[skill_name]
+    next unless skill
+    next if existing_skill_ids.include?(skill.id)
+
+    ProjectSkill.create!(project: project, skill: skill)
+  end
+end
+
+puts "Finished seeding projects: #{Project.count}"
