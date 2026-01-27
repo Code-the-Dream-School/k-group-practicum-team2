@@ -54,7 +54,7 @@ RSpec.describe "Profiles", type: :request do
                 expect(profile.last_name).to eq("Lee")
                 expect(profile.bio).to eq("Hello")
                 expect(profile.skill_level).to eq("junior")
-                expect(response).to redirect_to(user_profile_path(user_without_profile, profile))
+                expect(response).to redirect_to(user_dashboard_path(user_without_profile))
             end
         end
 
