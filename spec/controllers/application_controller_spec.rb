@@ -13,7 +13,7 @@ RSpec.describe ApplicationController, type: :controller do
 
       it "redirects to the user dashboard" do
         expect(controller.after_sign_in_path_for(user))
-          .to eq(user_dashboard_path(user))
+          .to eq(user_dashboard_path)
       end
     end
 
