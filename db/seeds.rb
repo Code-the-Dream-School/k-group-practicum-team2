@@ -71,3 +71,27 @@ Profile.find_or_create_by!(user: user4) do |profile|
 end
 
 puts "Finished seeding #{User.count} users and #{Profile.count} profiles."
+
+# Profile Skills Seeding
+puts "Seeding profile skills..."
+
+profile_skill_map = {
+  "Sisi"  => [ "Ruby on Rails", "React", "PostgreSQL", "Tailwind CSS", "Git", "GitHub" ],
+  "Penny" => [ "Ruby on Rails", "Git" ],
+  "Velma" => [ "Python" ]
+}
+
+profile_skill_map.each do |first_name, skill_list|
+  profile = Profile.find_by(first_name: first_name)
+  next unless profile
+
+  skills = Skill.where(name: skill_list)
+  skills.each do |skill|
+    ProfileSkill.find_or_create_by!(
+      profile: profile,
+      skill: skill
+    )
+  end
+end
+
+puts "Finished seeding profile skills."
