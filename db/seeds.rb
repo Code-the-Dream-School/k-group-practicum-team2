@@ -71,3 +71,51 @@ Profile.find_or_create_by!(user: user4) do |profile|
 end
 
 puts "Finished seeding #{User.count} users and #{Profile.count} profiles."
+
+# Resources Seeding
+resources = [
+  {
+    title: 'Resource 1',
+    url: 'https://example.com/resource1',
+    description: "I'm a description of resource one!",
+    user: user1
+  },
+  {
+    title: 'Resource 2',
+    url: 'https://example.com/resource2',
+    description: nil,
+    user: user1
+  },
+  {
+    title: 'Resource 3',
+    url: 'https://example.com/resource3',
+    description: "I'm a description of resource three! Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.",
+    user: user1
+  },
+  {
+    title: 'Resource 4',
+    url: 'https://example.com/resource4',
+    description: "I'm a description of resource four!",
+    user: user2
+  },
+  {
+    title: 'Resource 5',
+    url: 'https://example.com/resource5',
+    description: nil,
+    user: user2
+  }
+]
+
+puts 'Seeding initial resources...'
+
+resources.each do |resource|
+  resource_record = Resource.find_or_initialize_by(url: resource[:url])
+  resource_record.assign_attributes(
+    title: resource[:title],
+    description: resource[:description],
+    user: resource[:user]
+  )
+  resource_record.save!
+end
+
+puts "Finished seeding #{Resource.count} resources."
