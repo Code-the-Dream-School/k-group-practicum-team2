@@ -40,3 +40,6 @@
 
 .idea/
 
+# Ignore coverage reports
+/coverage/
+
