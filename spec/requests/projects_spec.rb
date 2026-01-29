@@ -60,7 +60,7 @@ RSpec.describe "Projects", type: :request do
       description: 'New project description three.',
       status: "both",
       skills: [ skill1 ],
-      user: user2,
+      user: user2
     )
   end
 
