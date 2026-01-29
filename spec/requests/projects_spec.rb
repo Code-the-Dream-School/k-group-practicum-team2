@@ -39,7 +39,8 @@ RSpec.describe "Projects", type: :request do
       description: 'Test project description one.',
       status: "mentors",
       skills: [ skill1, skill2 ],
-      user: user1
+      user: user1,
+      url: "https://example.com"
     )
   end
 
@@ -59,7 +60,7 @@ RSpec.describe "Projects", type: :request do
       description: 'New project description three.',
       status: "both",
       skills: [ skill1 ],
-      user: user2
+      user: user2,
     )
   end
 
@@ -92,6 +93,9 @@ RSpec.describe "Projects", type: :request do
       expect(response.body).to include('Skill 1')
       expect(response.body).to include('Skill 2')
     end
+    it 'returns a page containing the project url when present' do
+      expect(response.body).to include('https://example.com')
+    end
   end
 
   describe 'GET /projects/:id' do
@@ -119,6 +123,9 @@ RSpec.describe "Projects", type: :request do
       expect(response.body).to include('Skill 1')
       expect(response.body).to include('Skill 2')
     end
+    it 'returns a page containing the project url when present' do
+      expect(response.body).to include('https://example.com')
+    end
   end
 
   describe 'GET /projects/new' do
@@ -143,11 +150,13 @@ RSpec.describe "Projects", type: :request do
           title: "New Project",
           description: 'Project description.',
           status: 'mentors',
+          url: "https://example.com",
           skill_ids: [ skill1.id ]
         }
       }
 
       expect(response).to redirect_to(projects_path)
+      expect(Project.last.url).to eq("https://example.com")
 
       expect(Project.last.title).to eq('New Project')
       expect(Project.last.description).to eq('Project description.')
@@ -193,6 +202,21 @@ RSpec.describe "Projects", type: :request do
           }
         }
       }.to_not change(Project, :count)
+    end
+    it 'does not create a project when url is invalid' do
+      expect {
+        post '/projects', params: {
+          project: {
+            title: "Invalid URL Project",
+            description: "Description",
+            status: "mentors",
+            url: "not-url",
+            skill_ids: [ skill1.id ]
+          }
+        }
+      }.not_to change(Project, :count)
+
+      expect(response).to have_http_status(:unprocessable_entity)
     end
   end
 
@@ -248,6 +272,17 @@ RSpec.describe "Projects", type: :request do
       expect(project1.skills).to_not include(skill1)
     end
 
+    it 'updates the project url when valid' do
+      put "/projects/#{project1.id}", params: {
+        project: {
+          url: "https://new-url.com"
+        }
+      }
+
+      expect(response).to redirect_to(project1)
+      project1.reload
+      expect(project1.url).to eq("https://new-url.com")
+    end
     it 'responds with 422 status when title is not provided' do
       put "/projects/#{project1.id}", params: {
         project: {
