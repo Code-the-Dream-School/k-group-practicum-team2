@@ -77,6 +77,7 @@ GEM
       uri (>= 0.13.1)
     addressable (2.8.8)
       public_suffix (>= 2.0.2, < 8.0)
+    ansi (1.5.0)
     ast (2.4.3)
     base64 (0.3.0)
     bcrypt (3.1.20)
@@ -116,6 +117,7 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.6.2)
+    docile (1.4.1)
     dotenv (3.2.0)
     drb (2.2.3)
     ed25519 (1.4.0)
@@ -354,6 +356,16 @@ GEM
       websocket (~> 1.0)
     shoulda-matchers (6.5.0)
       activesupport (>= 5.2.0)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-console (0.9.4)
+      ansi
+      simplecov
+      terminal-table
+    simplecov-html (0.13.2)
+    simplecov_json_formatter (0.1.4)
     solid_cable (3.0.12)
       actioncable (>= 7.2)
       activejob (>= 7.2)
@@ -398,6 +410,8 @@ GEM
     tailwindcss-ruby (4.1.18-x86_64-darwin)
     tailwindcss-ruby (4.1.18-x86_64-linux-gnu)
     tailwindcss-ruby (4.1.18-x86_64-linux-musl)
+    terminal-table (4.0.0)
+      unicode-display_width (>= 1.1.1, < 4)
     thor (1.4.0)
     thruster (0.1.16)
     thruster (0.1.16-aarch64-linux)
@@ -465,6 +479,8 @@ DEPENDENCIES
   rubocop-rails-omakase
   selenium-webdriver
   shoulda-matchers (~> 6.0)
+  simplecov
+  simplecov-console
   solid_cable
   solid_cache
   solid_queue
