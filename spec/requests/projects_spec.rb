@@ -283,6 +283,20 @@ RSpec.describe "Projects", type: :request do
       project1.reload
       expect(project1.url).to eq("https://new-url.com")
     end
+    it 'does not update the project url when invalid' do
+      original_url = project1.url
+
+      put "/projects/#{project1.id}", params: {
+        project: {
+          url: "not-a-valid-url"
+        }
+      }
+
+      expect(response).to have_http_status(:unprocessable_entity)
+
+      project1.reload
+      expect(project1.url).to eq(original_url)
+    end
     it 'responds with 422 status when title is not provided' do
       put "/projects/#{project1.id}", params: {
         project: {
