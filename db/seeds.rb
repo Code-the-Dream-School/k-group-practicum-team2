@@ -76,17 +76,27 @@ puts "Finished seeding #{User.count} users and #{Profile.count} profiles."
 puts "Seeding profile skills..."
 
 profile_skill_map = {
-  "Sisi"  => [ "Ruby on Rails", "React", "PostgreSQL", "Tailwind CSS", "Git", "GitHub" ],
-  "Penny" => [ "Ruby on Rails", "Git" ],
-  "Velma" => [ "Python" ]
+  "user1@example.com"  => [ "Ruby on Rails", "React", "PostgreSQL", "Tailwind CSS", "Git", "GitHub" ],
+  "user2@example.com" => [ "Ruby on Rails", "Git" ],
+  "user3@example.com" => [ "Python" ]
 }
 
-profile_skill_map.each do |first_name, skill_list|
-  profile = Profile.find_by(first_name: first_name)
-  next unless profile
+profile_skill_map.each do |email, skill_list|
+  user = User.find_by(email: email)
+  raise "Seed error: user not found for #{email}" unless user
 
-  skills = Skill.where(name: skill_list)
-  skills.each do |skill|
+  profile = Profile.find_by(user: user)
+  raise "Seed error: profile not found for #{email}" unless profile
+
+  matched_skills = Skill.where(name: skill_list)
+  missing_skills = skill_list - matched_skills.pluck(:name)
+
+  unless missing_skills.empty?
+    raise "Seed error: missing skills for profile #{first_name}: #{missing_skills.join(', ')}"
+  end
+
+
+  matched_skills.each do |skill|
     ProfileSkill.find_or_create_by!(
       profile: profile,
       skill: skill
