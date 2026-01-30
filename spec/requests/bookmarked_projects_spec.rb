@@ -33,14 +33,39 @@ RSpec.describe "BookmarkedProjects", type: :request do
     )
   end
 
+  let!(:bookmarked_project) do
+    BookmarkedProject.create!(
+      user: user1,
+      project: project2
+    )
+  end
+
   before do
     sign_in user1, scope: :user
   end
 
   describe 'POST /bookmarked_projects' do
-    it 'creates a new project bookmark'
-    it 'does not create duplicate bookmarks'
-    it 'does not bookmark a project that does not exist'
+    it 'creates a new project bookmark' do
+      expect {
+        post "/projects/#{project1.id}/bookmarked_projects"
+      }.to change(BookmarkedProject, :count)
+
+      expect(BookmarkedProject.last.user).to eq(user1)
+      expect(BookmarkedProject.last.project).to eq(project1)
+    end
+
+    it 'does not create duplicate bookmarks' do
+      expect {
+        post "/projects/#{project2.id}/bookmarked_projects"
+      }.to_not change(BookmarkedProject, :count)
+
+    end
+
+    it 'does not bookmark a project that does not exist' do
+      post '/projects/nope/bookmarked_projects'
+
+      expect(response).to have_http_status(:not_found)
+    end
   end
 
   describe 'DELETE /bookmarked_projects' do
