@@ -1,0 +1,28 @@
+<div class="border rounded-lg p-4 flex flex-col items-center text-center shadow-sm">
+  <h2 class="text-lg font-semibold">
+    <%= project.title %>
+  </h2>
+
+  <% if project.project_skills.any? %>
+    <ul>
+      <%= render 'project_skills', project: project %>
+    </ul>
+  <% end %>
+
+  <p class="text-gray-600 mt-2">
+    <%= project.description %>
+  </p>
+
+  <%= render 'project_status', project: project %>
+
+  <%= link_to "View Project", project_path(project), class: "mt-3 text-blue-500 hover:underline" %>
+
+  <div>
+    <% if current_user.bookmarked_projects.exists?(project: project) %>
+      <img src="<%= asset_path('star-filled.svg') %>" alt='bookmark star' width='20' height='20' >
+    <% else %>
+      <img src="<%= asset_path('star-empty.svg') %>" alt='empty star' width='20' height='20' >
+    <% end %>
+  </div>
+</div>
+
