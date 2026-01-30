@@ -33,10 +33,17 @@ RSpec.describe "BookmarkedProjects", type: :request do
     )
   end
 
-  let!(:bookmarked_project) do
+  let!(:bookmarked_project1) do
     BookmarkedProject.create!(
       user: user1,
       project: project2
+    )
+  end
+
+  let!(:bookmarked_project2) do
+    BookmarkedProject.create!(
+      user: user2,
+      project: project1
     )
   end
 
@@ -48,7 +55,7 @@ RSpec.describe "BookmarkedProjects", type: :request do
     it 'creates a new project bookmark' do
       expect {
         post "/projects/#{project1.id}/bookmarked_projects"
-      }.to change(BookmarkedProject, :count)
+      }.to change(BookmarkedProject, :count).by(1)
 
       expect(BookmarkedProject.last.user).to eq(user1)
       expect(BookmarkedProject.last.project).to eq(project1)
@@ -69,7 +76,16 @@ RSpec.describe "BookmarkedProjects", type: :request do
   end
 
   describe 'DELETE /bookmarked_projects' do
-    it 'deletes the project bookmark'
-    it "does not allow a user to remove another user's bookmark"
+    it 'deletes the project bookmark' do
+      expect {
+        delete "/projects/#{project2.id}/bookmarked_projects/#{bookmarked_project1.id}"
+      }.to change(BookmarkedProject, :count).by(-1)
+    end
+
+    it "does not allow access to another user's bookmark" do
+      expect {
+        delete "/projects/#{project1.id}/bookmarked_projects/#{bookmarked_project2.id}"
+      }.to_not change(BookmarkedProject, :count)
+    end
   end
 end
