@@ -18,6 +18,14 @@
       <%= render 'project_status', project: project %>
 
       <%= link_to "View Project", project_path(project), class: "mt-3 text-blue-500 hover:underline" %>
+
+      <div>
+        <% if current_user.bookmarked_projects.exists?(project: project) %>
+          <img src="<%= asset_path('star-filled.svg') %>" alt='bookmark star' width='20' height='20' >
+        <% else %>
+          <img src="<%= asset_path('star-empty.svg') %>" alt='empty star' width='20' height='20' >
+        <% end %>
+      </div>
     </div>
   <% end %>
 
