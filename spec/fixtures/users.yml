@@ -17,3 +17,5 @@ three:
   email: "three@example.com"
   encrypted_password: <%= Devise::Encryptor.digest(User, "password123") %>
 
+without_profile:
+  email: "noprof@example.com"
