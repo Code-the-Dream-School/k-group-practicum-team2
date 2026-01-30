@@ -155,4 +155,3 @@ resources.each do |resource|
 end
 
 puts "Finished seeding #{Resource.count} resources."
-
