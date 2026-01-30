@@ -93,12 +93,14 @@ profile_skill_map.each do |email, skill_list|
   missing_skills = skill_list - matched_skills.pluck(:name)
 
   unless missing_skills.empty?
-    raise "Seed error: missing skills for profile #{first_name}: #{missing_skills.join(', ')}"
+    raise "Seed error: missing skills for profile with email #{email}: #{missing_skills.join(', ')}"
   end
 
+  existing_skill_ids = ProfileSkill.where(profile: profile, skill: matched_skills).pluck(:skill_id)
+  skills_to_create = matched_skills.reject { |skill| existing_skill_ids.include?(skill.id) }
 
-  matched_skills.each do |skill|
-    ProfileSkill.find_or_create_by!(
+  skills_to_create.each do |skill|
+    ProfileSkill.create!(
       profile: profile,
       skill: skill
     )
