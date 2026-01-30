@@ -14,7 +14,9 @@
       <p class="text-gray-600 mt-2">
         <%= project.description %>
       </p>
-      <%= link_to "Project Repo ", project&.url, target: :_blank, rel: :noopener%>
+      <% if project&.url.present? %>
+        <%= link_to "Project Repo ", project.url, target: :_blank, rel: :noopener %>
+      <% end %>
       <%= render 'project_status', project: project %>
 
 
