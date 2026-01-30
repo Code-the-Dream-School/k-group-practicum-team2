@@ -94,7 +94,10 @@ projects_data = [
 
 projects_data.each do |project_data|
   user = User.find_by(email: project_data[:user_email])
-  next unless user
+  unless user
+    puts "User not found for email #{project_data[:user_email]}"
+    next
+  end
 
   project = Project.find_or_create_by!(
     title: project_data[:title],
@@ -112,8 +115,15 @@ projects_data.each do |project_data|
 
   project_data[:skill_names].each do |skill_name|
     skill = skills_by_name[skill_name]
-    next unless skill
-    next if existing_skill_ids.include?(skill.id)
+    unless skill
+      puts "Skill '#{skill_name}' not found - skipping for project '#{project.title}'"
+      next
+    end
+
+    if existing_skill_ids.include?(skill.id)
+      puts "Skill '#{skill_name}' already associated with project '#{project.title}'"
+      next
+    end
 
     ProjectSkill.create!(project: project, skill: skill)
   end
