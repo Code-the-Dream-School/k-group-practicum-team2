@@ -3,5 +3,6 @@ class DashboardController < ApplicationController
 
   def index
     @user = current_user
+    @bookmarked_projects = current_user.bookmarked_projects.includes(:project).map(&:project)
   end
 end

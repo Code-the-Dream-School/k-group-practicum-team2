@@ -5,7 +5,7 @@
 
   <% if project.project_skills.any? %>
     <ul>
-      <%= render 'project_skills', project: project %>
+      <%= render 'projects/project_skills', project: project %>
     </ul>
   <% end %>
 
@@ -13,7 +13,7 @@
     <%= project.description %>
   </p>
 
-  <%= render 'project_status', project: project %>
+  <%= render 'projects/project_status', project: project %>
 
   <%= link_to "View Project", project_path(project), class: "mt-3 text-blue-500 hover:underline" %>
 
