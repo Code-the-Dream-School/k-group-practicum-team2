@@ -65,7 +65,6 @@ RSpec.describe "BookmarkedProjects", type: :request do
       expect {
         post "/projects/#{project2.id}/bookmarked_projects"
       }.to_not change(BookmarkedProject, :count)
-
     end
 
     it 'does not bookmark a project that does not exist' do
