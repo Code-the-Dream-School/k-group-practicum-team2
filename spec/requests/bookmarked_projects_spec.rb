@@ -59,6 +59,8 @@ RSpec.describe "BookmarkedProjects", type: :request do
 
       expect(BookmarkedProject.last.user).to eq(user1)
       expect(BookmarkedProject.last.project).to eq(project1)
+      expect(response).to redirect_to(project_path(project1))
+      expect(flash[:notice]).to eq("Test Project 1 successfully bookmarked!")
     end
 
     it 'does not create duplicate bookmarks' do
@@ -75,16 +77,22 @@ RSpec.describe "BookmarkedProjects", type: :request do
   end
 
   describe 'DELETE /bookmarked_projects' do
-    it 'deletes the project bookmark' do
+    it 'deletes the project bookmark and redirects with an appropriate flash message' do
       expect {
         delete "/projects/#{project2.id}/bookmarked_projects/#{bookmarked_project1.id}"
       }.to change(BookmarkedProject, :count).by(-1)
+
+      expect(response).to redirect_to(project_path(project2))
+      expect(flash[:notice]).to eq("Project is no longer bookmarked.")
     end
+
 
     it "does not allow access to another user's bookmark" do
       expect {
         delete "/projects/#{project1.id}/bookmarked_projects/#{bookmarked_project2.id}"
       }.to_not change(BookmarkedProject, :count)
+
+      expect(response).to have_http_status(:not_found)
     end
   end
 end

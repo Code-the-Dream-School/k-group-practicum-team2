@@ -1,4 +1,4 @@
-`<div class="min-h-screen bg-gray-100 py-10">
+<div class="min-h-screen bg-gray-100 py-10">
   <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-2xl p-8 relative">
     <h1 class="text-3xl font-bold text-center text-gray-500"><%= @project.title %></h1>
 
@@ -18,10 +18,10 @@
         method: :delete,
         class: "absolute top-16 right-6 bg-black text-red-600 px-4 py-2 rounded-lg hover:opacity-80 transition"%>
     <% else %>
-      <% if current_user.bookmarked_projects.exists?(project: @project) %>
+      <% bookmark = current_user.bookmarked_projects.find_by(project: @project) %>
+      <% if bookmark %>
         <div class="absolute top-6 right-6 flex items-center gap-2" >
           <img src="<%= asset_path('star-filled.svg') %>" alt='bookmark star' width='20' height='20' >
-          <% bookmark = current_user.bookmarked_projects.find_by(project: @project) %>
           <%= button_to "Remove Bookmark", project_bookmarked_project_path(@project, bookmark), method: :delete,
            class: 'bg-black text-white px-4 py-2 rounded-lg hover:opacity-80 transition' %>
         </div>

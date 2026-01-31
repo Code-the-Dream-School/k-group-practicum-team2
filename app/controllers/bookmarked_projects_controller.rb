@@ -6,9 +6,9 @@ class BookmarkedProjectsController < ApplicationController
     @bookmarked_project = current_user.bookmarked_projects.new(project: @project)
 
     if @bookmarked_project.save
-      flash[:notice] = "#{@project.title} bookmarked!"
+      flash[:notice] = "#{@project.title} successfully bookmarked!"
     else
-      flash[:notice] = "#{@project.title} failed to be saved as a bookmark."
+      flash[:alert] = "#{@project.title} failed to be saved as a bookmark."
     end
 
     redirect_back(fallback_location: project_path(@project))
@@ -19,8 +19,6 @@ class BookmarkedProjectsController < ApplicationController
     @project = @bookmarked_project.project
     @bookmarked_project.destroy
 
-    flash[:notice] = "Project is no longer bookmarked."
-
-    redirect_back(fallback_location: project_path(@project))
+    redirect_back(fallback_location: project_path(@project), notice: "Project is no longer bookmarked.")
   end
 end
