@@ -72,6 +72,101 @@ end
 
 puts "Finished seeding #{User.count} users and #{Profile.count} profiles."
 
+
+# Profile Skills Seeding
+puts "Seeding profile skills..."
+
+profile_skill_map = {
+  "user1@example.com"  => [ "Ruby on Rails", "React", "PostgreSQL", "Tailwind CSS", "Git", "GitHub" ],
+  "user2@example.com" => [ "Ruby on Rails", "Git" ],
+  "user3@example.com" => [ "Python" ]
+}
+
+profile_skill_map.each do |email, skill_list|
+  user = User.find_by(email: email)
+  raise "Seed error: user not found for #{email}" unless user
+
+  profile = Profile.find_by(user: user)
+  raise "Seed error: profile not found for #{email}" unless profile
+
+  matched_skills = Skill.where(name: skill_list)
+  missing_skills = skill_list - matched_skills.pluck(:name)
+
+  unless missing_skills.empty?
+    raise "Seed error: missing skills for profile with email #{email}: #{missing_skills.join(', ')}"
+  end
+
+  existing_skill_ids = ProfileSkill.where(profile: profile, skill: matched_skills).pluck(:skill_id)
+  skills_to_create = matched_skills.reject { |skill| existing_skill_ids.include?(skill.id) }
+
+  skills_to_create.each do |skill|
+    ProfileSkill.create!(
+      profile: profile,
+      skill: skill
+    )
+  end
+end
+
+puts "Finished seeding profile skills."
+
+puts "Seeding projects..."
+
+projects_data = [
+  {
+    title: "Personal Portfolio Website",
+    description: "A personal portfolio website built with Ruby on Rails and Tailwind CSS.",
+    status: 0,
+    user_email: "user1@example.com",
+    skill_names: [ "Ruby on Rails", "Tailwind CSS", "Git", "GitHub" ]
+  },
+  {
+    title: "E-commerce App",
+    description: "An online shop website with full CRUD and user authentication.",
+    status: 1,
+    user_email: "user1@example.com",
+    skill_names: [ "Ruby on Rails", "PostgreSQL", "React" ]
+  }
+]
+
+projects_data.each do |project_data|
+  user = User.find_by(email: project_data[:user_email])
+  unless user
+    puts "User not found for email #{project_data[:user_email]}"
+    next
+  end
+
+  project = Project.find_or_create_by!(
+    title: project_data[:title],
+    user: user
+  ) do |p|
+    p.description = project_data[:description]
+    p.status = project_data[:status]
+  end
+
+  skills_by_name = Skill.where(name: project_data[:skill_names]).index_by(&:name)
+  existing_skill_ids = ProjectSkill.where(
+    project: project,
+    skill_id: skills_by_name.values.map(&:id)
+  ).pluck(:skill_id)
+
+  project_data[:skill_names].each do |skill_name|
+    skill = skills_by_name[skill_name]
+    unless skill
+      puts "Skill '#{skill_name}' not found - skipping for project '#{project.title}'"
+      next
+    end
+
+    if existing_skill_ids.include?(skill.id)
+      puts "Skill '#{skill_name}' already associated with project '#{project.title}'"
+      next
+    end
+
+    ProjectSkill.create!(project: project, skill: skill)
+  end
+end
+
+puts "Finished seeding projects: #{Project.count}"
+
 # Resources Seeding
 resources = [
   {
