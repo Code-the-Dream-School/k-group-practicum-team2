@@ -21,6 +21,11 @@
       </div>
 
       <div>
+        <%= form.label :url, class: "block font-medium mb-1" %>
+        <%= form.text_field :url,  class: "w-full border rounded-lg px-3 py-2" %>
+      </div>
+
+      <div>
         <%= form.label :status, class: "block font-medium mb-1" %>
         <%= form.select :status, Project.statuses.keys.map { |s| [s.humanize, s] }, prompt: "Project status" %>
       </div>

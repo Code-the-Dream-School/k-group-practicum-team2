@@ -62,5 +62,44 @@ RSpec.describe Project, type: :model do
       expect(project.valid?).to be false
       expect(project.errors[:title]).to include("can't be blank")
     end
+
+    it "is valid with a nil url" do
+      project = Project.new(
+        title: "My Project",
+        url: nil,
+        user: user
+      )
+      expect(project).to be_valid
+    end
+    it "is valid with an empty url" do
+      project = Project.new(
+        title: "My Project",
+        url: "",
+        user: user
+      )
+
+      expect(project).to be_valid
+    end
+
+    it "is invalid with a malformed url" do
+      project = Project.new(
+        title: "My Project",
+        url: "not-a-url",
+        user: user
+      )
+
+      expect(project).not_to be_valid
+      expect(project.errors[:url]).to include("is invalid")
+    end
+
+    it "is valid,  properly formatted url" do
+      project = Project.new(
+        title: "My Project",
+        url: "https://example.com",
+        user: user
+      )
+
+      expect(project).to be_valid
+    end
   end
 end

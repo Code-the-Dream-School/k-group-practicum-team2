@@ -9,8 +9,12 @@
     <% end %>
 
     <p class="text-gray-600 text-center mb-2"><%= @project.description %></p>
-
+    <% if @project&.url.present? %>
+      <%= link_to "Project Repo ", @project.url, target: :_blank, rel: :noopener %>
+    <% end %>
     <%= render 'project_status', project: @project %>
+
+
 
     <% if @project.user == current_user %>
       <%= link_to "Edit Project", edit_project_path(@project), class: "absolute top-6 right-6 bg-black text-white px-4 py-2 rounded-lg hover:opacity-80 transition" %>
