@@ -19,3 +19,4 @@ three:
 
 without_profile:
   email: "noprof@example.com"
+  encrypted_password: <%= Devise::Encryptor.digest(User, "password123") %>
