@@ -22,5 +22,7 @@ Rails.application.routes.draw do
   root "home#index"
 
   resources :resources
-  resources :projects
+  resources :projects do
+    resources :bookmarked_projects, only: [ :create, :destroy ]
+  end
 end

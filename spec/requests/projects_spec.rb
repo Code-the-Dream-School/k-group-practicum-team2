@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Projects", type: :request do
   let!(:user1) do
     User.create!(
-      email: 'user@example.com',
+      email: 'user1@example.com',
       password: 'secret'
     )
   end

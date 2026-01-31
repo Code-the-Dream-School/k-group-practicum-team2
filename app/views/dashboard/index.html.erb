@@ -16,7 +16,7 @@
       <%# User name and skill level %>
       <div class="text-center">
         <h2 class="text-lg font-semibold">
-          <%= [@user&.profile&.first_name, @user&.profile&.last_name].compact.join(" ") || "Guest" %> 
+          <%= [@user&.profile&.first_name, @user&.profile&.last_name].compact.join(" ") || "Guest" %>
         </h2>
         <p class="text-sm text-gray-600"><span>☆</span> Skill level</p>
       </div>
@@ -57,10 +57,13 @@
     <%# bookmarked projects %>
     <div class="w-full max-w-3xl">
       <h2 class="text-left font-semibold text-lg sm:text-xl">Bookmarked Projects</h2>
-      <%# bookmarked projects cards %>
-      <div class="mt-2">
-        <%# placeholder card container %>
-      </div>
+      <% if @bookmarked_projects.any? %>
+        <% @bookmarked_projects.each do |project| %>
+          <%= render partial: "projects/project", locals: { project: project } %>
+        <% end %>
+      <% else %>
+        <p>No bookmarked projects.</p>
+      <% end %>
     </div>
 
     <%# my shared resources %>

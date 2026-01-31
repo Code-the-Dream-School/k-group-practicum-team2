@@ -202,3 +202,9 @@ COVERAGE=true bundle exec rspec
 - **Console Output** — Coverage summary and file-by-file breakdown are displayed directly in the terminal after tests complete
 - **HTML Report** — Detailed coverage report with line-by-line highlighting is generated in `coverage/index.html`. Open this file in your browser for an interactive view
 - **CI Logs** — In GitHub Actions, expand the "Run RSpec" step to view console coverage output. HTML reports are available as downloadable artifacts
+
+---
+
+## Icons
+
+Star icons used for bookmarking feature from [Star SVG Repo](https://www.svgrepo.com/).
