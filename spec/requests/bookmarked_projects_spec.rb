@@ -67,6 +67,9 @@ RSpec.describe "BookmarkedProjects", type: :request do
       expect {
         post "/projects/#{project2.id}/bookmarked_projects"
       }.to_not change(BookmarkedProject, :count)
+
+      expect(response).to redirect_to(project_path(project2))
+      expect(flash[:alert]).to eq("Test Project 2 failed to be saved as a bookmark.")
     end
 
     it 'does not bookmark a project that does not exist' do
