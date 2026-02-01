@@ -101,5 +101,16 @@ RSpec.describe Project, type: :model do
 
       expect(project).to be_valid
     end
+    it "is invalid with a non-http/https protocol" do
+      project = Project.new(
+        title: "Test Project",
+        status: "mentors",
+        user: user,
+        url: "ftp://example.com"
+      )
+
+      expect(project).to be_invalid
+      expect(project.errors[:url]).to be_present
+    end
   end
 end
