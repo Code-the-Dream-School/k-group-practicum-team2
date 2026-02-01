@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_23_211157) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_29_154837) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -92,6 +92,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_23_211157) do
     t.integer "status", default: 0, null: false
     t.string "title"
     t.datetime "updated_at", null: false
+    t.string "url"
     t.integer "user_id", null: false
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
@@ -124,8 +125,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_23_211157) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bookmarked_projects", "projects"
   add_foreign_key "bookmarked_projects", "users"
   add_foreign_key "bookmarked_resources", "resources"
