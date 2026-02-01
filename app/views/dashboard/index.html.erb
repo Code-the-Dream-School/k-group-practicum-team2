@@ -59,7 +59,7 @@
       <h2 class="text-left font-semibold text-lg sm:text-xl">Bookmarked Projects</h2>
       <% if @bookmarked_projects.any? %>
         <% @bookmarked_projects.each do |project| %>
-          <%= render partial: "projects/project", locals: { project: project } %>
+          <%= render partial: "projects/project", locals: { project: project, bookmarked_project_ids: @bookmarked_project_ids } %>
         <% end %>
       <% else %>
         <p>No bookmarked projects.</p>
