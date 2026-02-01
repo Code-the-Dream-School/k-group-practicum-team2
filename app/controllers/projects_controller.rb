@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = Project.all
+    @bookmarked_project_ids = current_user.bookmarked_projects.pluck(:project_id).to_set
   end
 
   def show
