@@ -12,6 +12,20 @@
         <%= link_to resource.url, resource.url, target: "_blank", rel: "noopener" %>
       </p>
       <%= link_to "View Resource", resource_path(resource), class: "mt-3 text-blue-500 hover:underline" %>
+
+      <% is_bookmarked =
+        if local_assigns[:bookmarked_resource_ids]
+          bookmarked_resource_ids.include?(resource.id)
+        else
+          current_user.bookmarked_resources.exists?(resource: resource)
+        end
+      %>
+
+      <% if is_bookmarked %>
+        <img src="<%= asset_path('star-filled.svg') %>" alt='bookmark star' width='20' height='20' >
+      <% else %>
+        <img src="<%= asset_path('star-empty.svg') %>" alt='empty star' width='20' height='20' >
+      <% end %>
     </div>
   <% end %>
 
