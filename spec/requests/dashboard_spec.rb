@@ -63,6 +63,54 @@ RSpec.describe "Dashboards", type: :request do
     )
   end
 
+  let!(:resource1) do
+    Resource.create!(
+      title: 'Test Resource 1',
+      description: 'Test description one.',
+      url: 'https://example.com/resource1',
+      user: user1
+    )
+  end
+
+  let!(:resource2) do
+    Resource.create!(
+      title: 'Test Resource 2',
+      description: 'Test description two.',
+      url: 'https://example.com/resource2',
+      user: user1
+    )
+  end
+
+  let!(:resource3) do
+    Resource.create!(
+      title: 'Test Resource 3',
+      description: 'Test description three.',
+      url: 'https://example.com/resource3',
+      user: user2
+    )
+  end
+
+  let!(:bookmarked_resource1) do
+    BookmarkedResource.create!(
+      user: user1,
+      resource: resource1
+    )
+  end
+
+  let!(:bookmarked_resource2) do
+    BookmarkedResource.create!(
+      user: user1,
+      resource: resource2
+    )
+  end
+
+  let!(:bookmarked_resource3) do
+    BookmarkedResource.create!(
+      user: user2,
+      resource: resource3
+    )
+  end
+
   before do
     sign_in user1, scope: :user
   end
@@ -81,8 +129,14 @@ RSpec.describe "Dashboards", type: :request do
       expect(response.body).to include('Test Project 2')
     end
 
+    it "displays a user's bookmarked resources" do
+      expect(response.body).to include('Test Resource 1')
+      expect(response.body).to include('Test Resource 2')
+    end
+
     it "does not display bookmarks belonging to another user" do
       expect(response.body).to_not include('Test Project 3')
+      expect(response.body).to_not include('Test Resource 3')
     end
   end
 end
