@@ -78,10 +78,13 @@
     <%# bookmarked resources %>
     <div class="w-full max-w-3xl">
       <h2 class="text-left font-semibold text-lg sm:text-xl">Bookmarked Resources</h2>
-      <%# bookmarked resources cards %>
-      <div class="mt-2">
-        <%# placeholder card container %>
-      </div>
+      <% if @bookmarked_resources.any? %>
+        <% @bookmarked_resources.each do |resource| %>
+          <%= render partial: "resources/resource", locals: { resource: resource, bookmarked_resource_ids: @bookmarked_resource_ids } %>
+        <% end %>
+      <% else %>
+        <p>No bookmarked resources.</p>
+      <% end %>
     </div>
   </section>
 </div>
