@@ -16,6 +16,16 @@ class Project < ApplicationRecord
     closed: 3
   }
 
+  def self.options_for_select
+    {
+      mentors: "Looking for mentors",
+      teammates: "Looking for teammates",
+      both: "Looking for both",
+      closed: "Closed"
+
+    }
+  end
+
   validates :title, presence: true
   validates :status, presence: true
   validates :url, format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]) }, allow_blank: true
