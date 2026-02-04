@@ -49,9 +49,13 @@
     <div class="w-full max-w-3xl">
       <h2 class="text-left font-semibold text-lg sm:text-xl">My Projects</h2>
       <%# my projects cards %>
-      <div class="mt-2">
-        <%# placeholder card container %>
-      </div>
+      <% if @projects.any? %>
+        <% @projects.each do |project| %>
+          <%= render partial: "projects/project", locals: { project: project } %>
+        <% end %>
+      <% else %>
+        <p>No projects yet.
+      <% end %>
     </div>
 
     <%# bookmarked projects %>

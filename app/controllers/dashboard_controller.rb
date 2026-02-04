@@ -11,5 +11,7 @@ class DashboardController < ApplicationController
     bookmarked_resources = current_user.bookmarked_resources
     @bookmarked_resources = bookmarked_resources.map(&:resource)
     @bookmarked_resource_ids = bookmarked_resources.pluck(:resource_id).to_set
+
+    @projects = current_user.projects
   end
 end
