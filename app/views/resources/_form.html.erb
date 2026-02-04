@@ -11,22 +11,26 @@
       <% end %>
 
       <div>
-        <%= form.label :title, class: "block font-medium mb-1" %>
-        <%= form.text_field :title, class: "w-full border rounded-lg px-3 py-2"%>
+        <%= form.label :title,"Title *", class: "block font-medium mb-1" %>
+        <%= form.text_field :title, placeholder: "Enter Resource Title",class: "w-full border rounded-lg px-3 py-2"%>
       </div>
 
       <div>
         <%= form.label :description, class: "block font-medium mb-1" %>
-        <%= form.text_area :description, rows: 8, class: "w-full border rounded-lg px-3 py-2" %>
+        <%= form.text_area :description, placeholder: "Describe your resource...",rows: 8, class: "w-full border rounded-lg px-3 py-2" %>
       </div>
 
       <div>
-        <%= form.label :url, "External link", class: "block font-medium mb-1" %>
-        <%= form.url_field :url, class: "w-full border rounded-lg px-3 py-2" %>
+        <%= form.label :url, "External Link *", class: "block font-medium mb-1" %>
+        <%= form.url_field :url, placeholder: "https://github.com/" ,class: "w-full border rounded-lg px-3 py-2" %>
       </div>
 
-      <div class="pt-4 text-center">
-        <%= form.submit @resource.new_record? ? "Create Resource" : "Update Resource", class: "bg-black text-white px-6 py-2 rounded-lg hover:opacity-80 transition" %>
+      <div class="pt-6 flex space-x-4 justify-center">
+        <%= link_to "Cancel",
+                    resources_path,
+                    class: "flex-1 py-3 border border-gray-300 rounded-lg text-black bg-white hover:bg-gray-100 transition text-lg font-medium text-center"
+        %>
+        <%= form.submit @resource.new_record? ? "Create Resource" : "Update Resource", class: "flex-1 py-3 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 transition text-lg text-center" %>
       </div>
     <% end %>
   </div>
