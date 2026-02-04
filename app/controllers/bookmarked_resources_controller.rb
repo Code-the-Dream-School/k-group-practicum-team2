@@ -15,9 +15,9 @@ class BookmarkedResourcesController < ApplicationController
   end
 
   def destroy
-    @bookmarked_resource = current_user.bookmarked_resources.find(params[:id])
-    @resource = @bookmarked_resource.resource
-    @bookmarked_resource.destroy
+    bookmarked_resource = current_user.bookmarked_resources.find(params[:id])
+    @resource = bookmarked_resource.resource
+    bookmarked_resource.destroy
 
     flash[:notice] = "Resource is no longer bookmarked."
     redirect_back(fallback_location: resource_path(@resource))
