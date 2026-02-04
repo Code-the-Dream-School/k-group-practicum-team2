@@ -1,5 +1,5 @@
 <div class="min-h-screen bg-gray-100 flex items-center justify-center py-10">
-  <div class="w-full max-w-xl bg-white rounded-2xl shadow-lg p-8">
+  <div class="w-full max-w-xl bg-white rounded-2xl shadow-lg p-6 sm:p-8">
     <%= form_with model: @resource, class: "space-y-5" do |form| %>
       <% if @resource.errors.any? %>
         <h2><%= pluralize(@resource.errors.count, "error") %>: Resource not saved:</h2>
@@ -25,7 +25,7 @@
         <%= form.url_field :url, placeholder: "https://github.com/" ,class: "w-full border rounded-lg px-3 py-2" %>
       </div>
 
-      <div class="pt-6 flex space-x-4 justify-center">
+      <div class="pt-6 flex flex-col sm:flex-row gap-4 justify-center">
         <%= link_to "Cancel",
                     resources_path,
                     class: "flex-1 py-3 border border-gray-300 rounded-lg text-black bg-white hover:bg-gray-100 transition text-lg font-medium text-center"
