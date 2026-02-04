@@ -15,9 +15,9 @@ class BookmarkedProjectsController < ApplicationController
   end
 
   def destroy
-    @bookmarked_project = current_user.bookmarked_projects.find(params[:id])
-    @project = @bookmarked_project.project
-    @bookmarked_project.destroy
+    bookmarked_project = current_user.bookmarked_projects.find(params[:id])
+    @project = bookmarked_project.project
+    bookmarked_project.destroy
 
     redirect_back(fallback_location: project_path(@project), notice: "Project is no longer bookmarked.")
   end
