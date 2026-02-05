@@ -11,6 +11,21 @@
       <%= button_to 'Delete Resource', resource_path(@resource),
         method: :delete,
         class: "absolute top-16 right-6 bg-black text-red-600 px-4 py-2 rounded-lg hover:opacity-80 transition"%>
+    <% else %>
+      <% bookmark = current_user.bookmarked_resources.find_by(resource: @resource) %>
+      <% if bookmark %>
+        <div class="absolute top-6 right-6 flex items-center gap-2" >
+          <img src="<%= asset_path('star-filled.svg') %>" alt='bookmark star' width='20' height='20' >
+          <%= button_to "Remove Bookmark", resource_bookmarked_resource_path(@resource, bookmark), method: :delete,
+           class: 'bg-black text-white px-4 py-2 rounded-lg hover:opacity-80 transition' %>
+        </div>
+      <% else %>
+        <div class="absolute top-6 right-6 flex items-center gap-2" >
+          <img src="<%= asset_path('star-empty.svg') %>" alt='empty star' width='20' height='20' >
+          <%= button_to "Bookmark Resource", resource_bookmarked_resources_path(@resource), method: :post,
+            class: 'bg-black text-white px-4 py-2 rounded-lg hover:opacity-80 transition' %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
