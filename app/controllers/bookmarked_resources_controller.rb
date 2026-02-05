@@ -19,7 +19,12 @@ class BookmarkedResourcesController < ApplicationController
     @resource = bookmarked_resource.resource
     bookmarked_resource.destroy
 
-    flash[:notice] = "Resource is no longer bookmarked."
+    if bookmarked_resource.destroy
+      flash[:notice] = "Resource is no longer bookmarked."
+    else
+      flash[:alert] = "The bookmark for #{@resource.title} failed to be deleted."
+    end
+
     redirect_back(fallback_location: resource_path(@resource))
   end
 end
