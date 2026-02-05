@@ -21,7 +21,10 @@ Rails.application.routes.draw do
   # root "posts#index"
   root "home#index"
 
-  resources :resources
+  resources :resources do
+    resources :bookmarked_resources, only: [ :create, :destroy ]
+  end
+
   resources :projects do
     resources :bookmarked_projects, only: [ :create, :destroy ]
   end
