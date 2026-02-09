@@ -3,10 +3,7 @@
   <div class="flex items-center gap-8">
     <!-- Logo -->
     <%= link_to root_path, class: "flex items-center mr-12 gap-2" do %>
-      <div 
-        class="w-8 h-8 flex items-center justify-center bg-blue-500 text-white px-3 py-1 rounded-lg text-xl font-semibold"
-        style="background: linear-gradient(to right, #3b82f6, #8b5cf6);"
-      >
+      <div class="w-8 h-8 flex items-center justify-center bg-gradient-to-r from-[#3b82f6] to-[#8b5cf6] text-white px-3 py-1 rounded-lg text-xl font-semibold">
         D
       </div>
       <span class="text-xl sm:text-2xl tracking-tight text-gray-900 font-semibold">
@@ -17,7 +14,7 @@
     <!-- Main navigation links -->
     <div class="flex items-center gap-8 text-gray-800">
       <% if user_signed_in? %>
-        <%= link_to user_dashboard_path, class: "nav-link flex items-center gap-2 text-gray-800" do %>
+        <%= link_to user_dashboard_path, class: "flex items-center gap-2 text-gray-800 p-2 hover:bg-blue-50 hover:text-blue-800 rounded-lg" do %>
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
             fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -26,7 +23,7 @@
           <span>Dashboard</span>
         <% end %>
 
-        <%= link_to resources_path, class: "nav-link flex items-center gap-2 text-gray-800" do %>
+        <%= link_to resources_path, class: "flex items-center gap-2 p-2 hover:bg-blue-50 hover:text-blue-800 rounded-lg" do %>
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
            fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -35,7 +32,7 @@
         <span>Resources</span>
         <% end %>
 
-        <%= link_to  projects_path, class: "nav-link flex items-center gap-2 text-gray-800" do %>
+        <%= link_to  projects_path, class: "flex items-center gap-2 text-gray-800 p-2 hover:bg-blue-50 hover:text-blue-800 rounded-lg" do %>
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
             fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -52,7 +49,7 @@
     <% if user_signed_in? %>
 
       <!-- Dashboard link with clean person icon -->
-      <%= link_to user_dashboard_path, class: "user-icon flex items-center justify-center rounded-lg transition" do %>
+      <%= link_to user_dashboard_path, class: "flex items-center justify-center rounded-lg transition p-2 hover:bg-blue-50 hover:text-blue-800" do %>
         <!-- Clean person icon -->
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -63,7 +60,7 @@
       <!-- Logout link with logout icon -->
       <%= link_to destroy_user_session_path,
             data: { turbo_method: :delete },
-            class: "logout-icon flex items-center justify-center rounded-lg transition" do %>
+            class: "flex items-center justify-center rounded-lg transition p-2 hover:bg-blue-50 hover:text-blue-800" do %>
         <!-- Logout icon -->
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
             fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -74,7 +71,7 @@
 
     <% else %>
       <%= link_to new_user_session_path,
-            class: "user-icon flex items-center justify-center rounded-lg transition" do %>
+            class: "flex items-center justify-center rounded-lg transition p-2 hover:bg-blue-50 hover:text-blue-800" do %>
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M5.121 17.804A9 9 0 0112 15a9 9 0 016.879 2.804M12 12a4 4 0 100-8 4 4 0 000 8z" />
@@ -91,23 +88,3 @@
     <% end %>
   </div>
 </nav>
-
-<style>
-.nav-link {
-  padding: 0.4rem 0.5rem;
-  border-radius: 0.375rem;
-}
-.nav-link:hover,
-.user-icon:hover,
-.logout-icon:hover,
-.signup-icon:hover {
-  background-color: #eff6ff;
-  color: #2563eb;
-}
-.user-icon,
-.logout-icon,
-.signup-icon {
-  padding: 0.4rem;
-}
-
-</style>

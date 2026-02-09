@@ -19,11 +19,5 @@
   }
   
 @layer components {
-  .logo-signature {
-    font-family: "Dancing Script", cursive;
-    font-size: 1.75rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-  }
 }
 
