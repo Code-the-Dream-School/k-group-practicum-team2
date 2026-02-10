@@ -14,13 +14,15 @@ RSpec.describe "BookmarkedProjects", type: :request do
       password: 'secret'
     )
   end
+  let!(:skill) { Skill.create!(name: "Rails") }
 
   let!(:project1) do
     Project.create!(
       title: 'Test Project 1',
       description: 'Test project description one.',
       status: 'mentors',
-      user: user1
+      user: user1,
+      skills: [ skill ]
     )
   end
 
@@ -29,7 +31,8 @@ RSpec.describe "BookmarkedProjects", type: :request do
       title: 'Test Project 2',
       description: 'Test project description two.',
       status: 'mentors',
-      user: user2
+      user: user2,
+    skills: [ skill ]
     )
   end
 
