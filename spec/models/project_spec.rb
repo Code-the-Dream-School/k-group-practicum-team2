@@ -8,13 +8,13 @@ RSpec.describe Project, type: :model do
 
   describe "associations" do
     it "belongs to a user" do
-      project = Project.create!(title: "Test Project", user: user, status: :mentors, skills: [skill])
+      project = Project.create!(title: "Test Project", user: user, status: :mentors, skills: [ skill ])
 
       expect(project.user).to eq(user)
     end
 
     it "can have many skills through project_skills" do
-      project = Project.create!(title: "Test Project", user: user, status: :mentors, skills: [skill])
+      project = Project.create!(title: "Test Project", user: user, status: :mentors, skills: [ skill ])
 
       skill1 = Skill.create!(name: "Rails")
       skill2 = Skill.create!(name: "React")
@@ -26,14 +26,14 @@ RSpec.describe Project, type: :model do
     end
 
     it "tracks users who bookmarked the project" do
-      project = Project.create!(title: "Test Project", user: owner, status: :mentors, skills: [skill])
+      project = Project.create!(title: "Test Project", user: owner, status: :mentors, skills: [ skill ])
       BookmarkedProject.create!(user: favoriter, project: project)
 
       expect(project.favorited_by).to include(favoriter)
     end
 
     it "destroys associated project_skills when deleted" do
-      project = Project.create!(title: "Test Project", user: user, status: :mentors, skills: [skill])
+      project = Project.create!(title: "Test Project", user: user, status: :mentors, skills: [ skill ])
 
 
 
@@ -41,7 +41,7 @@ RSpec.describe Project, type: :model do
       expect { project.destroy }.to change(ProjectSkill, :count).by(-1)
     end
     it "destroys associated bookmarked_projects when deleted" do
-      project = Project.create!(title: "Test Project", user: owner, status: :mentors, skills: [skill])
+      project = Project.create!(title: "Test Project", user: owner, status: :mentors, skills: [ skill ])
       project.bookmarked_projects.create!(user: user)
 
       expect { project.destroy }.to change(BookmarkedProject, :count).by(-1)
@@ -51,14 +51,14 @@ RSpec.describe Project, type: :model do
 
   describe "validations" do
     it "is invalid with an empty title ('')" do
-      project = Project.new(title: "", user: user, status: :mentors, skills: [skill])
+      project = Project.new(title: "", user: user, status: :mentors, skills: [ skill ])
 
       expect(project.valid?).to be false
       expect(project.errors[:title]).to include("can't be blank")
     end
 
     it "is invalid without a title - nil" do
-      project = Project.new(title: nil, user: user, status: :mentors, skills: [skill])
+      project = Project.new(title: nil, user: user, status: :mentors, skills: [ skill ])
 
       expect(project.valid?).to be false
       expect(project.errors[:title]).to include("can't be blank")
@@ -70,7 +70,7 @@ RSpec.describe Project, type: :model do
         url: nil,
         user: user,
         status: :mentors,
-        skills: [skill]
+        skills: [ skill ]
       )
       expect(project).to be_valid
     end
@@ -80,7 +80,7 @@ RSpec.describe Project, type: :model do
         url: "",
         user: user,
         status: :mentors,
-        skills: [skill]
+        skills: [ skill ]
       )
 
       expect(project).to be_valid
@@ -92,7 +92,7 @@ RSpec.describe Project, type: :model do
         url: "not-a-url",
         user: user,
         status: :mentors,
-        skills: [skill]
+        skills: [ skill ]
       )
 
       expect(project).not_to be_valid
@@ -105,7 +105,7 @@ RSpec.describe Project, type: :model do
         url: "https://example.com",
         user: user,
         status: :mentors,
-        skills: [skill]
+        skills: [ skill ]
       )
 
       expect(project).to be_valid
@@ -117,7 +117,7 @@ RSpec.describe Project, type: :model do
         user: user,
         url: "ftp://example.com",
         status: :mentors,
-        skills: [skill]
+        skills: [ skill ]
       )
 
       expect(project).to be_invalid
@@ -135,5 +135,4 @@ RSpec.describe Project, type: :model do
     expect(project).not_to be_valid
     expect(project.errors[:skills]).to include("can't be blank")
   end
-
 end
