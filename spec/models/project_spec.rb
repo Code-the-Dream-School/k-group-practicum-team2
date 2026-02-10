@@ -116,7 +116,6 @@ RSpec.describe Project, type: :model do
         status: :mentors,
         user: user,
         url: "ftp://example.com",
-        status: :mentors,
         skills: [ skill ]
       )
 
