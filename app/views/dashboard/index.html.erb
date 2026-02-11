@@ -1,59 +1,80 @@
-<div>
-  <%# Part 1 - profile section %>
-  <section class="bg-gray-300 py-6">
+<%# Part 1 - profile section with links %>
+<section class="bg-gray-300 py-6 px-4">
+  <div class="max-w-3xl mx-auto flex flex-col items-center gap-4">
+    <%# profile partial %>
     <%= render partial: "profiles/profile", locals: { profile: current_user.profile } %>
-  </section>
+  </div>
+</section>
 
-  <%# Part 2 - resources and projects %>
-  <section class="flex flex-col items-center gap-8 py-8">
-    <%# my projects %>
-    <div class="w-full max-w-3xl">
-      <h2 class="text-left font-semibold text-lg sm:text-xl">My Projects</h2>
-      <%# my projects cards %>
-      <% if @projects.any? %>
-        <% @projects.each do |project| %>
-          <%= render partial: "projects/project", locals: { project: project } %>
-        <% end %>
-      <% else %>
-        <p>No projects yet.
-      <% end %>
-    </div>
+<%# Part 2 - resources and projects %>
+<div class="min-h-screen bg-gray-100 py-10 px-4">
+  <div class="w-full max-w-5xl mx-auto bg-white rounded-2xl shadow-lg p-6 sm:p-8 space-y-8">
+    <section class="flex flex-col items-center gap-8 py-8">
+      <%# my projects %>
+      <div class="w-full max-w-3xl">
+        <h2 class="text-left font-semibold text-lg sm:text-xl mb-4">My Projects</h2>
+        <%# my projects cards %>
+        <div class="space-y-4">
+          <% if @projects.any? %>
+            <% @projects.each do |project| %>
+              <div class="p-4">
+                <%= render partial: "projects/project", locals: { project: project } %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-gray-500 italic">No projects yet.</p>
+          <% end %>
+        </div>
+      </div>
 
-    <%# bookmarked projects %>
-    <div class="w-full max-w-3xl">
-      <h2 class="text-left font-semibold text-lg sm:text-xl">Bookmarked Projects</h2>
-      <% if @bookmarked_projects.any? %>
-        <% @bookmarked_projects.each do |project| %>
-          <%= render partial: "projects/project", locals: { project: project, bookmarked_project_ids: @bookmarked_project_ids } %>
-        <% end %>
-      <% else %>
-        <p>No bookmarked projects.</p>
-      <% end %>
-    </div>
+      <%# bookmarked projects %>
+      <div class="w-full max-w-3xl">
+        <h2 class="text-left font-semibold text-lg sm:text-xl mb-4">Bookmarked Projects</h2>
+        <div class="space-y-4">
+          <% if @bookmarked_projects.any? %>
+            <% @bookmarked_projects.each do |project| %>
+              <div class="p-4">
+                <%= render partial: "projects/project", locals: { project: project, bookmarked_project_ids: @bookmarked_project_ids } %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-gray-500 italic">No bookmarked projects.</p>
+          <% end %>
+        </div>
+      </div>
 
-    <%# my shared resources %>
-    <div class="w-full max-w-3xl">
-      <h2 class="text-left font-semibold text-lg sm:text-xl">My Resources</h2>
-      <%# my resources cards %>
-      <% if @resources.any? %>
-        <% @resources.each do |resource| %>
-          <%= render partial: "resources/resource", locals: { resource: resource } %>
-        <% end %>
-      <% else %>
-        <p>No resources yet.
-      <% end %>
-    </div>
+      <%# my shared resources %>
+      <div class="w-full max-w-3xl">
+        <h2 class="text-left font-semibold text-lg sm:text-xl mb-4">My Resources</h2>
+        <%# my resources cards %>
+        <div class="space-y-4">
+          <% if @resources.any? %>
+            <% @resources.each do |resource| %>
+              <div class="p-4">
+                <%= render partial: "resources/resource", locals: { resource: resource } %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-gray-500 italic">No resources yet.</p>
+          <% end %>
+        </div>
+      </div>
 
-    <%# bookmarked resources %>
-    <div class="w-full max-w-3xl">
-      <h2 class="text-left font-semibold text-lg sm:text-xl">Bookmarked Resources</h2>
-      <% if @bookmarked_resources.any? %>
-        <% @bookmarked_resources.each do |resource| %>
-          <%= render partial: "resources/resource", locals: { resource: resource, bookmarked_resource_ids: @bookmarked_resource_ids } %>
-        <% end %>
-      <% else %>
-        <p>No bookmarked resources.</p>
-      <% end %>
-    </div>
-  </section>
+      <%# bookmarked resources %>
+      <div class="w-full max-w-3xl">
+        <h2 class="text-left font-semibold text-lg sm:text-xl mb-4">Bookmarked Resources</h2>
+        <div class="space-y-4">
+          <% if @bookmarked_resources.any? %>
+            <% @bookmarked_resources.each do |resource| %>
+              <div class="p-4">
+                <%= render partial: "resources/resource", locals: { resource: resource, bookmarked_resource_ids: @bookmarked_resource_ids } %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-gray-500 italic">No bookmarked resources.</p>
+          <% end %>
+        </div>
+      </div>
+    </section>
+  </div>
 </div>
