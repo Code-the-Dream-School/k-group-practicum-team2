@@ -122,16 +122,17 @@ RSpec.describe Project, type: :model do
       expect(project).to be_invalid
       expect(project.errors[:url]).to be_present
     end
-  end
-  it "is invalid without any skills" do
-    project = Project.new(
-      title: "Test Project",
-      user: user,
-      status: :mentors,
-      skills: []
-    )
 
-    expect(project).not_to be_valid
-    expect(project.errors[:skills]).to include("can't be blank")
+    it "is invalid without any skills" do
+      project = Project.new(
+        title: "Test Project",
+        user: user,
+        status: :mentors,
+        skills: []
+      )
+
+      expect(project).not_to be_valid
+      expect(project.errors[:skills]).to include("can't be blank")
+    end
   end
 end
