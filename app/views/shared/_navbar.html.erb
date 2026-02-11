@@ -58,9 +58,10 @@
       <% end %>
 
       <!-- Logout link with logout icon -->
-      <%= link_to destroy_user_session_path,
-            data: { turbo_method: :delete },
-            class: "flex items-center justify-center rounded-lg transition p-2 hover:bg-blue-50 hover:text-blue-800" do %>
+      <%= button_to destroy_user_session_path,
+          method: :delete,
+          form: { data: { turbo: false }},
+          class: "flex items-center justify-center rounded-lg transition p-2 hover:bg-blue-50 hover:text-blue-800" do %>
         <!-- Logout icon -->
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
             fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -78,12 +79,9 @@
         </svg>
       <% end %>
       <%= link_to new_user_registration_path,
-            class: "flex items-center justify-center rounded-lg transition" do %>
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
-            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
-        </svg>
+            class: "px-4 py-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#8b5cf6] 
+              text-white font-semibold hover:opacity-90 transition" do %>
+        Sign up
       <% end %>
     <% end %>
   </div>
