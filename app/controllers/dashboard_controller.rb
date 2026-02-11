@@ -13,5 +13,6 @@ class DashboardController < ApplicationController
     @bookmarked_resource_ids = bookmarked_resources.pluck(:resource_id).to_set
 
     @projects = current_user.projects
+    @resources = current_user.resources
   end
 end

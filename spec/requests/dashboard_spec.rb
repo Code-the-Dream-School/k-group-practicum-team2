@@ -8,10 +8,28 @@ RSpec.describe "Dashboards", type: :request do
     )
   end
 
+  let!(:profile1) do
+    Profile.create!(
+      user: user1,
+      first_name: 'User',
+      last_name: 'One',
+      skill_level: 'beginner'
+    )
+  end
+
   let!(:user2) do
     User.create!(
       email: 'user2@example.com',
       password: 'secret'
+    )
+  end
+
+  let!(:profile2) do
+    Profile.create!(
+      user: user2,
+      first_name: 'User',
+      last_name: 'Two',
+      skill_level: 'beginner'
     )
   end
 

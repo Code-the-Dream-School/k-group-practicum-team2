@@ -33,11 +33,15 @@
 
     <%# my shared resources %>
     <div class="w-full max-w-3xl">
-      <h2 class="text-left font-semibold text-lg sm:text-xl">My Shared Resources</h2>
-      <%# my shared resources cards %>
-      <div class="mt-2">
-        <%# placeholder card container %>
-      </div>
+      <h2 class="text-left font-semibold text-lg sm:text-xl">My Resources</h2>
+      <%# my resources cards %>
+      <% if @resources.any? %>
+        <% @resources.each do |resource| %>
+          <%= render partial: "resources/resource", locals: { resource: resource } %>
+        <% end %>
+      <% else %>
+        <p>No resources yet.
+      <% end %>
     </div>
 
     <%# bookmarked resources %>

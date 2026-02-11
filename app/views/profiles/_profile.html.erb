@@ -2,7 +2,7 @@
 
 
     <div class="w-32 h-32 rounded-full overflow-hidden border bg-gray-300 flex-shrink-0">
-      <% if profile.avatar.attached? %>
+      <% if profile&.avatar&.attached? %>
         <%= image_tag profile.avatar, class: "w-full h-full object-cover" %>
       <% else %>
         <div class="w-full h-full flex items-center justify-center text-gray-500">
