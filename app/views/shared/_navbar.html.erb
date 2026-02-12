@@ -1,34 +1,88 @@
-<nav class="flex items-center justify-between px-6 sm:px-8 md:px-12 py-2 h-16 bg-gray-200 font-semibold">
+<nav class="flex items-center justify-between px-6 sm:px-8 md:px-12 py-2 h-16 shadow-sm">
   <!-- Left side: logo and main links -->
   <div class="flex items-center gap-8">
     <!-- Logo -->
-    <%= link_to root_path, class: "flex items-center mr-12" do %>
-      <span class="logo-signature text-2xl sm:text-3xl tracking-tight text-gray-900">
-        Developer
+    <%= link_to root_path, class: "flex items-center mr-12 gap-2" do %>
+      <div class="w-8 h-8 flex items-center justify-center bg-gradient-to-r from-[#3b82f6] to-[#8b5cf6] text-white rounded-lg text-xl font-semibold">
+        D
+      </div>
+      <span class="text-xl sm:text-2xl tracking-tight text-gray-900 font-semibold">
+        DeveloperHub
       </span>
     <% end %>
 
     <!-- Main navigation links -->
     <div class="flex items-center gap-8 text-gray-800">
       <% if user_signed_in? %>
-        <%= link_to "Dashboard", user_dashboard_path, class: "text-gray-800 hover:underline transition" %>
-        <%= link_to "Resources", resources_path, class: "text-gray-800 hover:underline transition" %>
-        <%= link_to "Projects", projects_path, class: "text-gray-800 hover:underline transition" %>
+        <%= link_to user_dashboard_path, class: "flex items-center gap-2 text-gray-800 p-2 hover:bg-blue-50 hover:text-blue-800 rounded-lg" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h5m4 0h5a1 1 0 001-1V10" />
+          </svg>
+          <span>Dashboard</span>
+        <% end %>
+
+        <%= link_to resources_path, class: "flex items-center gap-2 p-2 hover:bg-blue-50 hover:text-blue-800 rounded-lg" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
+           fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 6v14m0-14c-4 0-7 1-7 1v14s3-1 7-1 7 1 7 1V7s-3-1-7-1z" />
+        </svg>
+        <span>Resources</span>
+        <% end %>
+
+        <%= link_to  projects_path, class: "flex items-center gap-2 text-gray-800 p-2 hover:bg-blue-50 hover:text-blue-800 rounded-lg" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 7a2 2 0 012-2h5l2 2h7a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z" />
+          </svg>
+        <span>Projects</span>
+        <% end %>
       <% end %>
     </div>
   </div>
 
   <!-- Right side: auth links -->
-  <div class="flex items-center gap-6">
+  <div class="flex items-center gap-4">
     <% if user_signed_in? %>
-      <%= link_to "Logout", destroy_user_session_path,
-          data: { turbo_method: :delete },
-          class: "border border-gray-800 px-4 py-2 rounded hover:bg-gray-800 hover:text-white transition" %>
+
+      <!-- Dashboard link with clean person icon -->
+      <%= link_to user_dashboard_path, class: "flex items-center justify-center rounded-lg transition p-2 hover:bg-blue-50 hover:text-blue-800" do %>
+        <!-- Clean person icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5.121 17.804A9 9 0 0112 15a9 9 0 016.879 2.804M12 12a4 4 0 100-8 4 4 0 000 8z" />
+        </svg>
+      <% end %>
+
+      <!-- Logout link with logout icon -->
+      <%= button_to destroy_user_session_path,
+          method: :delete,
+          form: { data: { turbo: false }},
+          class: "flex items-center justify-center rounded-lg transition p-2 hover:bg-blue-50 hover:text-blue-800" do %>
+        <!-- Logout icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
+        </svg>
+      <% end %>
+
     <% else %>
-      <%= link_to "Login", new_user_session_path,
-          class: "border border-gray-800 px-4 py-2 rounded hover:bg-gray-800 hover:text-white transition" %>
-      <%= link_to "Sign Up", new_user_registration_path,
-          class: "border border-gray-800 px-4 py-2 rounded hover:bg-gray-800 hover:text-white transition" %>
+      <%= link_to new_user_session_path,
+            class: "flex items-center justify-center rounded-lg transition p-2 hover:bg-blue-50 hover:text-blue-800" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5.121 17.804A9 9 0 0112 15a9 9 0 016.879 2.804M12 12a4 4 0 100-8 4 4 0 000 8z" />
+        </svg>
+      <% end %>
+      <%= link_to new_user_registration_path,
+            class: "px-4 py-2 rounded-lg bg-gradient-to-r from-[#3b82f6] to-[#8b5cf6] 
+              text-white font-semibold hover:opacity-90 transition" do %>
+        Sign up
+      <% end %>
     <% end %>
   </div>
 </nav>

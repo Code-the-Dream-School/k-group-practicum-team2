@@ -25,6 +25,7 @@ RSpec.describe "Dashboards", type: :request do
       password: 'secret'
     )
   end
+  let!(:skill) { Skill.create!(name: "Rails") }
 
   let!(:profile2) do
     Profile.create!(
@@ -58,7 +59,8 @@ RSpec.describe "Dashboards", type: :request do
       title: 'Test Project 1',
       description: 'Test description one.',
       status: 'mentors',
-      user: user1
+      user: user1,
+      skills: [ skill ]
     )
   end
 
@@ -67,7 +69,8 @@ RSpec.describe "Dashboards", type: :request do
       title: 'Test Project 2',
       description: 'Test description two.',
       status: 'mentors',
-      user: user1
+      user: user1,
+      skills: [ skill ]
     )
   end
 
@@ -77,7 +80,8 @@ RSpec.describe "Dashboards", type: :request do
       title: 'Test Project 3',
       description: 'Test description three.',
       status: 'mentors',
-      user: user2
+      user: user2,
+      skills: [ skill ]
     )
   end
 
