@@ -3,7 +3,7 @@ class ResourcesController < ApplicationController
 
   def index
     @resources = Resource.all
-    @bookmarked_resource_ids = current_user.bookmarked_resources.pluck(:resource_id).to_set
+    @bookmarked_resource_ids = current_user.bookmarked_resources.pluck(:resource_id, :id).to_h
   end
 
   def show

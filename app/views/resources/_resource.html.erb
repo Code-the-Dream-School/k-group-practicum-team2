@@ -11,10 +11,10 @@
   </p>
   <%= link_to "View Resource", resource_path(resource), class: "mt-3 text-blue-500 hover:underline" %>
 
-  <% bookmark = current_user.bookmarked_resources.find_by(resource: resource) %>
+  <% bookmark_id = bookmarked_resource_ids[resource.id]%>
 
-  <% if bookmark %>
-    <%= button_to resource_bookmarked_resource_path(resource, bookmark),
+  <% if bookmark_id %>
+    <%= button_to resource_bookmarked_resource_path(resource, bookmark_id),
                   method: :delete,
                   class: "inline-block hover:scale-110 transition cursor-pointer" do %>
       <img src="<%= asset_path('star-filled.svg') %>"
