@@ -130,42 +130,30 @@ projects_data = [
 
 projects_data.each do |project_data|
   user = User.find_by(email: project_data[:user_email])
-  unless user
-    puts "User not found for email #{project_data[:user_email]}"
+  next unless user
+
+  matched_skills = Skill.where(name: project_data[:skill_names])
+
+  if matched_skills.empty?
+    puts "No skills found for project #{project_data[:title]}"
     next
   end
 
-  project = Project.find_or_create_by!(
+  project = Project.find_or_initialize_by(
     title: project_data[:title],
     user: user
-  ) do |p|
-    p.description = project_data[:description]
-    p.status = project_data[:status]
-  end
+  )
 
-  skills_by_name = Skill.where(name: project_data[:skill_names]).index_by(&:name)
-  existing_skill_ids = ProjectSkill.where(
-    project: project,
-    skill_id: skills_by_name.values.map(&:id)
-  ).pluck(:skill_id)
+  project.description = project_data[:description]
+  project.status = project_data[:status]
 
-  project_data[:skill_names].each do |skill_name|
-    skill = skills_by_name[skill_name]
-    unless skill
-      puts "Skill '#{skill_name}' not found - skipping for project '#{project.title}'"
-      next
-    end
+  project.skills = matched_skills
 
-    if existing_skill_ids.include?(skill.id)
-      puts "Skill '#{skill_name}' already associated with project '#{project.title}'"
-      next
-    end
+  project.save!
 
-    ProjectSkill.create!(project: project, skill: skill)
-  end
+  puts "Seeded project: #{project.title}"
 end
 
-puts "Finished seeding projects: #{Project.count}"
 
 # Resources Seeding
 resources = [
