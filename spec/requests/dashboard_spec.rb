@@ -90,7 +90,8 @@ RSpec.describe "Dashboards", type: :request do
       title: 'Test Project 4',
       description: 'Test description four.',
       status: 'mentors',
-      user: user2
+      user: user2,
+      skills: [ skill ]
     )
   end
 
@@ -100,7 +101,8 @@ RSpec.describe "Dashboards", type: :request do
       title: 'Test Project 5',
       description: 'Test description five.',
       status: 'mentors',
-      user: user3
+      user: user3,
+      skills: [ skill ]
     )
   end
 
