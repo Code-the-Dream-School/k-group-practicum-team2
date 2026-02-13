@@ -211,12 +211,12 @@ RSpec.describe "Dashboards", type: :request do
       expect(response).to have_http_status(:ok)
     end
 
-    it "displays a users own projects" do
+    it "displays a user's own projects" do
       expect(response.body).to include('Test Project 1')
       expect(response.body).to include('Test Project 2')
     end
 
-    it "displays a users own resources" do
+    it "displays a user's own resources" do
       expect(response.body).to include('Test Resource 1')
       expect(response.body).to include('Test Resource 2')
     end
