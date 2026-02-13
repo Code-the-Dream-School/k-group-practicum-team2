@@ -20,7 +20,7 @@ class ProjectsController < ApplicationController
     if @project.save
       redirect_to projects_path, notice: 'New project was created!'
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -34,7 +34,7 @@ class ProjectsController < ApplicationController
     if @project.update(project_params)
       redirect_to @project, notice: "#{@project.title} has been updated!"
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

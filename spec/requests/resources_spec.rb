@@ -149,7 +149,7 @@ RSpec.describe "Resources", type: :request do
         }
       }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     it 'does not create a resource when no url is provided' do
@@ -173,7 +173,7 @@ RSpec.describe "Resources", type: :request do
         }
       }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     it 'does not create a resource when url is invalid' do
@@ -197,7 +197,7 @@ RSpec.describe "Resources", type: :request do
         }
       }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
   end
 
@@ -274,7 +274,7 @@ RSpec.describe "Resources", type: :request do
         }
       }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
 
@@ -302,7 +302,7 @@ RSpec.describe "Resources", type: :request do
         }
       }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     it 'does not update the resource when url is invalid format' do
@@ -329,7 +329,7 @@ RSpec.describe "Resources", type: :request do
         }
       }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     it "does not allow access to another user's resource" do

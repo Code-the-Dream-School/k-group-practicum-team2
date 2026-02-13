@@ -19,7 +19,7 @@ class ResourcesController < ApplicationController
     if @resource.save
       redirect_to resources_path, notice: 'New resource was posted!'
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -33,7 +33,7 @@ class ResourcesController < ApplicationController
     if @resource.update(resource_params)
       redirect_to resource_path(@resource), notice: "#{@resource.title} has been updated!"
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

@@ -67,7 +67,7 @@ RSpec.describe "Profiles", type: :request do
                     profile: { first_name: "", last_name: "" }
                 }
 
-                expect(response).to have_http_status(:unprocessable_entity)
+                expect(response).to have_http_status(:unprocessable_content)
             end
         end
     end
@@ -85,7 +85,7 @@ RSpec.describe "Profiles", type: :request do
         context "with invalid params" do
             it "renders unprocessable entity" do
                 patch user_profile_path(user, profile), params: { profile: { first_name: "" } }
-                expect(response).to have_http_status(:unprocessable_entity)
+                expect(response).to have_http_status(:unprocessable_content)
             end
         end
     end

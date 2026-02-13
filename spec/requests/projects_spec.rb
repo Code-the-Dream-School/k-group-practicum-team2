@@ -188,7 +188,7 @@ RSpec.describe "Projects", type: :request do
           skill_ids: [ skill1.id ]
         }
       }
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     it 'does not create a project when no status is provided' do
@@ -216,7 +216,7 @@ RSpec.describe "Projects", type: :request do
         }
       }.not_to change(Project, :count)
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
   end
 
@@ -292,7 +292,7 @@ RSpec.describe "Projects", type: :request do
         }
       }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
 
       project1.reload
       expect(project1.url).to eq(original_url)
@@ -307,7 +307,7 @@ RSpec.describe "Projects", type: :request do
         }
       }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     it 'responds with 422 status when no status is provided' do
@@ -320,7 +320,7 @@ RSpec.describe "Projects", type: :request do
         }
       }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
     end
 
     it "does not allow access to another user's project" do
