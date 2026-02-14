@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = Project.all
-    @bookmarked_project_ids = current_user.bookmarked_projects.pluck(:project_id, :id).to_h
+    @bookmark_id_by_project_id = current_user.bookmarked_projects.pluck(:project_id, :id).to_h
   end
 
   def show
