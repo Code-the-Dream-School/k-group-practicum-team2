@@ -104,9 +104,9 @@ RSpec.describe "Resources", type: :request do
     it 'displays title, description and external link labels' do
       get '/resources/new'
 
-      expect(response.body).to include('Title')
+      expect(response.body).to include('Title *')
       expect(response.body).to include('Description')
-      expect(response.body).to include('External link')
+      expect(response.body).to include('External Link *')
     end
   end
 
@@ -211,7 +211,7 @@ RSpec.describe "Resources", type: :request do
     it 'displays the title label' do
       get "/resources/#{resource1.id}/edit"
 
-      expect(response.body).to include('Title')
+      expect(response.body).to include('Title *')
     end
 
     it 'displays the description label' do
@@ -223,7 +223,7 @@ RSpec.describe "Resources", type: :request do
     it 'displays the link label' do
       get "/resources/#{resource1.id}/edit"
 
-      expect(response.body).to include('External link')
+      expect(response.body).to include('External Link *')
     end
 
     it "does not allow access to another user's resource" do
