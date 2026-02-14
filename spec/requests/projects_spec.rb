@@ -374,5 +374,4 @@ RSpec.describe "Projects", type: :request do
       expect(response.body).to include(project_bookmarked_project_path(project1, bookmark))
     end
   end
-
 end

@@ -388,5 +388,4 @@ RSpec.describe "Resources", type: :request do
       expect(response.body).to include(resource_bookmarked_resource_path(resource1, bookmark))
     end
   end
-
 end
