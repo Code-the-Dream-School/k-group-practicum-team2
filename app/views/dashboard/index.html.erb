@@ -18,7 +18,7 @@
           <% if @projects.any? %>
             <% @projects.each do |project| %>
               <div class="p-4">
-                <%= render partial: "projects/project", locals: { project: project } %>
+                <%= render partial: "projects/project", locals: { project: project, bookmarked_project_ids: @bookmarked_project_ids } %>
               </div>
             <% end %>
           <% else %>
@@ -51,7 +51,7 @@
           <% if @resources.any? %>
             <% @resources.each do |resource| %>
               <div class="p-4">
-                <%= render partial: "resources/resource", locals: { resource: resource } %>
+                <%= render partial: "resources/resource", locals: { resource: resource, bookmarked_resource_ids: @bookmarked_resource_ids } %>
               </div>
             <% end %>
           <% else %>
