@@ -356,4 +356,23 @@ RSpec.describe "Projects", type: :request do
       expect(response).to have_http_status(:not_found)
     end
   end
+  describe "bookmark buttons on index" do
+    it "renders the POST bookmark button when not bookmarked" do
+      get "/projects"
+
+      expect(response.body).to include(project_bookmarked_projects_path(project1))
+    end
+
+    it "renders the DELETE unbookmark button when bookmarked" do
+      bookmark = BookmarkedProject.create!(
+        user: user1,
+        project: project1
+      )
+
+      get "/projects"
+
+      expect(response.body).to include(project_bookmarked_project_path(project1, bookmark))
+    end
+  end
+
 end
