@@ -1,35 +1,42 @@
-<div class="flex items-start gap-6">
-  <div class="w-32 h-32 rounded-full overflow-hidden border bg-gray-300 flex-shrink-0">
+<div class="flex items-center justify-center gap-8">
+  <%# Profile image or default avatar %>
+  <div class="w-12 h-12 flex items-center justify-center bg-gray-200 rounded-full overflow-hidden">
     <% if profile&.avatar&.attached? %>
-      <%= image_tag profile.avatar, class: "w-full h-full object-cover" %>
+      <%= image_tag(profile.avatar, class: "w-12 h-12 object-cover") %>
     <% else %>
-      <div class="w-full h-full flex items-center justify-center text-gray-500">
-        No Image
-      </div>
+      <svg class="w-8 h-8 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A7.972 7.972 0 0112 15c1.657 0 3.157.504 4.379 1.36M12 3a4 4 0 110 8 4 4 0 010-8z" />
+      </svg>
     <% end %>
   </div>
 
-
-  <div class="flex flex-col justify-center gap-4">
-    <div class="flex items-center gap-6 flex-wrap">
-      <h1 class="text-3xl font-bold text-black whitespace-nowrap">
-        <%= profile.first_name %> <%= profile.last_name %>
-      </h1>
-
-      <div class="flex flex-wrap gap-3">
-        <% profile.skills.each do |skill| %>
-          <span class="px-3 py-1 border border-black bg-gray-300 text-black text-sm rounded">
-            <%= skill.name %>
-          </span>
-        <% end %>
-      </div>
-    </div>
-    <p><%= profile&.skill_level %></p>
-
-    <p class="text-gray-700">
-      <%= profile.bio.presence || "No bio provided." %>
-    </p>
+  <%# User name and skill level %>
+  <div class="text-center">
+    <h2 class="text-lg font-semibold">
+      <%= [profile&.first_name, profile&.last_name].compact.join(" ") || "Guest" %>
+    </h2>
+    <p class="text-sm text-gray-600"><span>☆</span> Skill level</p>
   </div>
+
+  <%# Skills list %>
+  <div>
+    <% if profile&.skills&.present? %>
+      <ul class="flex gap-2">
+        <% profile&.skills.each do |skill| %>
+          <li class="border border-gray-900 rounded px-2 py-1 text-sm text-center">
+            <%= skill.name %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-gray-500 text-sm">No skills added yet</p>
+    <% end %>
+  </div>
+</div>
+
+<%# Bio below the profile line %>
+<div class="mt-4 text-center text-gray-700">
+  <%= profile&.bio.presence || "..." %>
 </div>
 
 <% if current_user.profile&.id == profile.id %>
