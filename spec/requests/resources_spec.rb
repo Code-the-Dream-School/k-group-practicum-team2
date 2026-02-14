@@ -370,4 +370,23 @@ RSpec.describe "Resources", type: :request do
     }.to_not change(Resource, :count)
     end
   end
+  describe "bookmark buttons on resources index" do
+    it "renders the POST bookmark button when resource is not bookmarked" do
+      get "/resources"
+
+      expect(response.body).to include(resource_bookmarked_resources_path(resource1))
+    end
+
+    it "renders the DELETE unbookmark button when resource is bookmarked" do
+      bookmark = BookmarkedResource.create!(
+        user: user1,
+        resource: resource1
+      )
+
+      get "/resources"
+
+      expect(response.body).to include(resource_bookmarked_resource_path(resource1, bookmark))
+    end
+  end
+
 end
