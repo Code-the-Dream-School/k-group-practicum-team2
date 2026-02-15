@@ -65,7 +65,7 @@
       <h2 class="text-left font-semibold text-lg sm:text-xl">Bookmarked Projects</h2>
       <% if @bookmarked_projects.any? %>
         <% @bookmarked_projects.each do |project| %>
-          <%= render partial: "projects/project", locals: { project: project, bookmarked_project_ids: @bookmarked_project_ids } %>
+          <%= render partial: "projects/project", locals: { project: project, bookmarked_project_ids: @project_bookmark_ids } %>
         <% end %>
       <% else %>
         <p class="px-4 sm:px-6">No bookmarked projects.</p>
@@ -86,7 +86,7 @@
       <h2 class="text-left font-semibold text-lg sm:text-xl">Bookmarked Resources</h2>
       <% if @bookmarked_resources.any? %>
         <% @bookmarked_resources.each do |resource| %>
-          <%= render partial: "resources/resource", locals: { resource: resource, bookmarked_resource_ids: @bookmarked_resource_ids } %>
+          <%= render partial: "resources/resource", locals: { resource: resource, bookmarked_resource_ids: @resource_bookmark_ids } %>
         <% end %>
       <% else %>
         <p class="px-4 sm:px-6">No bookmarked resources.</p>
