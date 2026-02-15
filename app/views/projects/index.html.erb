@@ -1,4 +1,4 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-  <%= render partial: "project", collection: @projects, locals: { bookmarked_project_ids: @bookmarked_project_ids } %>
+  <%= render partial: "project", collection: @projects, locals: { bookmarked_project_ids: @bookmark_id_by_project_id } %>
   <%= link_to "+ Post a Project", new_project_path %>
 </div>
