@@ -18,7 +18,8 @@
           <% if @projects.any? %>
             <% @projects.each do |project| %>
               <div class="p-4">
-                <%= render partial: "projects/project", locals: { project: project, bookmarked_project_ids: @bookmarked_project_ids } %>
+                <%# <%= render partial: "projects/project", locals: { project: project, bookmarked_project_ids: @bookmarked_project_ids } %>
+                <%= render partial: "projects/project", locals: { project: project, bookmarked_project_ids: @project_bookmark_ids } %>
               </div>
             <% end %>
           <% else %>
@@ -34,7 +35,8 @@
           <% if @bookmarked_projects.any? %>
             <% @bookmarked_projects.each do |project| %>
               <div class="p-4">
-                <%= render partial: "projects/project", locals: { project: project, bookmarked_project_ids: @bookmarked_project_ids } %>
+                <%# <%= render partial: "projects/project", locals: { project: project, bookmarked_project_ids: @bookmarked_project_ids } %>
+                <%= render partial: "projects/project", locals: { project: project, bookmarked_project_ids: @project_bookmark_ids } %>
               </div>
             <% end %>
           <% else %>
@@ -51,7 +53,8 @@
           <% if @resources.any? %>
             <% @resources.each do |resource| %>
               <div class="p-4">
-                <%= render partial: "resources/resource", locals: { resource: resource, bookmarked_resource_ids: @bookmarked_resource_ids } %>
+                <%# <%= render partial: "resources/resource", locals: { resource: resource, bookmarked_resource_ids: @bookmarked_resource_ids } %>
+                <%= render partial: "resources/resource", locals: { resource: resource, bookmarked_resource_ids: @resource_bookmark_ids } %>
               </div>
             <% end %>
           <% else %>
@@ -67,7 +70,8 @@
           <% if @bookmarked_resources.any? %>
             <% @bookmarked_resources.each do |resource| %>
               <div class="p-4">
-                <%= render partial: "resources/resource", locals: { resource: resource, bookmarked_resource_ids: @bookmarked_resource_ids } %>
+                <%# <%= render partial: "resources/resource", locals: { resource: resource, bookmarked_resource_ids: @bookmarked_resource_ids } %>
+                <%= render partial: "resources/resource", locals: { resource: resource, bookmarked_resource_ids: @resource_bookmark_ids } %>
               </div>
             <% end %>
           <% else %>
