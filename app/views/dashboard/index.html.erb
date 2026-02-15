@@ -1,96 +1,80 @@
-<div>
-  <%# Part 1 - profile section %>
-  <section class="bg-gray-300 py-6">
-    <div class="flex items-center justify-center gap-8">
-        <%# Profile image or default avatar %>
-      <div class="w-12 h-12 flex items-center justify-center bg-gray-200 rounded-full overflow-hidden">
-        <% if @user&.profile&.avatar&.attached? %>
-          <%= image_tag(@user.profile.avatar, class: "w-12 h-12 object-cover") %>
-        <% else %>
-          <svg class="w-8 h-8 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A7.972 7.972 0 0112 15c1.657 0 3.157.504 4.379 1.36M12 3a4 4 0 110 8 4 4 0 010-8z" />
-          </svg>
-        <% end %>
-      </div>
+<%# Part 1 - profile section with links %>
+<section class="bg-gray-300 py-6 px-4">
+  <div class="max-w-3xl mx-auto flex flex-col items-center gap-4">
+    <%# profile partial %>
+    <%= render partial: "profiles/profile", locals: { profile: current_user.profile } %>
+  </div>
+</section>
 
-      <%# User name and skill level %>
-      <div class="text-center">
-        <h2 class="text-lg font-semibold">
-          <%= [@user&.profile&.first_name, @user&.profile&.last_name].compact.join(" ") || "Guest" %>
-        </h2>
-        <p class="text-sm text-gray-600"><span>☆</span> Skill level</p>
-      </div>
-
-      <%# Skills list %>
-      <div>
-        <% if @user&.profile&.skills&.present? %>
-          <ul class="flex gap-2">
-            <% @user&.profile&.skills.each do |skill| %>
-              <li class="border border-gray-900 rounded px-2 py-1 text-sm text-center">
-                <%= skill.name %>
-              </li>
+<%# Part 2 - resources and projects %>
+<div class="min-h-screen bg-gray-100 py-10 px-4">
+  <div class="w-full max-w-5xl mx-auto bg-white rounded-2xl shadow-lg p-6 sm:p-8 space-y-8">
+    <section class="flex flex-col items-center gap-8 py-8">
+      <%# my projects %>
+      <div class="w-full max-w-3xl">
+        <h2 class="text-left font-semibold text-lg sm:text-xl mb-4">My Projects</h2>
+        <%# my projects cards %>
+        <div class="space-y-4">
+          <% if @projects.any? %>
+            <% @projects.each do |project| %>
+              <div class="p-4">
+                <%= render partial: "projects/project", locals: { project: project, bookmarked_project_ids: @project_bookmark_ids } %>
+              </div>
             <% end %>
-          </ul>
-        <% else %>
-          <p class="text-gray-500 text-sm">No skills added yet</p>
-        <% end %>
+          <% else %>
+            <p class="text-gray-500 italic">No projects yet.</p>
+          <% end %>
+        </div>
       </div>
-    </div>
 
-    <%# Bio below the profile line %>
-    <div class="mt-4 text-center text-gray-700">
-      <%= @user&.profile&.bio.presence || "..." %>
-    </div>
-  </section>
-
-  <%# Part 2 - resources and projects %>
-  <section class="flex flex-col items-center gap-8 py-8">
-    <!-- Collaborate With Me heading -->
-    <div class="w-full max-w-3xl">
-      <h1 class="text-left font-semibold text-xl sm:text-2xl">
-        Collaborate With Me
-      </h1>
-    </div>
-    <%# my projects %>
-    <div class="w-full max-w-3xl px-4 sm:px-6">
-      <h2 class="text-left font-semibold text-lg sm:text-xl">My Projects</h2>
-      <%# my projects cards %>
-      <div class="mt-2">
-        <%# placeholder card container %>
+      <%# bookmarked projects %>
+      <div class="w-full max-w-3xl">
+        <h2 class="text-left font-semibold text-lg sm:text-xl mb-4">Bookmarked Projects</h2>
+        <div class="space-y-4">
+          <% if @bookmarked_projects.any? %>
+            <% @bookmarked_projects.each do |project| %>
+              <div class="p-4">
+                <%= render partial: "projects/project", locals: { project: project, bookmarked_project_ids: @project_bookmark_ids } %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-gray-500 italic">No bookmarked projects.</p>
+          <% end %>
+        </div>
       </div>
-    </div>
 
-    <%# bookmarked projects %>
-    <div class="w-full max-w-3xl px-4 sm:px-6">
-      <h2 class="text-left font-semibold text-lg sm:text-xl">Bookmarked Projects</h2>
-      <% if @bookmarked_projects.any? %>
-        <% @bookmarked_projects.each do |project| %>
-          <%= render partial: "projects/project", locals: { project: project, bookmarked_project_ids: @project_bookmark_ids } %>
-        <% end %>
-      <% else %>
-        <p class="px-4 sm:px-6">No bookmarked projects.</p>
-      <% end %>
-    </div>
-
-    <%# my shared resources %>
-    <div class="w-full max-w-3xl">
-      <h2 class="text-left font-semibold text-lg sm:text-xl">My Shared Resources</h2>
-      <%# my shared resources cards %>
-      <div class="mt-2">
-        <%# placeholder card container %>
+      <%# my shared resources %>
+      <div class="w-full max-w-3xl">
+        <h2 class="text-left font-semibold text-lg sm:text-xl mb-4">My Resources</h2>
+        <%# my resources cards %>
+        <div class="space-y-4">
+          <% if @resources.any? %>
+            <% @resources.each do |resource| %>
+              <div class="p-4">
+                <%= render partial: "resources/resource", locals: { resource: resource, bookmarked_resource_ids: @resource_bookmark_ids } %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-gray-500 italic">No resources yet.</p>
+          <% end %>
+        </div>
       </div>
-    </div>
 
-    <%# bookmarked resources %>
-    <div class="w-full max-w-3xl">
-      <h2 class="text-left font-semibold text-lg sm:text-xl">Bookmarked Resources</h2>
-      <% if @bookmarked_resources.any? %>
-        <% @bookmarked_resources.each do |resource| %>
-          <%= render partial: "resources/resource", locals: { resource: resource, bookmarked_resource_ids: @resource_bookmark_ids } %>
-        <% end %>
-      <% else %>
-        <p class="px-4 sm:px-6">No bookmarked resources.</p>
-      <% end %>
-    </div>
-  </section>
+      <%# bookmarked resources %>
+      <div class="w-full max-w-3xl">
+        <h2 class="text-left font-semibold text-lg sm:text-xl mb-4">Bookmarked Resources</h2>
+        <div class="space-y-4">
+          <% if @bookmarked_resources.any? %>
+            <% @bookmarked_resources.each do |resource| %>
+              <div class="p-4">
+                <%= render partial: "resources/resource", locals: { resource: resource, bookmarked_resource_ids: @resource_bookmark_ids } %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="text-gray-500 italic">No bookmarked resources.</p>
+          <% end %>
+        </div>
+      </div>
+    </section>
+  </div>
 </div>
