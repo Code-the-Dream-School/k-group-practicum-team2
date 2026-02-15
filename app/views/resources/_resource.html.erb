@@ -9,28 +9,72 @@
     Link to resource:
     <%= link_to resource.url, resource.url, target: "_blank", rel: "noopener" %>
   </p>
-  <%= link_to "View Resource", resource_path(resource), class: "mt-3 text-blue-500 hover:underline" %>
 
-  <% bookmark_id = bookmarked_resource_ids[resource.id]%>
+  <!-- divider -->
+  <hr class="my-4 w-full mt-2 mb-2">
 
-  <% if bookmark_id %>
-    <%= button_to resource_bookmarked_resource_path(resource, bookmark_id),
-                  method: :delete,
-                  class: "inline-block hover:scale-110 transition cursor-pointer" do %>
-      <img src="<%= asset_path('star-filled.svg') %>"
-           alt="bookmarked"
-           width="20"
-           height="20">
-    <% end %>
-  <% else %>
-    <%= button_to resource_bookmarked_resources_path(resource),
-                  method: :post,
-                  class: "inline-block hover:scale-110 transition cursor-pointer" do %>
-      <img src="<%= asset_path('star-empty.svg') %>"
-           alt="not bookmarked"
-           width="20"
-           height="20">
-    <% end %>
-  <% end %>
-  
+  <!-- bottom row -->
+  <div class="flex items-center justify-between w-full">
+    <!-- left: User + Date -->
+    <div class="flex items-center gap-3 text-sm text-gray-500">
+      <!-- avatar -->
+      <% if resource.user&.profile.present? %>
+        <%= link_to user_profile_path(resource.user, resource.user.profile), class:"flex-shrink-0" do %>
+          <% if resource.user&.profile&.avatar&.attached? %>
+            <%= image_tag(resource.user.profile.avatar, class: "w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover") %>
+          <% else %>
+            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gray-200 flex items-center justify-center">
+              <svg class="w-8 h-8 sm:w-10 sm:h-10 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A7.972 7.972 0 0112 15c1.657 0 3.157.504 4.379 1.36M12 3a4 4 0 110 8 4 4 0 010-8z" />
+              </svg>
+            </div>
+          <% end %>
+        <% end %>
+      <% else %>
+        <!-- fallback avatar when no profile -->
+        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gray-200 flex items-center justify-center">
+          <svg class="w-8 h-8 sm:w-10 sm:h-10 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A7.972 7.972 0 0112 15c1.657 0 3.157.504 4.379 1.36M12 3a4 4 0 110 8 4 4 0 010-8z" />
+          </svg>
+        </div>
+      <% end %>
+      <!-- created date -->
+      <div>
+        <% if resource.user&.profile.present? %>
+          <p>
+            <%= resource.user.profile.first_name%> 
+            <%= resource.user.profile.last_name %>
+          </p>
+        <% else %>
+          <p>Unknown User</p>
+        <% end %>
+        <p><%= resource.created_at.strftime("%b %d, %Y")%></p>
+      </div>
+    </div>
+    <!-- right side view link -->
+    <div class="flex flex-col items-center w-24">
+      <%= link_to "View", resource_path(resource), class: "mt-3 text-blue-500 hover:underline text-sm" %>
+      <% bookmark_id = bookmarked_resource_ids[resource.id]%>
+
+      <% if bookmark_id %>
+        <%= button_to resource_bookmarked_resource_path(resource, bookmark_id),
+                      method: :delete,
+                      class: "inline-block hover:scale-110 transition cursor-pointer" do %>
+          <img src="<%= asset_path('star-filled.svg') %>"
+              alt="bookmarked"
+              width="20"
+              height="20">
+        <% end %>
+      <% else %>
+        <%= button_to resource_bookmarked_resources_path(resource),
+                      method: :post,
+                      class: "inline-block hover:scale-110 transition cursor-pointer" do %>
+          <img src="<%= asset_path('star-empty.svg') %>"
+              alt="not bookmarked"
+              width="20"
+              height="20">
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 </div>
