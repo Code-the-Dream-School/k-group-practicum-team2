@@ -26,20 +26,29 @@
     <!-- left: User + Date -->
     <div class="flex items-center gap-3 text-sm text-gray-500">
       <!-- avatar -->
-      <%= link_to user_profile_path(project.user, project.user.profile), class:"flex-shrink-0" do %>
-        <% if project.user&.profile&.avatar&.attached? %>
-          <%= image_tag(project.user.profile.avatar, class: "w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover") %>
-        <% else %>
-          <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gray-200 flex items-center justify-center">
-            <svg class="w-8 h-8 sm:w-10 sm:h-10 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A7.972 7.972 0 0112 15c1.657 0 3.157.504 4.379 1.36M12 3a4 4 0 110 8 4 4 0 010-8z" />
-            </svg>
-          </div>
+      <% if project.user&.profile.present? %>
+        <%= link_to user_profile_path(project.user, project.user.profile), class:"flex-shrink-0" do %>
+          <% if project.user&.profile&.avatar&.attached? %>
+            <%= image_tag(project.user.profile.avatar, class: "w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover") %>
+          <% else %>
+            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gray-200 flex items-center justify-center">
+              <svg class="w-8 h-8 sm:w-10 sm:h-10 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A7.972 7.972 0 0112 15c1.657 0 3.157.504 4.379 1.36M12 3a4 4 0 110 8 4 4 0 010-8z" />
+              </svg>
+            </div>
+          <% end %>
         <% end %>
       <% end %>
       <!-- created date -->
       <div>
-        <p><%= project.user.profile.first_name%> <%= project.user.profile.last_name %></p>
+        <% if project.user&.profile.present? %>
+          <p>
+            <%= project.user.profile.first_name%> 
+            <%= project.user.profile.last_name %>
+          </p>
+        <% else %>
+          <p>Unknown User</p>
+        <% end %>
         <p><%= project.created_at.strftime("%b %d, %Y")%></p>
       </div>
     </div>
