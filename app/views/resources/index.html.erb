@@ -1,4 +1,4 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-  <%= render partial: "resource", collection: @resources, locals: { bookmarked_resource_ids: @bookmarked_resource_ids} %>
+  <%= render partial: "resource", collection: @resources, locals: { bookmarked_resource_ids: @bookmark_id_by_resource_id} %>
   <%= link_to "+ Share a Resource", new_resource_path %>
 </div>
