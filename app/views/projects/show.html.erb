@@ -25,7 +25,7 @@
       <% else %>
         <% bookmark = current_user.bookmarked_projects.find_by(project: @project) %>
         <% if bookmark %>
-          <div class="absolute top-6 right-6 flex items-center gap-2">
+          <div class="flex items-center gap-2">
             <img src="<%= asset_path('star-filled.svg') %>" alt='bookmark star' width='20' height='20' >
             <%= button_to "Remove Bookmark", project_bookmarked_project_path(@project, bookmark), method: :delete,
             class: 'bg-black text-white px-4 py-2 rounded-lg hover:opacity-80 transition' %>
