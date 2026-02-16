@@ -59,7 +59,7 @@ RSpec.describe "Profiles", type: :request do
         end
 
         context "with invalid params" do
-            it "returns unprocessable entity" do
+            it "returns unprocessable content" do
                 user_without_profile = users(:two)
                 login_as(user_without_profile, scope: :user)
 
@@ -67,7 +67,7 @@ RSpec.describe "Profiles", type: :request do
                     profile: { first_name: "", last_name: "" }
                 }
 
-                expect(response).to have_http_status(:unprocessable_entity)
+                expect(response).to have_http_status(:unprocessable_content)
             end
         end
     end
@@ -83,9 +83,9 @@ RSpec.describe "Profiles", type: :request do
         end
 
         context "with invalid params" do
-            it "renders unprocessable entity" do
+            it "renders unprocessable content" do
                 patch user_profile_path(user, profile), params: { profile: { first_name: "" } }
-                expect(response).to have_http_status(:unprocessable_entity)
+                expect(response).to have_http_status(:unprocessable_content)
             end
         end
     end
