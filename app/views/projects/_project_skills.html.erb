@@ -1,3 +1,7 @@
+<% item_class ||= "bg-gray-100 py-1 px-2 rounded-lg" %>
+
 <% project.project_skills.each do |project_skill| %>
-  <li><%= project_skill.skill.name %></li>
+  <li class="<%= item_class %> inline-block">
+    <%= project_skill.skill.name %>
+  </li>
 <% end %>
