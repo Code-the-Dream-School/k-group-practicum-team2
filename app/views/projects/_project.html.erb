@@ -14,7 +14,7 @@
   </p>
 
   <% if project&.url.present? %>
-    <%= link_to "Project Repo ", project.url, target: :_blank, rel: :noopener %>
+    <%= link_to "Project Repo ", project.url, target: :_blank, rel: :noopener, class: "mt-3 text-blue-500 hover:underline" %>
   <% end %>
 
   <%= render 'projects/project_status', project: project %>
