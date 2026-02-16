@@ -37,7 +37,7 @@
       </div>
 
       <div>
-        <%= f.label :skill_ids, "Skills", class: "block font-medium mb-1" %>
+        <%= f.label :skill_ids, "Skills *", class: "block font-medium mb-1" %>
         <%= f.collection_select(
               :skill_ids,
               @skills,
@@ -46,11 +46,16 @@
               { prompt: "Select skills" },
               { multiple: true, class: "w-full border rounded-lg px-3 py-2" }
             ) %>
+        <p class="mt-1 text-sm text-gray-400">
+          Please select at least one skill. <br>
+          Hold <span class="font-medium">Ctrl</span> (Windows) or
+          <span class="font-medium">Command ⌘</span> (Mac) to select multiple.
+        </p>
       </div>
 
       <div class="pt-4 text-center">
         <%= f.submit "Save Profile",
-                     class: "bg-black text-white px-6 py-2 rounded-lg hover:opacity-80 transition" %>
+                     class: "w-full border border-gray-300 rounded-lg px-3 py-2" %>
       </div>
 
     <% end %>
