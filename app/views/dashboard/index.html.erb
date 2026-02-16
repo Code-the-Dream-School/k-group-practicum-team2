@@ -1,13 +1,13 @@
 <div>
   <%# Part 1 - profile section %>
-  <section class="bg-gray-300 py-6">
+  <section class="bg-gray-300 py-6 -mx-4 sm:-mx-6 lg:-mx-8 -mt-8">
     <div class="flex items-center justify-center gap-8">
         <%# Profile image or default avatar %>
-      <div class="w-12 h-12 flex items-center justify-center bg-gray-200 rounded-full overflow-hidden">
+      <div class="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 flex items-center justify-center bg-gray-200 rounded-full overflow-hidden">
         <% if @user&.profile&.avatar&.attached? %>
-          <%= image_tag(@user.profile.avatar, class: "w-12 h-12 object-cover") %>
+          <%= image_tag(@user.profile.avatar, class: "w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 object-cover") %>
         <% else %>
-          <svg class="w-8 h-8 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A7.972 7.972 0 0112 15c1.657 0 3.157.504 4.379 1.36M12 3a4 4 0 110 8 4 4 0 010-8z" />
           </svg>
         <% end %>
